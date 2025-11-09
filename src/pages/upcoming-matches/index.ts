@@ -1,0 +1,1 @@
+export { UpcomingMatchesPage } from "./UpcomingMatchesPage";
