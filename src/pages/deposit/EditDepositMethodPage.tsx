@@ -20,6 +20,7 @@ import {
 } from "../../lib/queries";
 import { toast } from "sonner";
 import { Plus, Trash2, Upload, X, Save, ArrowLeft } from "lucide-react";
+import { API_URL } from "../../lib/api";
 
 export default function EditDepositMethodPage() {
   const { id } = useParams<{ id: string }>();
@@ -106,7 +107,7 @@ export default function EditDepositMethodPage() {
   const updateUserInput = (
     index: number,
     field: keyof UserInput,
-    value: any
+    value: string | boolean
   ) => {
     setUserInputs((prev) =>
       prev.map((input, i) =>
@@ -129,7 +130,7 @@ export default function EditDepositMethodPage() {
       if (key === "gateways") {
         formDataToSend.append(key, JSON.stringify(value));
       } else {
-        formDataToSend.append(key, value);
+        formDataToSend.append(key, String(value));
       }
     });
 
@@ -169,11 +170,12 @@ export default function EditDepositMethodPage() {
       await updatePaymentMethod.mutateAsync({ id: id!, data: formDataToSend });
       toast.success("Payment method updated successfully!");
       navigate(`/dashboard/deposit/view/${id}`);
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Payment method update error:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to update payment method"
-      );
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message || "Failed to update payment method";
+      toast.error(errorMessage);
     }
   };
 
@@ -320,7 +322,7 @@ export default function EditDepositMethodPage() {
               <div className="mb-2">
                 <p className="text-sm text-gray-600 mb-2">Current image:</p>
                 <img
-                  src={`http://localhost:8000/${paymentMethod.method_image}`}
+                  src={`${API_URL}/${paymentMethod.method_image}`}
                   alt="Current method"
                   className="w-32 h-20 object-cover rounded border"
                 />
@@ -349,7 +351,7 @@ export default function EditDepositMethodPage() {
               <div className="mb-2">
                 <p className="text-sm text-gray-600 mb-2">Current image:</p>
                 <img
-                  src={`http://localhost:8000/${paymentMethod.payment_page_image}`}
+                  src={`${API_URL}/${paymentMethod.payment_page_image}`}
                   alt="Current payment page"
                   className="w-32 h-20 object-cover rounded border"
                 />

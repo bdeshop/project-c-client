@@ -20,6 +20,7 @@ import {
 } from "../../lib/queries";
 import { toast } from "sonner";
 import { Upload, X, Save, ArrowLeft, Gift } from "lucide-react";
+import { API_URL } from "../../lib/api";
 
 export default function EditPromotionPage() {
   const { id } = useParams<{ id: string }>();
@@ -120,7 +121,7 @@ export default function EditPromotionPage() {
       if (key === "payment_methods") {
         formDataToSend.append(key, JSON.stringify(value));
       } else {
-        formDataToSend.append(key, value);
+        formDataToSend.append(key, String(value));
       }
     });
 
@@ -148,11 +149,12 @@ export default function EditPromotionPage() {
       await updatePromotion.mutateAsync({ id: id!, data: formDataToSend });
       toast.success("Promotion updated successfully!");
       navigate(`/dashboard/promotions/view/${id}`);
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Promotion update error:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to update promotion"
-      );
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message || "Failed to update promotion";
+      toast.error(errorMessage);
     }
   };
 
@@ -508,7 +510,7 @@ export default function EditPromotionPage() {
                     src={
                       promotion.promotion_image.startsWith("http")
                         ? promotion.promotion_image
-                        : `http://localhost:8000/${promotion.promotion_image}`
+                        : `${API_URL}/${promotion.promotion_image}`
                     }
                     alt="Current promotion"
                     className="w-48 h-32 object-cover rounded border"

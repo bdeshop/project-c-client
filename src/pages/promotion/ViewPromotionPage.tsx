@@ -20,6 +20,7 @@ import {
   FileText,
   CreditCard,
 } from "lucide-react";
+import { API_URL } from "../../lib/api";
 
 export default function ViewPromotionPage() {
   const { id } = useParams<{ id: string }>();
@@ -200,7 +201,7 @@ export default function ViewPromotionPage() {
                               src={
                                 method.method_image.startsWith("http")
                                   ? method.method_image
-                                  : `http://localhost:8000/${method.method_image}`
+                                  : `${API_URL}/${method.method_image}`
                               }
                               alt={method.method_name_en}
                               className="w-10 h-10 object-cover rounded"
@@ -329,7 +330,7 @@ export default function ViewPromotionPage() {
                     src={
                       promotion.promotion_image.startsWith("http")
                         ? promotion.promotion_image
-                        : `http://localhost:8000/${promotion.promotion_image}`
+                        : `${API_URL}/${promotion.promotion_image}`
                     }
                     alt={promotion.title_en}
                     className="w-full h-48 object-cover rounded-lg border"

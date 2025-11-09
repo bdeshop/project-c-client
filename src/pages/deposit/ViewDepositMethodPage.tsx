@@ -19,6 +19,7 @@ import {
   Settings,
   FileText,
 } from "lucide-react";
+import { API_URL } from "../../lib/api";
 
 export default function ViewDepositMethodPage() {
   const { id } = useParams<{ id: string }>();
@@ -325,7 +326,7 @@ export default function ViewDepositMethodPage() {
                     Method Image
                   </label>
                   <img
-                    src={`http://localhost:8000/${paymentMethod.method_image}`}
+                    src={`${API_URL}/${paymentMethod.method_image}`}
                     alt="Method"
                     className="w-full h-32 object-cover rounded-lg border mt-2"
                   />
@@ -337,7 +338,7 @@ export default function ViewDepositMethodPage() {
                     Payment Page Image
                   </label>
                   <img
-                    src={`http://localhost:8000/${paymentMethod.payment_page_image}`}
+                    src={`${API_URL}/${paymentMethod.payment_page_image}`}
                     alt="Payment Page"
                     className="w-full h-32 object-cover rounded-lg border mt-2"
                   />

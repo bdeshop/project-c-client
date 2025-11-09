@@ -17,6 +17,7 @@ import {
   useTogglePromotionStatus,
 } from "../../lib/queries";
 import { toast } from "sonner";
+import { API_URL } from "../../lib/api";
 import {
   Plus,
   Search,
@@ -131,7 +132,7 @@ export default function PromotionsListPage() {
                     src={
                       promotion.promotion_image.startsWith("http")
                         ? promotion.promotion_image
-                        : `http://localhost:8000/${promotion.promotion_image}`
+                        : `${API_URL}/${promotion.promotion_image}`
                     }
                     alt={promotion.title_en}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"

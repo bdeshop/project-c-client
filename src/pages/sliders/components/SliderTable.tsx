@@ -10,6 +10,7 @@ import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
 import { Slider } from "../../../lib/queries";
 import { Pencil, Trash2 } from "lucide-react";
+import { API_URL } from "../../../lib/api";
 
 interface SliderTableProps {
   sliders: Slider[];
@@ -27,7 +28,7 @@ export function SliderTable({
     if (imageUrl.startsWith("http")) {
       return imageUrl;
     }
-    return `http://localhost:8000/${imageUrl}`;
+    return `${API_URL}/${imageUrl}`;
   };
   console.log("sliders", sliders);
 
@@ -57,7 +58,7 @@ export function SliderTable({
               <TableCell>
                 {slider.imageUrl && (
                   <img
-                    src={`http://localhost:8000/${slider.imageUrl}`}
+                    src={`${API_URL}/${slider.imageUrl}`}
                     alt={slider.title}
                     className="w-16 h-16 object-cover rounded-md"
                   />

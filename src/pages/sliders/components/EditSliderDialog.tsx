@@ -16,6 +16,7 @@ import {
 } from "../../../components/ui/select";
 import { Label } from "../../../components/ui/label";
 import { Slider } from "../../../lib/queries";
+import { API_URL } from "../../../lib/api";
 
 // Extended Slider type to include image file for editing
 interface EditableSlider extends Slider {
@@ -52,7 +53,7 @@ export function EditSliderDialog({
       // Add base URL to the existing image URL for proper display
       const fullImageUrl = editSlider.imageUrl.startsWith("http")
         ? editSlider.imageUrl
-        : `http://localhost:8000${editSlider.imageUrl}`;
+        : `${API_URL}${editSlider.imageUrl}`;
       setExistingImageUrl(fullImageUrl);
       setImage(null);
       setPreviewUrl(null);
