@@ -21,6 +21,7 @@ import { Label } from "../components/ui/label";
 import { RotateCcw, Save, Building, Globe } from "lucide-react";
 import { Settings as SettingsType } from "../lib/queries";
 import { UICustomizationSettings } from "./components";
+import { APKManagementSettings } from "./components/APKManagementSettings";
 
 // Color picker component for better UX
 const ColorPicker = ({
@@ -84,6 +85,11 @@ const TabNavigation = ({
       id: "ui",
       label: "UI Customization",
       icon: <Globe className="w-4 h-4" />,
+    },
+    {
+      id: "apk",
+      label: "APK Management",
+      icon: <Save className="w-4 h-4" />,
     },
     { id: "all", label: "All Settings" },
   ];
@@ -582,6 +588,8 @@ export function NewSettingsPage() {
             isSaving={isSaving}
           />
         )}
+
+        {activeTab === "apk" && <APKManagementSettings />}
 
         {activeTab === "all" && (
           <Card>

@@ -1961,3 +1961,173 @@ export const useUpdateContactSettings = (
     ...options,
   });
 };
+
+// ============================================
+// APK File Management Types & Queries
+// ============================================
+
+export interface APKFile {
+  _id: string;
+  id: string;
+  filename: string;
+  originalName: string;
+  version: string;
+  size: number;
+  sizeInMB: string;
+  downloadCount: number;
+  isActive: boolean;
+  description?: string;
+  downloadUrl: string;
+  uploadedBy?: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface APKUploadInput {
+  apk: File;
+  version?: string;
+  description?: string;
+  customName?: string;
+}
+
+export interface APKUpdateInput {
+  version?: string;
+  description?: string;
+  isActive?: boolean;
+}
+
+// Get All APK Files
+export const useAPKFiles = (
+  options?: UseQueryOptions<
+    AxiosResponse<{ success: boolean; count: number; data: APKFile[] }>,
+    Error
+  >
+) => {
+  return useQuery<
+    AxiosResponse<{ success: boolean; count: number; data: APKFile[] }>,
+    Error
+  >({
+    queryKey: ["apkFiles"],
+    queryFn: () => apiClient.get("/apk"),
+    ...options,
+  });
+};
+
+// Get Latest Active APK
+export const useLatestAPK = (
+  options?: UseQueryOptions<
+    AxiosResponse<{ success: boolean; data: APKFile }>,
+    Error
+  >
+) => {
+  return useQuery<AxiosResponse<{ success: boolean; data: APKFile }>, Error>({
+    queryKey: ["latestAPK"],
+    queryFn: () => apiClient.get("/apk/latest"),
+    ...options,
+  });
+};
+
+// Upload APK File
+export const useUploadAPK = (
+  options?: UseMutationOptions<
+    AxiosResponse<{ success: boolean; message: string; data: APKFile }>,
+    Error,
+    FormData
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<{ success: boolean; message: string; data: APKFile }>,
+    Error,
+    FormData
+  >({
+    mutationFn: (formData: FormData) =>
+      apiClient.post("/apk/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["apkFiles"] });
+      queryClient.invalidateQueries({ queryKey: ["latestAPK"] });
+    },
+    ...options,
+  });
+};
+
+// Update APK Details
+export const useUpdateAPK = (
+  options?: UseMutationOptions<
+    AxiosResponse<{ success: boolean; message: string; data: APKFile }>,
+    Error,
+    { id: string; data: APKUpdateInput }
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<{ success: boolean; message: string; data: APKFile }>,
+    Error,
+    { id: string; data: APKUpdateInput }
+  >({
+    mutationFn: ({ id, data }) => apiClient.put(`/apk/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["apkFiles"] });
+      queryClient.invalidateQueries({ queryKey: ["latestAPK"] });
+    },
+    ...options,
+  });
+};
+
+// Toggle APK Active Status
+export const useToggleAPKStatus = (
+  options?: UseMutationOptions<
+    AxiosResponse<{ success: boolean; message: string; data: APKFile }>,
+    Error,
+    string
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<{ success: boolean; message: string; data: APKFile }>,
+    Error,
+    string
+  >({
+    mutationFn: (id: string) => apiClient.patch(`/apk/${id}/toggle`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["apkFiles"] });
+      queryClient.invalidateQueries({ queryKey: ["latestAPK"] });
+    },
+    ...options,
+  });
+};
+
+// Delete APK File
+export const useDeleteAPK = (
+  options?: UseMutationOptions<
+    AxiosResponse<{ success: boolean; message: string }>,
+    Error,
+    string
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<{ success: boolean; message: string }>,
+    Error,
+    string
+  >({
+    mutationFn: (id: string) => apiClient.delete(`/apk/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["apkFiles"] });
+      queryClient.invalidateQueries({ queryKey: ["latestAPK"] });
+    },
+    ...options,
+  });
+};
