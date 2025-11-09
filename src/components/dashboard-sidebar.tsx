@@ -28,6 +28,7 @@ import {
   Plus,
   List,
   Gift,
+  MessageSquare,
 } from "lucide-react";
 
 const navigation = [
@@ -61,6 +62,7 @@ const navigation = [
   },
   { name: "Transactions", href: "/dashboard/transactions", icon: TrendingDown },
   { name: "Pages", href: "/dashboard/pages", icon: Boxes },
+  { name: "Contact Us", href: "/dashboard/contact", icon: MessageSquare },
   { name: "Settings", href: "/dashboard/settings", icon: Settings },
   { name: "Slider Management", href: "/dashboard/slider", icon: FileText },
   { name: "Logout", href: "/logout", icon: LogOut },

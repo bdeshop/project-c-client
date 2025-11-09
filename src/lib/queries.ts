@@ -1906,3 +1906,58 @@ export const useDeleteTransaction = () => {
     },
   });
 };
+
+// ============================================
+// Contact Settings Types & Queries
+// ============================================
+
+export interface ContactSettings {
+  _id: string;
+  service247Url: string;
+  whatsappUrl: string;
+  telegramUrl: string;
+  facebookUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ContactSettingsInput {
+  service247Url?: string;
+  whatsappUrl?: string;
+  telegramUrl?: string;
+  facebookUrl?: string;
+}
+
+// Get Contact Settings
+export const useContactSettings = (
+  options?: UseQueryOptions<AxiosResponse<ApiResponse<ContactSettings>>, Error>
+) => {
+  return useQuery<AxiosResponse<ApiResponse<ContactSettings>>, Error>({
+    queryKey: ["contactSettings"],
+    queryFn: () => apiClient.get("/contact"),
+    ...options,
+  });
+};
+
+// Update Contact Settings
+export const useUpdateContactSettings = (
+  options?: UseMutationOptions<
+    AxiosResponse<ApiResponse<ContactSettings>>,
+    Error,
+    ContactSettingsInput
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<ApiResponse<ContactSettings>>,
+    Error,
+    ContactSettingsInput
+  >({
+    mutationFn: (data: ContactSettingsInput) => apiClient.put("/contact", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["contactSettings"] });
+    },
+    ...options,
+  });
+};

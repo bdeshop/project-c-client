@@ -30,6 +30,7 @@ import ViewDepositMethodPage from "./pages/deposit/ViewDepositMethodPage";
 import EditDepositMethodPage from "./pages/deposit/EditDepositMethodPage";
 import DepositRequestsPage from "./pages/deposit/DepositRequestsPage";
 import AddPromotionPage from "./pages/deposit/AddPromotionPage";
+import ContactSettingsPage from "./pages/contact/ContactSettingsPage";
 // import { ReferralPage } from "./pages/referral";
 // import { ReferralSettingsPage } from "./pages/referral/ReferralSettingsPage";
 import { AuthService } from "./lib/auth";
@@ -136,6 +137,7 @@ function App() {
             />
             <Route path="deposit/requests" element={<DepositRequestsPage />} />
             <Route path="referral" element={<ReferralPage />} />
+            <Route path="contact" element={<ContactSettingsPage />} />
             {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
           </Route>
         </Routes>
