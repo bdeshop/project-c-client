@@ -73,10 +73,16 @@ export default function ViewTransactionPage() {
 
   const handleStatusUpdate = async (status: string) => {
     try {
-      await updateStatus.mutateAsync({ id: id!, status: status as any });
+      await updateStatus.mutateAsync({
+        id: id!,
+        status: status as "Pending" | "Completed" | "Failed" | "Cancelled",
+      });
       toast.success("Transaction status updated successfully!");
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to update status");
+    } catch (error) {
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message || "Failed to update status";
+      toast.error(errorMessage);
     }
   };
 
@@ -264,14 +270,40 @@ export default function ViewTransactionPage() {
                   <CardTitle>User Information</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div>
-                    <label className="text-sm font-medium text-muted-foreground">
-                      User ID
-                    </label>
-                    <p className="text-base font-mono">
-                      {transactionData.user_id}
-                    </p>
-                  </div>
+                  {typeof transactionData.user_id === "object" ? (
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                          <User className="h-6 w-6 text-primary" />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-lg">
+                            {transactionData.user_id.username}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {transactionData.user_id.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-muted-foreground">
+                          User ID
+                        </label>
+                        <p className="text-sm font-mono bg-muted p-2 rounded mt-1">
+                          {transactionData.user_id._id}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="text-sm font-medium text-muted-foreground">
+                        User ID
+                      </label>
+                      <p className="text-base font-mono">
+                        {transactionData.user_id}
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             )}

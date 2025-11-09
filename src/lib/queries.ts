@@ -1699,7 +1699,13 @@ export interface Transaction {
   transaction_id: string;
   wallet_number: string;
   status: "Pending" | "Completed" | "Failed" | "Cancelled";
-  user_id?: string;
+  user_id?:
+    | string
+    | {
+        _id: string;
+        email: string;
+        username: string;
+      };
   transaction_type: "Deposit" | "Withdrawal" | "Transfer";
   description?: string;
   reference_number?: string;

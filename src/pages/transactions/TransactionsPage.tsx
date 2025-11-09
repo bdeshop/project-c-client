@@ -47,6 +47,7 @@ import {
   XCircle,
   Clock,
   AlertCircle,
+  User,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -278,6 +279,7 @@ export default function TransactionsPage() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Transaction ID</TableHead>
+                    <TableHead>User</TableHead>
                     <TableHead>Amount</TableHead>
                     <TableHead>Provider</TableHead>
                     <TableHead>Wallet Number</TableHead>
@@ -288,108 +290,136 @@ export default function TransactionsPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {transactions.map((transaction) => (
-                    <TableRow key={transaction._id}>
-                      <TableCell className="font-medium">
-                        {transaction.transaction_id}
-                      </TableCell>
-                      <TableCell>
-                        <span className="font-semibold text-success">
-                          ৳{transaction.amount.toLocaleString()}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="capitalize">
-                          {transaction.wallet_provider}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{transaction.wallet_number}</TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="capitalize">
-                          {transaction.transaction_type}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          {getStatusIcon(transaction.status)}
-                          <Badge
-                            variant="default"
-                            className={getStatusColor(transaction.status)}
-                          >
-                            {transaction.status}
+                  {transactions.map((transaction) => {
+                    const user =
+                      typeof transaction.user_id === "object"
+                        ? transaction.user_id
+                        : null;
+
+                    return (
+                      <TableRow key={transaction._id}>
+                        <TableCell className="font-medium">
+                          {transaction.transaction_id}
+                        </TableCell>
+                        <TableCell>
+                          {user ? (
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                <User className="h-4 w-4 text-primary" />
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="font-medium text-sm">
+                                  {user.username}
+                                </span>
+                                <span className="text-xs text-muted-foreground">
+                                  {user.email}
+                                </span>
+                              </div>
+                            </div>
+                          ) : (
+                            <span className="text-muted-foreground text-sm">
+                              N/A
+                            </span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <span className="font-semibold text-success">
+                            ৳{transaction.amount.toLocaleString()}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="capitalize">
+                            {transaction.wallet_provider}
                           </Badge>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {new Date(transaction.createdAt).toLocaleDateString()}
-                      </TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                              <Link
-                                to={`/dashboard/transactions/view/${transaction._id}`}
-                              >
-                                <Eye className="h-4 w-4 mr-2" />
-                                View Details
-                              </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                              <Link
-                                to={`/dashboard/transactions/edit/${transaction._id}`}
-                              >
-                                <Edit className="h-4 w-4 mr-2" />
-                                Edit
-                              </Link>
-                            </DropdownMenuItem>
-                            {transaction.status === "Pending" && (
-                              <>
-                                <DropdownMenuItem
-                                  onClick={() =>
-                                    handleStatusUpdate(
-                                      transaction._id,
-                                      "Completed"
-                                    )
-                                  }
-                                >
-                                  <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                  Mark Completed
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  onClick={() =>
-                                    handleStatusUpdate(
-                                      transaction._id,
-                                      "Failed"
-                                    )
-                                  }
-                                >
-                                  <XCircle className="h-4 w-4 mr-2 text-red-600" />
-                                  Mark Failed
-                                </DropdownMenuItem>
-                              </>
-                            )}
-                            <DropdownMenuItem
-                              onClick={() =>
-                                handleDelete(
-                                  transaction._id,
-                                  transaction.transaction_id
-                                )
-                              }
-                              className="text-red-600"
+                        </TableCell>
+                        <TableCell>{transaction.wallet_number}</TableCell>
+                        <TableCell>
+                          <Badge variant="secondary" className="capitalize">
+                            {transaction.transaction_type}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            {getStatusIcon(transaction.status)}
+                            <Badge
+                              variant="default"
+                              className={getStatusColor(transaction.status)}
                             >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Delete
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                              {transaction.status}
+                            </Badge>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          {new Date(transaction.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="sm">
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem asChild>
+                                <Link
+                                  to={`/dashboard/transactions/view/${transaction._id}`}
+                                >
+                                  <Eye className="h-4 w-4 mr-2" />
+                                  View Details
+                                </Link>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem asChild>
+                                <Link
+                                  to={`/dashboard/transactions/edit/${transaction._id}`}
+                                >
+                                  <Edit className="h-4 w-4 mr-2" />
+                                  Edit
+                                </Link>
+                              </DropdownMenuItem>
+                              {transaction.status === "Pending" && (
+                                <>
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleStatusUpdate(
+                                        transaction._id,
+                                        "Completed"
+                                      )
+                                    }
+                                  >
+                                    <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                                    Mark Completed
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleStatusUpdate(
+                                        transaction._id,
+                                        "Failed"
+                                      )
+                                    }
+                                  >
+                                    <XCircle className="h-4 w-4 mr-2 text-red-600" />
+                                    Mark Failed
+                                  </DropdownMenuItem>
+                                </>
+                              )}
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  handleDelete(
+                                    transaction._id,
+                                    transaction.transaction_id
+                                  )
+                                }
+                                className="text-red-600"
+                              >
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </div>
