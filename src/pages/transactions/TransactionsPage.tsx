@@ -30,6 +30,7 @@ import {
   useTransactions,
   useDeleteTransaction,
   useUpdateTransactionStatus,
+  useWithdrawalRequests,
 } from "../../lib/queries";
 import { toast } from "sonner";
 import {
@@ -104,12 +105,30 @@ export default function TransactionsPage() {
     transaction_type: activeTab === "deposit" ? "Deposit" : "Withdrawal",
   });
 
+  // Fetch withdrawal requests when withdraw tab is active
+  const { data: withdrawalRequestsData, isLoading: isLoadingWithdrawals } =
+    useWithdrawalRequests({
+      status: statusFilter || undefined,
+      page: currentPage,
+      limit: pageSize,
+    });
+
   const deleteTransaction = useDeleteTransaction();
   const updateStatus = useUpdateTransactionStatus();
 
-  const transactions = transactionsData?.data?.data || [];
-  const totalPages = transactionsData?.data?.totalPages || 1;
-  const total = transactionsData?.data?.total || 0;
+  // Use withdrawal requests data when withdraw tab is active
+  const transactions =
+    activeTab === "withdraw"
+      ? withdrawalRequestsData?.data?.data || []
+      : transactionsData?.data?.data || [];
+  const totalPages =
+    activeTab === "withdraw"
+      ? withdrawalRequestsData?.data?.totalPages || 1
+      : transactionsData?.data?.totalPages || 1;
+  const total =
+    activeTab === "withdraw"
+      ? withdrawalRequestsData?.data?.total || 0
+      : transactionsData?.data?.total || 0;
 
   const handleDelete = async (id: string, transactionId: string) => {
     if (
@@ -155,13 +174,16 @@ export default function TransactionsPage() {
     setTypeFilter("");
     setCurrentPage(1);
   };
-  console.log("transactionsData", transactionsData);
 
-  if (isLoading) {
+  // Log data based on active tab
+  console.log("transactionsData", transactionsData);
+  console.log("withdrawalRequestsData", withdrawalRequestsData);
+
+  if (isLoading || (activeTab === "withdraw" && isLoadingWithdrawals)) {
     return (
       <div className="container mx-auto p-6">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
       </div>
     );
@@ -325,11 +347,16 @@ export default function TransactionsPage() {
                               </div>
                               <div className="flex flex-col">
                                 <span className="font-medium text-sm">
-                                  {user.username}
+                                  {user.username || user.name}
                                 </span>
                                 <span className="text-xs text-muted-foreground">
                                   {user.email}
                                 </span>
+                                {user.balance !== undefined && (
+                                  <span className="text-xs text-primary font-medium">
+                                    Balance: ৳{user.balance}
+                                  </span>
+                                )}
                               </div>
                             </div>
                           ) : (
@@ -373,7 +400,18 @@ export default function TransactionsPage() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          {new Date(transaction.createdAt).toLocaleDateString()}
+                          <div className="flex flex-col">
+                            <span className="text-sm">
+                              {new Date(
+                                transaction.createdAt
+                              ).toLocaleDateString()}
+                            </span>
+                            {transaction.reference_number && (
+                              <span className="text-xs text-muted-foreground">
+                                Ref: {transaction.reference_number}
+                              </span>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell>
                           <DropdownMenu>
@@ -391,14 +429,16 @@ export default function TransactionsPage() {
                                   View Details
                                 </Link>
                               </DropdownMenuItem>
-                              <DropdownMenuItem asChild>
-                                <Link
-                                  to={`/dashboard/transactions/edit/${transaction._id}`}
-                                >
-                                  <Edit className="h-4 w-4 mr-2" />
-                                  Edit
-                                </Link>
-                              </DropdownMenuItem>
+                              {activeTab === "deposit" && (
+                                <DropdownMenuItem asChild>
+                                  <Link
+                                    to={`/dashboard/transactions/edit/${transaction._id}`}
+                                  >
+                                    <Edit className="h-4 w-4 mr-2" />
+                                    Edit
+                                  </Link>
+                                </DropdownMenuItem>
+                              )}
                               {transaction.status === "Pending" && (
                                 <>
                                   <DropdownMenuItem
@@ -410,7 +450,9 @@ export default function TransactionsPage() {
                                     }
                                   >
                                     <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                    Mark Completed
+                                    {activeTab === "withdraw"
+                                      ? "Approve & Complete"
+                                      : "Mark Completed"}
                                   </DropdownMenuItem>
                                   <DropdownMenuItem
                                     onClick={() =>
@@ -421,7 +463,9 @@ export default function TransactionsPage() {
                                     }
                                   >
                                     <XCircle className="h-4 w-4 mr-2 text-red-600" />
-                                    Mark Failed
+                                    {activeTab === "withdraw"
+                                      ? "Reject"
+                                      : "Mark Failed"}
                                   </DropdownMenuItem>
                                 </>
                               )}

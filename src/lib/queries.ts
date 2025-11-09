@@ -2308,3 +2308,123 @@ export const useToggleWithdrawMethodStatus = (
     }
   );
 };
+
+// ============================================
+// Withdrawal Requests Types & Queries
+// ============================================
+
+export interface WithdrawalRequest {
+  _id: string;
+  user_id:
+    | string
+    | {
+        _id: string;
+        email: string;
+        username: string;
+      };
+  amount: number;
+  wallet_provider: string;
+  wallet_number: string;
+  withdrawal_method: string;
+  status: "Pending" | "Completed" | "Failed" | "Cancelled";
+  transaction_id?: string;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Get All Withdrawal Requests (Admin)
+export const useWithdrawalRequests = (
+  params?: {
+    status?: string;
+    page?: number;
+    limit?: number;
+  },
+  options?: UseQueryOptions<
+    AxiosResponse<{
+      success: boolean;
+      count: number;
+      total: number;
+      totalPages: number;
+      currentPage: number;
+      data: WithdrawalRequest[];
+    }>,
+    Error
+  >
+) => {
+  const queryParams = new URLSearchParams();
+  if (params?.status) queryParams.append("status", params.status);
+  if (params?.page) queryParams.append("page", params.page.toString());
+  if (params?.limit) queryParams.append("limit", params.limit.toString());
+
+  return useQuery<
+    AxiosResponse<{
+      success: boolean;
+      count: number;
+      total: number;
+      totalPages: number;
+      currentPage: number;
+      data: WithdrawalRequest[];
+    }>,
+    Error
+  >({
+    queryKey: ["withdrawalRequests", params],
+    queryFn: () =>
+      apiClient.get(
+        `/withdrawal-requests/all${
+          queryParams.toString() ? `?${queryParams.toString()}` : ""
+        }`
+      ),
+    ...options,
+  });
+};
+
+// Get My Withdrawal Requests (User)
+export const useMyWithdrawalRequests = (
+  options?: UseQueryOptions<
+    AxiosResponse<{
+      success: boolean;
+      count: number;
+      data: WithdrawalRequest[];
+    }>,
+    Error
+  >
+) => {
+  return useQuery<
+    AxiosResponse<{
+      success: boolean;
+      count: number;
+      data: WithdrawalRequest[];
+    }>,
+    Error
+  >({
+    queryKey: ["myWithdrawalRequests"],
+    queryFn: () => apiClient.get("/withdrawal-requests"),
+    ...options,
+  });
+};
+
+// Cancel Withdrawal Request (User)
+export const useCancelWithdrawalRequest = (
+  options?: UseMutationOptions<
+    AxiosResponse<{ success: boolean; message: string }>,
+    Error,
+    string
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<{ success: boolean; message: string }>,
+    Error,
+    string
+  >({
+    mutationFn: (id: string) =>
+      apiClient.patch(`/withdrawal-requests/${id}/cancel`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["withdrawalRequests"] });
+      queryClient.invalidateQueries({ queryKey: ["myWithdrawalRequests"] });
+    },
+    ...options,
+  });
+};
