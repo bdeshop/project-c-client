@@ -31,6 +31,10 @@ import EditDepositMethodPage from "./pages/deposit/EditDepositMethodPage";
 import DepositRequestsPage from "./pages/deposit/DepositRequestsPage";
 import AddPromotionPage from "./pages/deposit/AddPromotionPage";
 import ContactSettingsPage from "./pages/contact/ContactSettingsPage";
+import WithdrawPage from "./pages/withdraw/WithdrawPage";
+import AddWithdrawMethodPage from "./pages/withdraw/AddWithdrawMethodPage";
+import ViewWithdrawMethodPage from "./pages/withdraw/ViewWithdrawMethodPage";
+import EditWithdrawMethodPage from "./pages/withdraw/EditWithdrawMethodPage";
 // import { ReferralPage } from "./pages/referral";
 // import { ReferralSettingsPage } from "./pages/referral/ReferralSettingsPage";
 import { AuthService } from "./lib/auth";
@@ -136,6 +140,19 @@ function App() {
               element={<AddPromotionPage />}
             />
             <Route path="deposit/requests" element={<DepositRequestsPage />} />
+            <Route path="withdraw" element={<WithdrawPage />} />
+            <Route
+              path="withdraw/add-method"
+              element={<AddWithdrawMethodPage />}
+            />
+            <Route
+              path="withdraw/view/:id"
+              element={<ViewWithdrawMethodPage />}
+            />
+            <Route
+              path="withdraw/edit/:id"
+              element={<EditWithdrawMethodPage />}
+            />
             <Route path="referral" element={<ReferralPage />} />
             <Route path="contact" element={<ContactSettingsPage />} />
             {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}

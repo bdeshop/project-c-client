@@ -87,6 +87,7 @@ const getStatusColor = (status: string) => {
 };
 
 export default function TransactionsPage() {
+  const [activeTab, setActiveTab] = useState<"deposit" | "withdraw">("deposit");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [providerFilter, setProviderFilter] = useState<string>("");
@@ -100,7 +101,7 @@ export default function TransactionsPage() {
     search: searchTerm || undefined,
     status: statusFilter || undefined,
     wallet_provider: providerFilter || undefined,
-    transaction_type: typeFilter || undefined,
+    transaction_type: activeTab === "deposit" ? "Deposit" : "Withdrawal",
   });
 
   const deleteTransaction = useDeleteTransaction();
@@ -188,6 +189,32 @@ export default function TransactionsPage() {
           </Link>
         </div>
 
+        {/* Tabs */}
+        <div className="flex gap-2 mb-6">
+          <Button
+            variant={activeTab === "deposit" ? "default" : "outline"}
+            onClick={() => {
+              setActiveTab("deposit");
+              setCurrentPage(1);
+            }}
+            className={activeTab === "deposit" ? "gradient-primary" : ""}
+          >
+            <Wallet className="h-4 w-4 mr-2" />
+            Deposit Transactions
+          </Button>
+          <Button
+            variant={activeTab === "withdraw" ? "default" : "outline"}
+            onClick={() => {
+              setActiveTab("withdraw");
+              setCurrentPage(1);
+            }}
+            className={activeTab === "withdraw" ? "gradient-primary" : ""}
+          >
+            <TrendingDown className="h-4 w-4 mr-2" />
+            Withdraw Transactions
+          </Button>
+        </div>
+
         {/* Filters */}
         <Card className="mb-6 glass-effect">
           <CardHeader>
@@ -197,7 +224,7 @@ export default function TransactionsPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
@@ -240,22 +267,6 @@ export default function TransactionsPage() {
                 </SelectContent>
               </Select>
 
-              <Select
-                value={typeFilter || undefined}
-                onValueChange={(value) => setTypeFilter(value || "")}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="All Types" />
-                </SelectTrigger>
-                <SelectContent>
-                  {TRANSACTION_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
               <Button variant="outline" onClick={clearFilters}>
                 Clear Filters
               </Button>
@@ -268,8 +279,13 @@ export default function TransactionsPage() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle className="flex items-center gap-2">
-                <Wallet className="h-5 w-5" />
-                Transactions ({total})
+                {activeTab === "deposit" ? (
+                  <Wallet className="h-5 w-5" />
+                ) : (
+                  <TrendingDown className="h-5 w-5" />
+                )}
+                {activeTab === "deposit" ? "Deposit" : "Withdraw"} Transactions
+                ({total})
               </CardTitle>
             </div>
           </CardHeader>
@@ -334,7 +350,14 @@ export default function TransactionsPage() {
                         </TableCell>
                         <TableCell>{transaction.wallet_number}</TableCell>
                         <TableCell>
-                          <Badge variant="secondary" className="capitalize">
+                          <Badge
+                            variant="secondary"
+                            className={
+                              transaction.transaction_type === "Deposit"
+                                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                                : "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+                            }
+                          >
                             {transaction.transaction_type}
                           </Badge>
                         </TableCell>
@@ -459,24 +482,21 @@ export default function TransactionsPage() {
             <div className="glass-effect rounded-2xl p-8 max-w-md mx-auto">
               <TrendingDown className="h-16 w-16 text-primary/60 mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-foreground mb-2">
-                No transactions found
+                No {activeTab} transactions found
               </h3>
               <p className="text-muted-foreground mb-6">
-                {searchTerm || statusFilter || providerFilter || typeFilter
-                  ? "No transactions match your search criteria."
-                  : "Get started by creating your first transaction."}
+                {searchTerm || statusFilter || providerFilter
+                  ? `No ${activeTab} transactions match your search criteria.`
+                  : `No ${activeTab} transactions yet.`}
               </p>
-              {!searchTerm &&
-                !statusFilter &&
-                !providerFilter &&
-                !typeFilter && (
-                  <Link to="/dashboard/transactions/create">
-                    <Button className="gradient-primary hover:opacity-90">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Transaction
-                    </Button>
-                  </Link>
-                )}
+              {!searchTerm && !statusFilter && !providerFilter && (
+                <Link to="/dashboard/transactions/create">
+                  <Button className="gradient-primary hover:opacity-90">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create Transaction
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}

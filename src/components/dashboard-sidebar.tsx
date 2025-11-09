@@ -54,6 +54,14 @@ const navigation = [
       { name: "All Deposit Requests", href: "/dashboard/deposit/requests" },
     ],
   },
+  {
+    name: "Withdraw",
+    href: "/dashboard/withdraw",
+    icon: TrendingDown,
+    children: [
+      { name: "Withdraw Method Management", href: "/dashboard/withdraw" },
+    ],
+  },
   { name: "Top Winners", href: "/dashboard/top-winners", icon: Trophy },
   {
     name: "Upcoming Matches",

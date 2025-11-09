@@ -2137,3 +2137,174 @@ export const useDeleteAPK = (
     ...options,
   });
 };
+
+// ============================================
+// Withdraw Method Types & Queries
+// ============================================
+
+export interface WithdrawMethod {
+  _id: string;
+  method_name_en: string;
+  method_name_bd: string;
+  method_image: string;
+  withdrawal_page_image: string;
+  min_withdrawal: number;
+  max_withdrawal: number;
+  processing_time: string;
+  withdrawal_fee: number;
+  fee_type: "percentage" | "fixed";
+  text_color: string;
+  background_color: string;
+  button_color: string;
+  instruction_en: string;
+  instruction_bd: string;
+  status: "Active" | "Inactive";
+  user_inputs: UserInput[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateWithdrawMethodData {
+  method_name_en: string;
+  method_name_bd: string;
+  method_image?: File;
+  withdrawal_page_image?: File;
+  min_withdrawal: number;
+  max_withdrawal: number;
+  processing_time: string;
+  withdrawal_fee: number;
+  fee_type: "percentage" | "fixed";
+  text_color: string;
+  background_color: string;
+  button_color: string;
+  instruction_en: string;
+  instruction_bd: string;
+  status?: "Active" | "Inactive";
+  user_inputs?: UserInput[];
+}
+
+// Get All Withdraw Methods
+export const useWithdrawMethods = (
+  options?: UseQueryOptions<
+    AxiosResponse<{ success: boolean; count: number; data: WithdrawMethod[] }>,
+    Error
+  >
+) => {
+  return useQuery<
+    AxiosResponse<{ success: boolean; count: number; data: WithdrawMethod[] }>,
+    Error
+  >({
+    queryKey: ["withdrawMethods"],
+    queryFn: () => apiClient.get("/withdrawal-methods"),
+    ...options,
+  });
+};
+
+// Get Single Withdraw Method
+export const useWithdrawMethod = (
+  id: string,
+  options?: UseQueryOptions<AxiosResponse<ApiResponse<WithdrawMethod>>, Error>
+) => {
+  return useQuery<AxiosResponse<ApiResponse<WithdrawMethod>>, Error>({
+    queryKey: ["withdrawMethod", id],
+    queryFn: () => apiClient.get(`/withdrawal-methods/${id}`),
+    enabled: !!id,
+    ...options,
+  });
+};
+
+// Create Withdraw Method
+export const useCreateWithdrawMethod = (
+  options?: UseMutationOptions<
+    AxiosResponse<ApiResponse<WithdrawMethod>>,
+    Error,
+    FormData
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<ApiResponse<WithdrawMethod>>,
+    Error,
+    FormData
+  >({
+    mutationFn: (formData: FormData) =>
+      apiClient.post("/withdrawal-methods", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["withdrawMethods"] });
+    },
+    ...options,
+  });
+};
+
+// Update Withdraw Method
+export const useUpdateWithdrawMethod = (
+  options?: UseMutationOptions<
+    AxiosResponse<ApiResponse<WithdrawMethod>>,
+    Error,
+    { id: string; data: FormData }
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<ApiResponse<WithdrawMethod>>,
+    Error,
+    { id: string; data: FormData }
+  >({
+    mutationFn: ({ id, data }) =>
+      apiClient.put(`/withdrawal-methods/${id}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["withdrawMethods"] });
+      queryClient.invalidateQueries({
+        queryKey: ["withdrawMethod", variables.id],
+      });
+    },
+    ...options,
+  });
+};
+
+// Delete Withdraw Method
+export const useDeleteWithdrawMethod = (
+  options?: UseMutationOptions<AxiosResponse<ApiResponse<void>>, Error, string>
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<AxiosResponse<ApiResponse<void>>, Error, string>({
+    mutationFn: (id: string) => apiClient.delete(`/withdrawal-methods/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["withdrawMethods"] });
+    },
+    ...options,
+  });
+};
+
+// Toggle Withdraw Method Status
+export const useToggleWithdrawMethodStatus = (
+  options?: UseMutationOptions<
+    AxiosResponse<ApiResponse<WithdrawMethod>>,
+    Error,
+    string
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<AxiosResponse<ApiResponse<WithdrawMethod>>, Error, string>(
+    {
+      mutationFn: (id: string) =>
+        apiClient.patch(`/withdrawal-methods/${id}/status`),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["withdrawMethods"] });
+      },
+      ...options,
+    }
+  );
+};
