@@ -55,7 +55,7 @@ export default function ViewPromotionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="container mx-auto max-w-6xl">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
@@ -68,13 +68,13 @@ export default function ViewPromotionPage() {
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Promotion Details
             </h1>
           </div>
           <Button
             onClick={() => navigate(`/dashboard/promotions/edit/${id}`)}
-            className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+            className="flex items-center gap-2 gradient-primary"
           >
             <Edit className="h-4 w-4" />
             Edit Promotion
@@ -85,9 +85,9 @@ export default function ViewPromotionPage() {
           {/* Main Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Information */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <Gift className="h-5 w-5 text-purple-600" />
+                <Gift className="h-5 w-5 text-primary" />
                 <CardTitle>Basic Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -142,9 +142,9 @@ export default function ViewPromotionPage() {
             </Card>
 
             {/* Descriptions */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <FileText className="h-5 w-5 text-purple-600" />
+                <FileText className="h-5 w-5 text-primary" />
                 <CardTitle>Descriptions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -168,53 +168,71 @@ export default function ViewPromotionPage() {
             </Card>
 
             {/* Payment Methods */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <CreditCard className="h-5 w-5 text-purple-600" />
+                <CreditCard className="h-5 w-5 text-primary" />
                 <CardTitle>Payment Methods</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   {promotion.payment_methods &&
                   promotion.payment_methods.length > 0 ? (
-                    promotion.payment_methods.map((method, index) => (
-                      <div
-                        key={method._id || index}
-                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
-                      >
-                        {method.method_image && (
-                          <img
-                            src={
-                              method.method_image.startsWith("http")
-                                ? method.method_image
-                                : `http://localhost:8000/${method.method_image}`
-                            }
-                            alt={method.method_name_en}
-                            className="w-10 h-10 object-cover rounded"
-                          />
-                        )}
-                        <div className="flex-1">
-                          <p className="font-medium">{method.method_name_en}</p>
-                          {method.method_name_bd && (
-                            <p className="text-sm text-gray-600">
-                              {method.method_name_bd}
-                            </p>
-                          )}
-                        </div>
-                        <Badge
-                          variant={
-                            method.status === "Active" ? "default" : "secondary"
-                          }
-                          className={
-                            method.status === "Active"
-                              ? "bg-green-500 hover:bg-green-600"
-                              : "bg-gray-500"
-                          }
+                    promotion.payment_methods.map((method, index) => {
+                      // Type guard: check if method is an object (PaymentMethod)
+                      if (typeof method === "string") {
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+                          >
+                            <p className="font-medium">{method}</p>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div
+                          key={method._id || index}
+                          className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
                         >
-                          {method.status}
-                        </Badge>
-                      </div>
-                    ))
+                          {method.method_image && (
+                            <img
+                              src={
+                                method.method_image.startsWith("http")
+                                  ? method.method_image
+                                  : `http://localhost:8000/${method.method_image}`
+                              }
+                              alt={method.method_name_en}
+                              className="w-10 h-10 object-cover rounded"
+                            />
+                          )}
+                          <div className="flex-1">
+                            <p className="font-medium">
+                              {method.method_name_en}
+                            </p>
+                            {method.method_name_bd && (
+                              <p className="text-sm text-gray-600">
+                                {method.method_name_bd}
+                              </p>
+                            )}
+                          </div>
+                          <Badge
+                            variant={
+                              method.status === "Active"
+                                ? "default"
+                                : "secondary"
+                            }
+                            className={
+                              method.status === "Active"
+                                ? "bg-green-500 hover:bg-green-600"
+                                : "bg-gray-500"
+                            }
+                          >
+                            {method.status}
+                          </Badge>
+                        </div>
+                      );
+                    })
                   ) : (
                     <p className="text-gray-500">No payment methods selected</p>
                   )}
@@ -224,9 +242,9 @@ export default function ViewPromotionPage() {
 
             {/* Bonus Settings */}
             {promotion.bonus_settings && (
-              <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+              <Card className="glass-effect">
                 <CardHeader className="flex flex-row items-center gap-2">
-                  <Settings className="h-5 w-5 text-purple-600" />
+                  <Settings className="h-5 w-5 text-primary" />
                   <CardTitle>Bonus Settings</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -301,7 +319,7 @@ export default function ViewPromotionPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Promotion Image */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader>
                 <CardTitle>Promotion Image</CardTitle>
               </CardHeader>
@@ -328,9 +346,9 @@ export default function ViewPromotionPage() {
             </Card>
 
             {/* Dates */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <Calendar className="h-5 w-5 text-purple-600" />
+                <Calendar className="h-5 w-5 text-primary" />
                 <CardTitle>Dates</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -358,7 +376,7 @@ export default function ViewPromotionPage() {
             </Card>
 
             {/* Metadata */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader>
                 <CardTitle>Metadata</CardTitle>
               </CardHeader>

@@ -12,6 +12,7 @@ import {
 import { Bell, Search, Settings, LogOut, User, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../lib/auth";
+import { ThemeToggle } from "./theme-toggle";
 
 export function DashboardHeader() {
   const navigate = useNavigate();
@@ -24,21 +25,21 @@ export function DashboardHeader() {
     navigate("/login");
   };
   return (
-    <header className="bg-gray-900 border-b border-gray-700 px-8 py-4">
+    <header className="bg-card border-b border-border px-8 py-4">
       <div className="flex items-center justify-between">
         {/* Left side with hamburger and title */}
         <div className="flex items-center space-x-4">
           <Button
             variant="ghost"
             size="sm"
-            className="h-12 w-12 rounded-xl hover:bg-white/10 transition-colors text-white"
+            className="h-12 w-12 rounded-xl hover:bg-accent transition-colors"
           >
             <Menu className="h-5 w-5" />
           </Button>
 
           <div>
-            <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-            <p className="text-sm text-gray-300">
+            <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-sm text-muted-foreground">
               Welcome to Mothers Admin Panel
             </p>
           </div>
@@ -46,11 +47,14 @@ export function DashboardHeader() {
 
         {/* Right Side */}
         <div className="flex items-center space-x-3">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           {/* Notifications */}
           <Button
             variant="ghost"
             size="sm"
-            className="relative h-12 w-12 rounded-xl hover:bg-white/10 transition-colors text-white"
+            className="relative h-12 w-12 rounded-xl hover:bg-accent transition-colors"
           >
             <Bell className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-gradient-to-r from-primary to-secondary rounded-full animate-pulse"></span>
@@ -61,9 +65,9 @@ export function DashboardHeader() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative h-12 w-12 rounded-xl p-0 hover:bg-white/10 transition-colors"
+                className="relative h-12 w-12 rounded-xl p-0 hover:bg-accent transition-colors"
               >
-                <Avatar className="h-10 w-10 ring-2 ring-white/20">
+                <Avatar className="h-10 w-10 ring-2 ring-border">
                   <AvatarImage src="/admin-avatar.png" alt="Admin" />
                   <AvatarFallback className="gradient-primary text-white font-semibold">
                     AD
@@ -72,7 +76,7 @@ export function DashboardHeader() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-64 glass-effect border-white/20"
+              className="w-64 glass-effect"
               align="end"
               forceMount
             >

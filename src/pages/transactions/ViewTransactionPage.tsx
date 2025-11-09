@@ -84,7 +84,7 @@ export default function ViewTransactionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
       </div>
     );
@@ -94,10 +94,10 @@ export default function ViewTransactionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Transaction Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             The transaction you're looking for doesn't exist.
           </p>
           <Button onClick={() => navigate("/dashboard/transactions")}>
@@ -111,7 +111,7 @@ export default function ViewTransactionPage() {
   const transactionData = transaction.data.data;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="container mx-auto max-w-6xl">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
@@ -124,7 +124,7 @@ export default function ViewTransactionPage() {
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Transaction Details
             </h1>
           </div>
@@ -151,7 +151,7 @@ export default function ViewTransactionPage() {
             )}
             <Button
               onClick={() => navigate(`/dashboard/transactions/edit/${id}`)}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="flex items-center gap-2 gradient-primary"
             >
               <Edit className="h-4 w-4" />
               Edit Transaction
@@ -163,15 +163,15 @@ export default function ViewTransactionPage() {
           {/* Main Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Information */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <TrendingDown className="h-5 w-5 text-blue-600" />
+                <TrendingDown className="h-5 w-5 text-primary" />
                 <CardTitle>Transaction Information</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Transaction ID
                     </label>
                     <p className="text-lg font-semibold font-mono">
@@ -179,7 +179,7 @@ export default function ViewTransactionPage() {
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Amount
                     </label>
                     <p className="text-2xl font-bold text-green-600">
@@ -187,7 +187,7 @@ export default function ViewTransactionPage() {
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Wallet Provider
                     </label>
                     <Badge variant="outline" className="text-base capitalize">
@@ -195,7 +195,7 @@ export default function ViewTransactionPage() {
                     </Badge>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Wallet Number
                     </label>
                     <p className="text-lg font-semibold font-mono">
@@ -203,7 +203,7 @@ export default function ViewTransactionPage() {
                     </p>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Transaction Type
                     </label>
                     <Badge
@@ -213,7 +213,7 @@ export default function ViewTransactionPage() {
                     </Badge>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Status
                     </label>
                     <div className="flex items-center gap-2">
@@ -230,7 +230,7 @@ export default function ViewTransactionPage() {
 
                 {transactionData.reference_number && (
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       Reference Number
                     </label>
                     <p className="text-lg font-semibold font-mono">
@@ -243,9 +243,9 @@ export default function ViewTransactionPage() {
 
             {/* Description */}
             {transactionData.description && (
-              <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+              <Card className="glass-effect">
                 <CardHeader className="flex flex-row items-center gap-2">
-                  <FileText className="h-5 w-5 text-blue-600" />
+                  <FileText className="h-5 w-5 text-primary" />
                   <CardTitle>Description</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -258,14 +258,14 @@ export default function ViewTransactionPage() {
 
             {/* User Information */}
             {transactionData.user_id && (
-              <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+              <Card className="glass-effect">
                 <CardHeader className="flex flex-row items-center gap-2">
-                  <User className="h-5 w-5 text-blue-600" />
+                  <User className="h-5 w-5 text-primary" />
                   <CardTitle>User Information</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div>
-                    <label className="text-sm font-medium text-gray-500">
+                    <label className="text-sm font-medium text-muted-foreground">
                       User ID
                     </label>
                     <p className="text-base font-mono">
@@ -280,7 +280,7 @@ export default function ViewTransactionPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Status Card */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader>
                 <CardTitle>Current Status</CardTitle>
               </CardHeader>
@@ -296,7 +296,7 @@ export default function ViewTransactionPage() {
                     {transactionData.status}
                   </Badge>
                   {transactionData.status === "Pending" && (
-                    <p className="text-sm text-gray-600 text-center">
+                    <p className="text-sm text-muted-foreground text-center">
                       This transaction is awaiting processing
                     </p>
                   )}
@@ -306,7 +306,7 @@ export default function ViewTransactionPage() {
 
             {/* Quick Actions */}
             {transactionData.status === "Pending" && (
-              <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+              <Card className="glass-effect">
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
                 </CardHeader>
@@ -342,14 +342,14 @@ export default function ViewTransactionPage() {
             )}
 
             {/* Timestamps */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <Calendar className="h-5 w-5 text-blue-600" />
+                <Calendar className="h-5 w-5 text-primary" />
                 <CardTitle>Timestamps</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-500">
+                  <label className="text-sm font-medium text-muted-foreground">
                     Created
                   </label>
                   <p className="text-sm">
@@ -357,7 +357,7 @@ export default function ViewTransactionPage() {
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">
+                  <label className="text-sm font-medium text-muted-foreground">
                     Last Updated
                   </label>
                   <p className="text-sm">
@@ -368,13 +368,13 @@ export default function ViewTransactionPage() {
             </Card>
 
             {/* Transaction Hash */}
-            <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+            <Card className="glass-effect">
               <CardHeader className="flex flex-row items-center gap-2">
-                <Hash className="h-5 w-5 text-blue-600" />
+                <Hash className="h-5 w-5 text-primary" />
                 <CardTitle>Transaction Hash</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xs font-mono bg-gray-100 p-2 rounded break-all">
+                <p className="text-xs font-mono bg-muted p-2 rounded break-all">
                   {transactionData._id}
                 </p>
               </CardContent>

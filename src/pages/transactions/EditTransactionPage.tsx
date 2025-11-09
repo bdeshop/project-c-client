@@ -99,7 +99,7 @@ export default function EditTransactionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
       </div>
     );
@@ -109,10 +109,10 @@ export default function EditTransactionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Transaction Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             The transaction you're trying to edit doesn't exist.
           </p>
           <Button onClick={() => navigate("/dashboard/transactions")}>
@@ -124,7 +124,7 @@ export default function EditTransactionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-4 mb-6">
           <Button
@@ -136,15 +136,15 @@ export default function EditTransactionPage() {
             <ArrowLeft className="h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
-            <TrendingDown className="h-8 w-8 text-blue-600" />
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-3">
+            <TrendingDown className="h-8 w-8 text-primary" />
             Edit Transaction
           </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Transaction Details</CardTitle>
             </CardHeader>
@@ -299,7 +299,7 @@ export default function EditTransactionPage() {
             <Button
               type="submit"
               disabled={updateTransaction.isPending}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="flex items-center gap-2 gradient-primary"
             >
               <Save className="h-4 w-4" />
               {updateTransaction.isPending

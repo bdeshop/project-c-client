@@ -166,21 +166,21 @@ export default function TransactionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen gradient-bg p-6">
       <div className="container mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
-              <TrendingDown className="h-8 w-8 text-blue-600" />
+            <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent flex items-center gap-3">
+              <TrendingDown className="h-8 w-8 text-primary" />
               Transactions
             </h1>
-            <p className="text-gray-600 mt-2">
+            <p className="text-muted-foreground mt-2">
               Manage financial transactions and wallet operations
             </p>
           </div>
           <Link to="/dashboard/transactions/create">
-            <Button className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+            <Button className="flex items-center gap-2 gradient-primary hover:opacity-90">
               <Plus className="h-4 w-4" />
               Add Transaction
             </Button>
@@ -188,7 +188,7 @@ export default function TransactionsPage() {
         </div>
 
         {/* Filters */}
-        <Card className="mb-6 bg-white/80 backdrop-blur-sm border-white/20">
+        <Card className="mb-6 glass-effect">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Filter className="h-5 w-5" />
@@ -198,7 +198,7 @@ export default function TransactionsPage() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   placeholder="Search transactions..."
                   value={searchTerm}
@@ -263,7 +263,7 @@ export default function TransactionsPage() {
         </Card>
 
         {/* Transactions Table */}
-        <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+        <Card className="glass-effect">
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle className="flex items-center gap-2">
@@ -294,7 +294,7 @@ export default function TransactionsPage() {
                         {transaction.transaction_id}
                       </TableCell>
                       <TableCell>
-                        <span className="font-semibold text-green-600">
+                        <span className="font-semibold text-success">
                           ৳{transaction.amount.toLocaleString()}
                         </span>
                       </TableCell>
@@ -405,7 +405,7 @@ export default function TransactionsPage() {
                 >
                   Previous
                 </Button>
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-muted-foreground">
                   Page {currentPage} of {totalPages}
                 </span>
                 <Button
@@ -426,12 +426,12 @@ export default function TransactionsPage() {
         {/* Empty State */}
         {transactions.length === 0 && (
           <div className="text-center py-12">
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 max-w-md mx-auto">
-              <TrendingDown className="h-16 w-16 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            <div className="glass-effect rounded-2xl p-8 max-w-md mx-auto">
+              <TrendingDown className="h-16 w-16 text-primary/60 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-foreground mb-2">
                 No transactions found
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-muted-foreground mb-6">
                 {searchTerm || statusFilter || providerFilter || typeFilter
                   ? "No transactions match your search criteria."
                   : "Get started by creating your first transaction."}
@@ -441,7 +441,7 @@ export default function TransactionsPage() {
                 !providerFilter &&
                 !typeFilter && (
                   <Link to="/dashboard/transactions/create">
-                    <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                    <Button className="gradient-primary hover:opacity-90">
                       <Plus className="h-4 w-4 mr-2" />
                       Create Transaction
                     </Button>

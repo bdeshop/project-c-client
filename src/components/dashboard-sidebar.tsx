@@ -79,23 +79,23 @@ export function DashboardSidebar() {
   return (
     <div
       className={cn(
-        "relative flex flex-col h-full bg-gray-900 transition-all duration-300 ease-in-out",
+        "relative flex flex-col h-full bg-card border-r border-border transition-all duration-300 ease-in-out",
         collapsed ? "w-20" : "w-72"
       )}
     >
       {/* Decorative overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
 
       <div className="relative z-10 flex flex-col h-full">
         {/* Logo Section */}
-        <div className="flex items-center justify-between p-3 border-b border-white/10">
+        <div className="flex items-center justify-between p-3 border-b border-border">
           {!collapsed && (
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center ring-2 ring-white/10">
-                <Zap className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-xl flex items-center justify-center ring-2 ring-primary/20">
+                <Zap className="w-6 h-6 text-primary" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-white text-lg">Admin</span>
+                <span className="font-bold text-foreground text-lg">Admin</span>
               </div>
             </div>
           )}
@@ -103,7 +103,7 @@ export function DashboardSidebar() {
             variant="ghost"
             size="sm"
             onClick={() => setCollapsed(!collapsed)}
-            className="text-white/80 hover:text-white hover:bg-white/10 transition-colors h-8 w-8 p-0"
+            className="text-muted-foreground hover:text-foreground hover:bg-accent transition-colors h-8 w-8 p-0"
           >
             {collapsed ? (
               <ChevronRight className="h-4 w-4" />
@@ -129,8 +129,8 @@ export function DashboardSidebar() {
                       "w-full justify-start transition-all duration-200 h-10",
                       collapsed ? "px-2" : "px-3",
                       isActive
-                        ? "bg-white/20 text-white shadow-lg shadow-black/10 backdrop-blur-sm"
-                        : "text-white/70 hover:text-white hover:bg-white/10"
+                        ? "bg-primary/20 text-primary shadow-lg shadow-primary/10 backdrop-blur-sm"
+                        : "text-muted-foreground hover:text-foreground hover:bg-accent"
                     )}
                     onClick={(e) => {
                       if (item.children) {
@@ -154,7 +154,7 @@ export function DashboardSidebar() {
                       </>
                     )}
                     {isActive && !collapsed && !item.children && (
-                      <div className="ml-auto w-2 h-2 bg-white rounded-full" />
+                      <div className="ml-auto w-2 h-2 bg-primary rounded-full" />
                     )}
                   </Button>
                 </Link>
@@ -170,13 +170,13 @@ export function DashboardSidebar() {
                             className={cn(
                               "w-full justify-start transition-all duration-200 h-8 text-sm px-2",
                               isChildActive
-                                ? "bg-white/20 text-white shadow-lg shadow-black/10 backdrop-blur-sm"
-                                : "text-white/70 hover:text-white hover:bg-white/10"
+                                ? "bg-primary/20 text-primary shadow-lg shadow-primary/10 backdrop-blur-sm"
+                                : "text-muted-foreground hover:text-foreground hover:bg-accent"
                             )}
                           >
                             <span>{child.name}</span>
                             {isChildActive && (
-                              <div className="ml-auto w-2 h-2 bg-white rounded-full" />
+                              <div className="ml-auto w-2 h-2 bg-primary rounded-full" />
                             )}
                           </Button>
                         </Link>
@@ -190,35 +190,35 @@ export function DashboardSidebar() {
         </nav>
 
         {/* User Profile Section */}
-        <div className="p-2 border-t border-white/10">
+        <div className="p-2 border-t border-border">
           {!collapsed ? (
-            <div className="flex items-center space-x-2 p-2 rounded-xl bg-white/10 backdrop-blur-sm">
-              <div className="w-10 h-10 bg-gradient-to-br from-white/20 to-white/10 rounded-full flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
+            <div className="flex items-center space-x-2 p-2 rounded-xl bg-accent backdrop-blur-sm">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+                <Shield className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-medium text-sm truncate">
+                <p className="text-foreground font-medium text-sm truncate">
                   {userProfile?.user?.username || "Admin User"}
                 </p>
-                <p className="text-white/60 text-xs truncate">
+                <p className="text-muted-foreground text-xs truncate">
                   {userProfile?.user?.email || "admin@example.com"}
                 </p>
               </div>
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="w-10 h-10 bg-gradient-to-br from-white/20 to-white/10 rounded-full flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+                <Shield className="w-5 h-5 text-primary" />
               </div>
             </div>
           )}
         </div>
 
         {/* Footer */}
-        <div className="p-2 border-t border-white/10">
+        <div className="p-2 border-t border-border">
           <div
             className={cn(
-              "text-xs text-white/50 font-medium",
+              "text-xs text-muted-foreground font-medium",
               collapsed ? "text-center" : ""
             )}
           >

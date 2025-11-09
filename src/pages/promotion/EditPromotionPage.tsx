@@ -160,7 +160,7 @@ export default function EditPromotionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
       </div>
     );
@@ -170,10 +170,10 @@ export default function EditPromotionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="text-center py-12">
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Promotion Not Found
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             The promotion you're trying to edit doesn't exist.
           </p>
           <Button onClick={() => navigate("/dashboard/promotions")}>
@@ -185,7 +185,7 @@ export default function EditPromotionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-4 mb-6">
           <Button
@@ -197,15 +197,15 @@ export default function EditPromotionPage() {
             <ArrowLeft className="h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent flex items-center gap-3">
-            <Gift className="h-8 w-8 text-purple-600" />
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-3">
+            <Gift className="h-8 w-8 text-primary" />
             Edit Promotion
           </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
@@ -246,7 +246,7 @@ export default function EditPromotionPage() {
                     onChange={(e) =>
                       handleInputChange("game_type", e.target.value)
                     }
-                    className="w-full p-2 border border-gray-300 rounded-md bg-white"
+                    className="w-full p-2 border border-input rounded-md bg-background text-foreground"
                     required
                   >
                     <option value="casino">Casino</option>
@@ -264,7 +264,7 @@ export default function EditPromotionPage() {
                     onChange={(e) =>
                       handleInputChange("status", e.target.value)
                     }
-                    className="w-full p-2 border border-gray-300 rounded-md bg-white"
+                    className="w-full p-2 border border-input rounded-md bg-background text-foreground"
                   >
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -301,7 +301,7 @@ export default function EditPromotionPage() {
           </Card>
 
           {/* Descriptions */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Descriptions</CardTitle>
             </CardHeader>
@@ -335,7 +335,7 @@ export default function EditPromotionPage() {
           </Card>
 
           {/* Payment Methods */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Payment Methods</CardTitle>
             </CardHeader>
@@ -347,8 +347,8 @@ export default function EditPromotionPage() {
                     onClick={() => togglePaymentMethod(method._id)}
                     className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
                       formData.payment_methods.includes(method._id)
-                        ? "border-purple-500 bg-purple-50"
-                        : "border-gray-200 hover:border-purple-300"
+                        ? "border-primary bg-primary/10"
+                        : "border-border hover:border-primary/50"
                     }`}
                   >
                     <div className="flex items-center space-x-2">
@@ -356,7 +356,7 @@ export default function EditPromotionPage() {
                         type="checkbox"
                         checked={formData.payment_methods.includes(method._id)}
                         onChange={() => togglePaymentMethod(method._id)}
-                        className="rounded text-purple-600"
+                        className="rounded text-primary"
                       />
                       <span className="text-sm font-medium">
                         {method.method_name_en}
@@ -367,7 +367,7 @@ export default function EditPromotionPage() {
               </div>
               {formData.payment_methods.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-muted-foreground mb-2">
                     Selected methods:
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -388,7 +388,7 @@ export default function EditPromotionPage() {
           </Card>
 
           {/* Bonus Settings */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Bonus Settings</CardTitle>
             </CardHeader>
@@ -402,7 +402,7 @@ export default function EditPromotionPage() {
                     onChange={(e) =>
                       handleBonusChange("bonus_type", e.target.value)
                     }
-                    className="w-full p-2 border border-gray-300 rounded-md bg-white"
+                    className="w-full p-2 border border-input rounded-md bg-background text-foreground"
                   >
                     <option value="percentage">Percentage</option>
                     <option value="fixed">Fixed Amount</option>
@@ -494,14 +494,16 @@ export default function EditPromotionPage() {
           </Card>
 
           {/* Promotion Image */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Promotion Image</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {promotion.promotion_image && !promotionImage && (
                 <div className="mb-4">
-                  <p className="text-sm text-gray-600 mb-2">Current image:</p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Current image:
+                  </p>
                   <img
                     src={
                       promotion.promotion_image.startsWith("http")
@@ -513,7 +515,7 @@ export default function EditPromotionPage() {
                   />
                 </div>
               )}
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
                 <input
                   type="file"
                   accept="image/*"
@@ -524,13 +526,13 @@ export default function EditPromotionPage() {
                   id="promotion-image"
                 />
                 <label htmlFor="promotion-image" className="cursor-pointer">
-                  <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                  <p className="text-lg font-medium text-gray-700 mb-2">
+                  <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <p className="text-lg font-medium text-foreground mb-2">
                     {promotionImage
                       ? promotionImage.name
                       : "Upload Promotion Image"}
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground">
                     {promotionImage
                       ? "Click to change image"
                       : "Click to browse or drag and drop"}
@@ -552,7 +554,7 @@ export default function EditPromotionPage() {
             <Button
               type="submit"
               disabled={updatePromotion.isPending}
-              className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+              className="flex items-center gap-2 gradient-primary"
             >
               <Save className="h-4 w-4" />
               {updatePromotion.isPending ? "Updating..." : "Update Promotion"}

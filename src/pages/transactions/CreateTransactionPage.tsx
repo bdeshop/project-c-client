@@ -95,7 +95,7 @@ export default function CreateTransactionPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="container mx-auto max-w-4xl">
         <div className="flex items-center gap-4 mb-6">
           <Button
@@ -107,15 +107,15 @@ export default function CreateTransactionPage() {
             <ArrowLeft className="h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
-            <TrendingDown className="h-8 w-8 text-blue-600" />
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-3">
+            <TrendingDown className="h-8 w-8 text-primary" />
             Create Transaction
           </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
-          <Card className="bg-white/80 backdrop-blur-sm border-white/20">
+          <Card className="glass-effect">
             <CardHeader>
               <CardTitle>Transaction Details</CardTitle>
             </CardHeader>
@@ -280,7 +280,7 @@ export default function CreateTransactionPage() {
             <Button
               type="submit"
               disabled={createTransaction.isPending}
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              className="flex items-center gap-2 gradient-primary"
             >
               <Save className="h-4 w-4" />
               {createTransaction.isPending

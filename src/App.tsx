@@ -33,6 +33,7 @@ import AddPromotionPage from "./pages/deposit/AddPromotionPage";
 // import { ReferralPage } from "./pages/referral";
 // import { ReferralSettingsPage } from "./pages/referral/ReferralSettingsPage";
 import { AuthService } from "./lib/auth";
+import { ThemeProvider } from "./lib/theme-context";
 import "./globals.css";
 import { ReferralPage } from "./pages/referral/ReferralPage";
 
@@ -60,72 +61,86 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <Router>
-      <Toaster />
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            AuthService.isAuthenticated() ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<DashboardPage />} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="slider" element={<SlidersPage />} />
-          <Route path="analytics" element={<AnalyticsPage />} />
-          <Route path="reports" element={<ReportsPage />} />
-          <Route path="security" element={<SecurityPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="top-winners" element={<TopWinnersPage />} />
-          <Route path="upcoming-matches" element={<UpcomingMatchesPage />} />
-          <Route path="promotion" element={<PromotionPage />} />
-          <Route path="promotions" element={<PromotionsListPage />} />
-          <Route path="promotions/view/:id" element={<ViewPromotionPage />} />
-          <Route path="promotions/edit/:id" element={<EditPromotionPage />} />
-          <Route path="transactions" element={<TransactionsPage />} />
+    <ThemeProvider>
+      <Router>
+        <Toaster />
+        <Routes>
           <Route
-            path="transactions/create"
-            element={<CreateTransactionPage />}
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
           />
           <Route
-            path="transactions/view/:id"
-            element={<ViewTransactionPage />}
+            path="/"
+            element={
+              AuthService.isAuthenticated() ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
           />
           <Route
-            path="transactions/edit/:id"
-            element={<EditTransactionPage />}
-          />
-          <Route path="deposit" element={<DepositPage />} />
-          <Route path="deposit/add-method" element={<AddDepositMethodPage />} />
-          <Route path="deposit/view/:id" element={<ViewDepositMethodPage />} />
-          <Route path="deposit/edit/:id" element={<EditDepositMethodPage />} />
-          <Route path="deposit/add-promotion" element={<AddPromotionPage />} />
-          <Route path="deposit/requests" element={<DepositRequestsPage />} />
-          <Route path="referral" element={<ReferralPage />} />
-          {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
-        </Route>
-      </Routes>
-    </Router>
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<DashboardPage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="slider" element={<SlidersPage />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+            <Route path="security" element={<SecurityPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="top-winners" element={<TopWinnersPage />} />
+            <Route path="upcoming-matches" element={<UpcomingMatchesPage />} />
+            <Route path="promotion" element={<PromotionPage />} />
+            <Route path="promotions" element={<PromotionsListPage />} />
+            <Route path="promotions/view/:id" element={<ViewPromotionPage />} />
+            <Route path="promotions/edit/:id" element={<EditPromotionPage />} />
+            <Route path="transactions" element={<TransactionsPage />} />
+            <Route
+              path="transactions/create"
+              element={<CreateTransactionPage />}
+            />
+            <Route
+              path="transactions/view/:id"
+              element={<ViewTransactionPage />}
+            />
+            <Route
+              path="transactions/edit/:id"
+              element={<EditTransactionPage />}
+            />
+            <Route path="deposit" element={<DepositPage />} />
+            <Route
+              path="deposit/add-method"
+              element={<AddDepositMethodPage />}
+            />
+            <Route
+              path="deposit/view/:id"
+              element={<ViewDepositMethodPage />}
+            />
+            <Route
+              path="deposit/edit/:id"
+              element={<EditDepositMethodPage />}
+            />
+            <Route
+              path="deposit/add-promotion"
+              element={<AddPromotionPage />}
+            />
+            <Route path="deposit/requests" element={<DepositRequestsPage />} />
+            <Route path="referral" element={<ReferralPage />} />
+            {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

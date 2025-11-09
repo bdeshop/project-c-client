@@ -97,16 +97,17 @@ export default function AddPromotionPage() {
       await createPromotion.mutateAsync(formDataToSend);
       toast.success("Promotion created successfully!");
       navigate("/dashboard/deposit");
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Promotion creation error:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to create promotion"
-      );
+      const errorMessage =
+        (error as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message || "Failed to create promotion";
+      toast.error(errorMessage);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 p-6">
+    <div className="min-h-screen bg-background p-6">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-8">
@@ -119,32 +120,28 @@ export default function AddPromotionPage() {
             <ArrowLeft className="h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Promotion Dashboard
           </h1>
         </div>
 
         {/* Main Form Card */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl">
+        <Card className="glass-effect">
           <CardHeader className="pb-6">
-            <CardTitle className="text-2xl text-purple-600">
-              Create New Promotion
-            </CardTitle>
+            <CardTitle className="text-2xl">Create New Promotion</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Basic Information Section */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-purple-600">
+                <h3 className="text-lg font-semibold text-primary">
                   Basic Information
                 </h3>
 
                 {/* Promotion Image */}
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium text-gray-700">
-                    Promotion Image
-                  </Label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50">
+                  <Label className="text-sm font-medium">Promotion Image</Label>
+                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center bg-muted/50">
                     <input
                       type="file"
                       accept="image/*"
@@ -155,7 +152,7 @@ export default function AddPromotionPage() {
                       id="promotion-image"
                     />
                     <label htmlFor="promotion-image" className="cursor-pointer">
-                      <div className="flex items-center justify-center gap-2 text-gray-600">
+                      <div className="flex items-center justify-center gap-2 text-muted-foreground">
                         <Upload className="h-5 w-5" />
                         <span className="text-sm">
                           {promotionImage
@@ -175,7 +172,7 @@ export default function AddPromotionPage() {
                       handleInputChange("title_en", e.target.value)
                     }
                     placeholder="Promotion Title"
-                    className="h-12 text-base bg-gray-50 border-gray-200"
+                    className="h-12 text-base"
                     required
                   />
                 </div>
@@ -188,7 +185,7 @@ export default function AddPromotionPage() {
                       handleInputChange("title_bd", e.target.value)
                     }
                     placeholder="Title (Bangla)"
-                    className="h-12 text-base bg-gray-50 border-gray-200"
+                    className="h-12 text-base"
                     required
                   />
                 </div>
@@ -202,7 +199,7 @@ export default function AddPromotionPage() {
                     }
                     placeholder="Description"
                     rows={4}
-                    className="text-base bg-gray-50 border-gray-200 resize-none"
+                    className="text-base resize-none"
                     required
                   />
                 </div>
@@ -216,7 +213,7 @@ export default function AddPromotionPage() {
                     }
                     placeholder="Description (Bangla)"
                     rows={4}
-                    className="text-base bg-gray-50 border-gray-200 resize-none"
+                    className="text-base resize-none"
                     required
                   />
                 </div>
@@ -228,7 +225,7 @@ export default function AddPromotionPage() {
                     onChange={(e) =>
                       handleInputChange("game_type", e.target.value)
                     }
-                    className="w-full h-12 px-3 text-base bg-gray-50 border border-gray-200 rounded-md text-gray-500"
+                    className="w-full h-12 px-3 text-base bg-background border border-input rounded-md"
                     required
                   >
                     <option value="">Select Game Type</option>
@@ -243,13 +240,13 @@ export default function AddPromotionPage() {
 
               {/* Payment Methods Section */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-purple-600">
+                <h3 className="text-lg font-semibold text-primary">
                   Payment Methods
                 </h3>
 
                 {loadingPaymentMethods ? (
                   <div className="flex justify-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -263,18 +260,18 @@ export default function AddPromotionPage() {
                           id={`method-${method._id}`}
                           checked={selectedPaymentMethods.includes(method._id)}
                           onChange={() => handlePaymentMethodToggle(method._id)}
-                          className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                          className="w-4 h-4 text-primary border-input rounded focus:ring-primary"
                         />
                         <label
                           htmlFor={`method-${method._id}`}
-                          className="text-sm font-medium text-gray-700 cursor-pointer"
+                          className="text-sm font-medium cursor-pointer"
                         >
                           {method.method_name_en} ({method.method_name_bd})
                         </label>
                       </div>
                     ))}
                     {(!paymentMethods || paymentMethods.length === 0) && (
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-muted-foreground text-sm">
                         No payment methods available
                       </p>
                     )}
@@ -284,27 +281,27 @@ export default function AddPromotionPage() {
 
               {/* Bonus Settings Section */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-purple-600">
+                <h3 className="text-lg font-semibold text-primary">
                   Bonus Settings
                 </h3>
 
                 {selectedPaymentMethods.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 text-muted-foreground">
                     <p>
                       No payment methods selected. Please select at least one
                       payment method.
                     </p>
                   </div>
                 ) : (
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <p className="text-sm text-gray-600 mb-4">
+                  <div className="bg-muted/50 rounded-lg p-6">
+                    <p className="text-sm text-muted-foreground mb-4">
                       Selected payment methods: {selectedPaymentMethods.length}
                     </p>
 
                     <div className="space-y-4">
                       {/* Bonus Type */}
                       <div>
-                        <Label className="text-sm font-medium text-gray-700">
+                        <Label className="text-sm font-medium">
                           Bonus Type
                         </Label>
                         <select
@@ -315,7 +312,7 @@ export default function AddPromotionPage() {
                               e.target.value as "percentage" | "fixed"
                             )
                           }
-                          className="w-full mt-1 p-2 bg-white border border-gray-200 rounded-md"
+                          className="w-full mt-1 p-2 bg-background border border-input rounded-md"
                         >
                           <option value="percentage">Percentage</option>
                           <option value="fixed">Fixed Amount</option>
@@ -324,7 +321,7 @@ export default function AddPromotionPage() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label className="text-sm font-medium text-gray-700">
+                          <Label className="text-sm font-medium">
                             {bonusSettings.bonus_type === "percentage"
                               ? "Bonus Percentage (%)"
                               : "Bonus Amount"}
@@ -343,11 +340,11 @@ export default function AddPromotionPage() {
                                 ? "Enter percentage"
                                 : "Enter amount"
                             }
-                            className="mt-1 bg-white"
+                            className="mt-1"
                           />
                         </div>
                         <div>
-                          <Label className="text-sm font-medium text-gray-700">
+                          <Label className="text-sm font-medium">
                             Maximum Bonus Limit
                           </Label>
                           <Input
@@ -360,7 +357,7 @@ export default function AddPromotionPage() {
                               )
                             }
                             placeholder="Enter maximum limit"
-                            className="mt-1 bg-white"
+                            className="mt-1"
                           />
                         </div>
                       </div>
@@ -370,7 +367,7 @@ export default function AddPromotionPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-4 pt-6 border-t">
+              <div className="flex justify-end gap-4 pt-6 border-t border-border">
                 <Button
                   type="button"
                   variant="outline"
@@ -385,7 +382,7 @@ export default function AddPromotionPage() {
                     createPromotion.isPending ||
                     selectedPaymentMethods.length === 0
                   }
-                  className="px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                  className="px-6 gradient-primary"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   {createPromotion.isPending
