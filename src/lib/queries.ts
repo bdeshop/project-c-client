@@ -2441,3 +2441,35 @@ export const useCancelWithdrawalRequest = (
     ...options,
   });
 };
+
+// Change Password
+export interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export const useChangePassword = (
+  options?: UseMutationOptions<
+    AxiosResponse<ApiResponse<{ message: string }>>,
+    Error,
+    ChangePasswordData
+  >
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    AxiosResponse<ApiResponse<{ message: string }>>,
+    Error,
+    ChangePasswordData
+  >({
+    mutationFn: (data: ChangePasswordData) =>
+      apiClient.put<ApiResponse<{ message: string }>>(
+        "/users/change-password",
+        data
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.userProfile });
+    },
+    ...options,
+  });
+};
