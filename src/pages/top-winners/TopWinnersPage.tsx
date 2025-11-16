@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+import { Breadcrumb } from "../../components/ui/breadcrumb";
 import { useTopWinners } from "../../lib/queries";
 import {
   TopWinnerTable,
@@ -43,9 +44,12 @@ export function TopWinnersPage() {
   return (
     <div className="p-6">
       <div className="max-w-7xl mx-auto space-y-6">
+        {/* Breadcrumb */}
+        <Breadcrumb items={[{ label: "Top Winners" }]} />
+
         {/* Header */}
-        <TopWinnerHeader 
-          onAddTopWinner={handleOpenAddTopWinner} 
+        <TopWinnerHeader
+          onAddTopWinner={handleOpenAddTopWinner}
           onRefresh={refetch}
           isLoading={isLoading}
         />
@@ -74,9 +78,7 @@ export function TopWinnersPage() {
         <Card>
           <CardHeader>
             <CardTitle>Top Winners Management</CardTitle>
-            <CardDescription>
-              Manage your top winners records
-            </CardDescription>
+            <CardDescription>Manage your top winners records</CardDescription>
           </CardHeader>
           <CardContent>
             {/* Loading, Error, and Empty States */}
@@ -87,13 +89,16 @@ export function TopWinnersPage() {
             />
 
             {/* Top Winners Table */}
-            {!isLoading && !error && topWinnersData && topWinnersData.length > 0 && (
-              <TopWinnerTable
-                topWinners={topWinnersData}
-                onEditTopWinner={handleEditTopWinner}
-                onDeleteTopWinner={(id) => handleDeleteTopWinner(id, refetch)}
-              />
-            )}
+            {!isLoading &&
+              !error &&
+              topWinnersData &&
+              topWinnersData.length > 0 && (
+                <TopWinnerTable
+                  topWinners={topWinnersData}
+                  onEditTopWinner={handleEditTopWinner}
+                  onDeleteTopWinner={(id) => handleDeleteTopWinner(id, refetch)}
+                />
+              )}
           </CardContent>
         </Card>
       </div>

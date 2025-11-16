@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+import { Breadcrumb } from "../../components/ui/breadcrumb";
 import { Badge } from "../../components/ui/badge";
 import {
   Select,
@@ -42,12 +43,10 @@ import {
   Filter,
   TrendingDown,
   Wallet,
-  ArrowUpDown,
   MoreHorizontal,
   CheckCircle,
   XCircle,
   Clock,
-  AlertCircle,
   User,
 } from "lucide-react";
 import {
@@ -192,6 +191,9 @@ export default function TransactionsPage() {
   return (
     <div className="min-h-screen gradient-bg p-6">
       <div className="container mx-auto">
+        {/* Breadcrumb */}
+        <Breadcrumb items={[{ label: "Transactions" }]} />
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div>
@@ -313,182 +315,216 @@ export default function TransactionsPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Transaction ID</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Provider</TableHead>
-                    <TableHead>Wallet Number</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.map((transaction) => {
-                    const user =
-                      typeof transaction.user_id === "object"
-                        ? transaction.user_id
-                        : null;
+              <div className="rounded-lg border border-border/50 overflow-hidden shadow-sm">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-700 dark:via-blue-700 dark:to-indigo-700 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 dark:hover:from-purple-600 dark:hover:via-blue-600 dark:hover:to-indigo-600 border-b-2 border-purple-400 dark:border-purple-500 transition-all duration-300">
+                      <TableHead className="font-bold text-white">
+                        Transaction ID
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        User
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Amount
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Provider
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Wallet Number
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Type
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Status
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Date
+                      </TableHead>
+                      <TableHead className="font-bold text-white">
+                        Actions
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {transactions.map((transaction, index) => {
+                      const user =
+                        typeof transaction.user_id === "object"
+                          ? transaction.user_id
+                          : null;
 
-                    return (
-                      <TableRow key={transaction._id}>
-                        <TableCell className="font-medium">
-                          {transaction.transaction_id}
-                        </TableCell>
-                        <TableCell>
-                          {user ? (
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                <User className="h-4 w-4 text-primary" />
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="font-medium text-sm">
-                                  {user.username || user.name}
-                                </span>
-                                <span className="text-xs text-muted-foreground">
-                                  {user.email}
-                                </span>
-                                {user.balance !== undefined && (
-                                  <span className="text-xs text-primary font-medium">
-                                    Balance: ৳{user.balance}
+                      return (
+                        <TableRow
+                          key={transaction._id}
+                          className={`
+                          transition-all duration-300 ease-in-out
+                          hover:bg-gradient-to-r hover:from-purple-50 hover:via-blue-50 hover:to-indigo-50 
+                          dark:hover:from-purple-950/40 dark:hover:via-blue-950/40 dark:hover:to-indigo-950/40
+                          hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-purple-500
+                          ${
+                            index % 2 === 0
+                              ? "bg-white dark:bg-slate-950"
+                              : "bg-slate-50/50 dark:bg-slate-900/50"
+                          }
+                          border-b border-slate-100 dark:border-slate-800
+                        `}
+                        >
+                          <TableCell className="font-semibold text-slate-900 dark:text-slate-100 py-4">
+                            {transaction.transaction_id}
+                          </TableCell>
+                          <TableCell>
+                            {user ? (
+                              <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                  <User className="h-4 w-4 text-primary" />
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className="font-medium text-sm">
+                                    {user.username || user.name}
                                   </span>
-                                )}
+                                  <span className="text-xs text-muted-foreground">
+                                    {user.email}
+                                  </span>
+                                  {user.balance !== undefined && (
+                                    <span className="text-xs text-primary font-medium">
+                                      Balance: ৳{user.balance}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          ) : (
-                            <span className="text-muted-foreground text-sm">
-                              N/A
-                            </span>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <span className="font-semibold text-success">
-                            ৳{transaction.amount.toLocaleString()}
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="capitalize">
-                            {transaction.wallet_provider}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{transaction.wallet_number}</TableCell>
-                        <TableCell>
-                          <Badge
-                            variant="secondary"
-                            className={
-                              transaction.transaction_type === "Deposit"
-                                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                                : "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
-                            }
-                          >
-                            {transaction.transaction_type}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            {getStatusIcon(transaction.status)}
-                            <Badge
-                              variant="default"
-                              className={getStatusColor(transaction.status)}
-                            >
-                              {transaction.status}
-                            </Badge>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-col">
-                            <span className="text-sm">
-                              {new Date(
-                                transaction.createdAt
-                              ).toLocaleDateString()}
-                            </span>
-                            {transaction.reference_number && (
-                              <span className="text-xs text-muted-foreground">
-                                Ref: {transaction.reference_number}
+                            ) : (
+                              <span className="text-muted-foreground text-sm">
+                                N/A
                               </span>
                             )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm">
-                                <MoreHorizontal className="h-4 w-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem asChild>
-                                <Link
-                                  to={`/dashboard/transactions/view/${transaction._id}`}
-                                >
-                                  <Eye className="h-4 w-4 mr-2" />
-                                  View Details
-                                </Link>
-                              </DropdownMenuItem>
-                              {activeTab === "deposit" && (
+                          </TableCell>
+                          <TableCell>
+                            <span className="font-semibold text-success">
+                              ৳{transaction.amount.toLocaleString()}
+                            </span>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className="capitalize">
+                              {transaction.wallet_provider}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{transaction.wallet_number}</TableCell>
+                          <TableCell>
+                            <Badge
+                              variant="secondary"
+                              className={
+                                transaction.transaction_type === "Deposit"
+                                  ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                                  : "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200"
+                              }
+                            >
+                              {transaction.transaction_type}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              {getStatusIcon(transaction.status)}
+                              <Badge
+                                variant="default"
+                                className={getStatusColor(transaction.status)}
+                              >
+                                {transaction.status}
+                              </Badge>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="text-sm">
+                                {new Date(
+                                  transaction.createdAt
+                                ).toLocaleDateString()}
+                              </span>
+                              {transaction.reference_number && (
+                                <span className="text-xs text-muted-foreground">
+                                  Ref: {transaction.reference_number}
+                                </span>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm">
+                                  <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
                                 <DropdownMenuItem asChild>
                                   <Link
-                                    to={`/dashboard/transactions/edit/${transaction._id}`}
+                                    to={`/dashboard/transactions/view/${transaction._id}`}
                                   >
-                                    <Edit className="h-4 w-4 mr-2" />
-                                    Edit
+                                    <Eye className="h-4 w-4 mr-2" />
+                                    View Details
                                   </Link>
                                 </DropdownMenuItem>
-                              )}
-                              {transaction.status === "Pending" && (
-                                <>
-                                  <DropdownMenuItem
-                                    onClick={() =>
-                                      handleStatusUpdate(
-                                        transaction._id,
-                                        "Completed"
-                                      )
-                                    }
-                                  >
-                                    <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                    {activeTab === "withdraw"
-                                      ? "Approve & Complete"
-                                      : "Mark Completed"}
+                                {activeTab === "deposit" && (
+                                  <DropdownMenuItem asChild>
+                                    <Link
+                                      to={`/dashboard/transactions/edit/${transaction._id}`}
+                                    >
+                                      <Edit className="h-4 w-4 mr-2" />
+                                      Edit
+                                    </Link>
                                   </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    onClick={() =>
-                                      handleStatusUpdate(
-                                        transaction._id,
-                                        "Failed"
-                                      )
-                                    }
-                                  >
-                                    <XCircle className="h-4 w-4 mr-2 text-red-600" />
-                                    {activeTab === "withdraw"
-                                      ? "Reject"
-                                      : "Mark Failed"}
-                                  </DropdownMenuItem>
-                                </>
-                              )}
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  handleDelete(
-                                    transaction._id,
-                                    transaction.transaction_id
-                                  )
-                                }
-                                className="text-red-600"
-                              >
-                                <Trash2 className="h-4 w-4 mr-2" />
-                                Delete
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
+                                )}
+                                {transaction.status === "Pending" && (
+                                  <>
+                                    <DropdownMenuItem
+                                      onClick={() =>
+                                        handleStatusUpdate(
+                                          transaction._id,
+                                          "Completed"
+                                        )
+                                      }
+                                    >
+                                      <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                                      {activeTab === "withdraw"
+                                        ? "Approve & Complete"
+                                        : "Mark Completed"}
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      onClick={() =>
+                                        handleStatusUpdate(
+                                          transaction._id,
+                                          "Failed"
+                                        )
+                                      }
+                                    >
+                                      <XCircle className="h-4 w-4 mr-2 text-red-600" />
+                                      {activeTab === "withdraw"
+                                        ? "Reject"
+                                        : "Mark Failed"}
+                                    </DropdownMenuItem>
+                                  </>
+                                )}
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleDelete(
+                                      transaction._id,
+                                      transaction.transaction_id
+                                    )
+                                  }
+                                  className="text-red-600"
+                                >
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
             </div>
 
             {/* Pagination */}

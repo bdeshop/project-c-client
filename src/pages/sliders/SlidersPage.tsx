@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+import { Breadcrumb } from "../../components/ui/breadcrumb";
 import { useSliders } from "../../lib/queries";
 import {
   SliderTable,
@@ -47,9 +48,12 @@ export function SlidersPage() {
   return (
     <div className="p-6">
       <div className="max-w-7xl mx-auto space-y-6">
+        {/* Breadcrumb */}
+        <Breadcrumb items={[{ label: "Sliders" }]} />
+
         {/* Header */}
-        <SliderHeader 
-          onAddSlider={handleOpenAddSlider} 
+        <SliderHeader
+          onAddSlider={handleOpenAddSlider}
           onEditBannerText={() => setIsEditBannerTextOpen(true)}
         />
 

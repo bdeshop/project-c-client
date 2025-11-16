@@ -1,5 +1,4 @@
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -9,13 +8,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Bell, Search, Settings, LogOut, User, Menu } from "lucide-react";
+import { Bell, Settings, LogOut, User, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../lib/auth";
 import { ThemeToggle } from "./theme-toggle";
+import { useUserProfile } from "../lib/queries";
 
 export function DashboardHeader() {
   const navigate = useNavigate();
+  const { data: userProfile, isLoading } = useUserProfile();
 
   const handleSignOut = () => {
     // Use AuthService to logout
@@ -23,6 +24,18 @@ export function DashboardHeader() {
 
     // Navigate to login page
     navigate("/login");
+  };
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (!userProfile?.user) return "AD";
+    const name = userProfile.user.name || userProfile.user.username;
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
   return (
     <header className="bg-card border-b border-border px-8 py-4">
@@ -68,9 +81,12 @@ export function DashboardHeader() {
                 className="relative h-12 w-12 rounded-xl p-0 hover:bg-accent transition-colors"
               >
                 <Avatar className="h-10 w-10 ring-2 ring-border">
-                  <AvatarImage src="/admin-avatar.png" alt="Admin" />
+                  <AvatarImage
+                    src={userProfile?.user?.profileImage || "/admin-avatar.png"}
+                    alt={userProfile?.user?.name || "User"}
+                  />
                   <AvatarFallback className="gradient-primary text-white font-semibold">
-                    AD
+                    {isLoading ? "..." : getUserInitials()}
                   </AvatarFallback>
                 </Avatar>
               </Button>
@@ -80,25 +96,70 @@ export function DashboardHeader() {
               align="end"
               forceMount
             >
-              // ... existing code ...
               <DropdownMenuLabel className="font-normal p-4">
                 <div className="flex flex-col space-y-2">
                   <p className="text-base font-semibold leading-none">
-                    Admin User
+                    {isLoading
+                      ? "Loading..."
+                      : userProfile?.user?.name ||
+                        userProfile?.user?.username ||
+                        "User"}
                   </p>
                   <p className="text-sm leading-none text-muted-foreground">
-                    admin@example.com
+                    {isLoading
+                      ? "Loading..."
+                      : userProfile?.user?.email || "No email"}
                   </p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <div className="w-2 h-2 bg-success rounded-full"></div>
-                    <span className="text-xs text-success font-medium">
-                      Online
-                    </span>
-                  </div>
+                  {!isLoading && userProfile?.user && (
+                    <>
+                      <div className="flex items-center gap-2 mt-2">
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            userProfile.user.status === "active"
+                              ? "bg-success"
+                              : "bg-destructive"
+                          }`}
+                        ></div>
+                        <span
+                          className={`text-xs font-medium ${
+                            userProfile.user.status === "active"
+                              ? "text-success"
+                              : "text-destructive"
+                          }`}
+                        >
+                          {userProfile.user.status === "active"
+                            ? "Online"
+                            : "Offline"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border/50">
+                        <span className="text-xs text-muted-foreground">
+                          Balance:
+                        </span>
+                        <span className="text-sm font-semibold text-green-600 dark:text-green-400">
+                          {userProfile.user.currency}{" "}
+                          {userProfile.user.balance?.toFixed(2) || "0.00"}
+                        </span>
+                      </div>
+                      {userProfile.user.player_id && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-muted-foreground">
+                            Player ID:
+                          </span>
+                          <span className="text-xs font-mono text-foreground">
+                            {userProfile.user.player_id}
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-border/50" />
-              <DropdownMenuItem className="cursor-pointer hover:bg-primary/10 transition-colors">
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-primary/10 transition-colors"
+                onClick={() => navigate("/dashboard/profile")}
+              >
                 <User className="mr-3 h-4 w-4" />
                 <span>Profile Settings</span>
               </DropdownMenuItem>

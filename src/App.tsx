@@ -35,6 +35,7 @@ import WithdrawPage from "./pages/withdraw/WithdrawPage";
 import AddWithdrawMethodPage from "./pages/withdraw/AddWithdrawMethodPage";
 import ViewWithdrawMethodPage from "./pages/withdraw/ViewWithdrawMethodPage";
 import EditWithdrawMethodPage from "./pages/withdraw/EditWithdrawMethodPage";
+import { ProfilePage } from "./pages/profile/ProfilePage";
 // import { ReferralPage } from "./pages/referral";
 // import { ReferralSettingsPage } from "./pages/referral/ReferralSettingsPage";
 import { AuthService } from "./lib/auth";
@@ -155,6 +156,7 @@ function App() {
             />
             <Route path="referral" element={<ReferralPage />} />
             <Route path="contact" element={<ContactSettingsPage />} />
+            <Route path="profile" element={<ProfilePage />} />
             {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
           </Route>
         </Routes>

@@ -30,11 +30,24 @@ export interface UserProfile {
   user: {
     id: string;
     username: string;
+    name: string;
     email: string;
+    country: string;
+    currency: string;
+    phoneNumber: string | null;
+    player_id: string;
     balance: number;
+    deposit: number;
+    withdraw: number;
     isVerified: boolean;
-    lastLogin: string;
-    registrationDate: string;
+    emailVerified: boolean;
+    status: string;
+    role: string;
+    profileImage: string;
+    birthday: string;
+    referralCode: string;
+    lastLogin?: string;
+    registrationDate?: string;
   };
 }
 

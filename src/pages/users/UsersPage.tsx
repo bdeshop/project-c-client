@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+import { Breadcrumb } from "../../components/ui/breadcrumb";
 import { useUsers, UserFilters } from "../../lib/queries";
 import {
   UserTable,
@@ -70,6 +71,9 @@ export function UsersPage() {
   return (
     <div className="p-6">
       <div className="max-w-7xl mx-auto space-y-6">
+        {/* Breadcrumb */}
+        <Breadcrumb items={[{ label: "Users" }]} />
+
         {/* Header */}
         <UserHeader onAddUser={handleOpenAddUser} />
 
@@ -95,12 +99,7 @@ export function UsersPage() {
 
         {/* Filters and Search */}
         <Card>
-          <CardHeader>
-            <CardTitle>User Management</CardTitle>
-            <CardDescription>
-              Search and filter users by role, status, or name
-            </CardDescription>
-          </CardHeader>
+          <CardHeader></CardHeader>
           <CardContent>
             <UserFiltersComponent
               searchTerm={searchTerm}
