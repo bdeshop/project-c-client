@@ -15,6 +15,7 @@ import {
 import {
   useContactSettings,
   useUpdateContactSettings,
+  useUserProfile,
 } from "../../lib/queries";
 import { toast } from "sonner";
 import {
@@ -30,6 +31,10 @@ export default function ContactSettingsPage() {
   const navigate = useNavigate();
   const { data: contactData, isLoading } = useContactSettings();
   const updateSettings = useUpdateContactSettings();
+  const { data: userProfile } = useUserProfile();
+
+  // Check if user is admin
+  const isAdmin = userProfile?.user?.role === "admin";
 
   const [formData, setFormData] = useState({
     service247Url: "",
@@ -95,19 +100,25 @@ export default function ContactSettingsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">
-            Contact Settings
+            Contact {isAdmin ? "Settings" : "Information"}
           </h1>
           <p className="text-muted-foreground">
-            Manage your customer support and social media contact URLs
+            {isAdmin
+              ? "Manage your customer support and social media contact URLs"
+              : "View customer support and social media contact information"}
           </p>
         </div>
 
         {/* Main Form Card */}
         <Card className="glass-effect">
           <CardHeader>
-            <CardTitle>Contact URLs Configuration</CardTitle>
+            <CardTitle>
+              Contact URLs {isAdmin ? "Configuration" : "Information"}
+            </CardTitle>
             <CardDescription>
-              Configure URLs for 24/7 service, WhatsApp, Telegram, and Facebook
+              {isAdmin
+                ? "Configure URLs for 24/7 service, WhatsApp, Telegram, and Facebook"
+                : "View contact URLs for 24/7 service, WhatsApp, Telegram, and Facebook"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -126,6 +137,8 @@ export default function ContactSettingsPage() {
                     }
                     placeholder="https://example.com/support"
                     className="flex-1"
+                    disabled={!isAdmin}
+                    readOnly={!isAdmin}
                   />
                   <Button
                     type="button"
@@ -158,6 +171,8 @@ export default function ContactSettingsPage() {
                     }
                     placeholder="https://wa.me/1234567890"
                     className="flex-1"
+                    disabled={!isAdmin}
+                    readOnly={!isAdmin}
                   />
                   <Button
                     type="button"
@@ -189,6 +204,8 @@ export default function ContactSettingsPage() {
                     }
                     placeholder="https://t.me/yourusername"
                     className="flex-1"
+                    disabled={!isAdmin}
+                    readOnly={!isAdmin}
                   />
                   <Button
                     type="button"
@@ -219,6 +236,8 @@ export default function ContactSettingsPage() {
                     }
                     placeholder="https://facebook.com/yourpage"
                     className="flex-1"
+                    disabled={!isAdmin}
+                    readOnly={!isAdmin}
                   />
                   <Button
                     type="button"
@@ -237,23 +256,36 @@ export default function ContactSettingsPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-end gap-4 pt-6 border-t border-border">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => navigate("/dashboard")}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  disabled={updateSettings.isPending}
-                  className="gradient-primary"
-                >
-                  <Save className="h-4 w-4 mr-2" />
-                  {updateSettings.isPending ? "Saving..." : "Save Settings"}
-                </Button>
-              </div>
+              {isAdmin && (
+                <div className="flex justify-end gap-4 pt-6 border-t border-border">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={updateSettings.isPending}
+                    className="gradient-primary"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    {updateSettings.isPending ? "Saving..." : "Save Settings"}
+                  </Button>
+                </div>
+              )}
+              {!isAdmin && (
+                <div className="flex justify-end pt-6 border-t border-border">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Back to Dashboard
+                  </Button>
+                </div>
+              )}
             </form>
           </CardContent>
         </Card>
@@ -261,26 +293,44 @@ export default function ContactSettingsPage() {
         {/* Info Card */}
         <Card className="glass-effect mt-6">
           <CardHeader>
-            <CardTitle className="text-lg">Usage Information</CardTitle>
+            <CardTitle className="text-lg">
+              {isAdmin ? "Usage Information" : "Information"}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 text-sm text-muted-foreground">
-            <p>
-              • These URLs will be used across your platform for customer
-              support links
-            </p>
-            <p>
-              • All fields are optional - leave empty if you don't use that
-              platform
-            </p>
-            <p>
-              • Use the test button (
-              <ExternalLink className="h-3 w-3 inline" />) to verify each URL
-              opens correctly
-            </p>
-            <p>
-              • Changes take effect immediately after saving and will be
-              reflected on your website
-            </p>
+            {isAdmin ? (
+              <>
+                <p>
+                  • These URLs will be used across your platform for customer
+                  support links
+                </p>
+                <p>
+                  • All fields are optional - leave empty if you don't use that
+                  platform
+                </p>
+                <p>
+                  • Use the test button (
+                  <ExternalLink className="h-3 w-3 inline" />) to verify each
+                  URL opens correctly
+                </p>
+                <p>
+                  • Changes take effect immediately after saving and will be
+                  reflected on your website
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  • These are the official contact URLs for customer support
+                </p>
+                <p>
+                  • Click the test button (
+                  <ExternalLink className="h-3 w-3 inline" />) to open any
+                  contact link
+                </p>
+                <p>• Use these links to reach out for support or inquiries</p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>

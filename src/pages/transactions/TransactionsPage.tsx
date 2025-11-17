@@ -32,6 +32,7 @@ import {
   useDeleteTransaction,
   useUpdateTransactionStatus,
   useWithdrawalRequests,
+  useUserProfile,
 } from "../../lib/queries";
 import { toast } from "sonner";
 import {
@@ -94,6 +95,10 @@ export default function TransactionsPage() {
   const [typeFilter, setTypeFilter] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
+
+  // Get user profile to check role
+  const { data: userProfile } = useUserProfile();
+  const isAdmin = userProfile?.user?.role === "admin";
 
   const { data: transactionsData, isLoading } = useTransactions({
     page: currentPage,
@@ -199,18 +204,22 @@ export default function TransactionsPage() {
           <div>
             <h1 className="text-4xl font-bold gradient-primary bg-clip-text text-transparent flex items-center gap-3">
               <TrendingDown className="h-8 w-8 text-primary" />
-              Transactions
+              {isAdmin ? "All Transactions" : "My Transactions"}
             </h1>
             <p className="text-muted-foreground mt-2">
-              Manage financial transactions and wallet operations
+              {isAdmin
+                ? "Manage all financial transactions and wallet operations"
+                : "View your transaction history and withdrawal requests"}
             </p>
           </div>
-          <Link to="/dashboard/transactions/create">
-            <Button className="flex items-center gap-2 gradient-primary hover:opacity-90">
-              <Plus className="h-4 w-4" />
-              Add Transaction
-            </Button>
-          </Link>
+          {isAdmin && (
+            <Link to="/dashboard/transactions/create">
+              <Button className="flex items-center gap-2 gradient-primary hover:opacity-90">
+                <Plus className="h-4 w-4" />
+                Add Transaction
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Tabs */}
@@ -322,9 +331,11 @@ export default function TransactionsPage() {
                       <TableHead className="font-bold text-white">
                         Transaction ID
                       </TableHead>
-                      <TableHead className="font-bold text-white">
-                        User
-                      </TableHead>
+                      {isAdmin && (
+                        <TableHead className="font-bold text-white">
+                          User
+                        </TableHead>
+                      )}
                       <TableHead className="font-bold text-white">
                         Amount
                       </TableHead>
@@ -374,32 +385,34 @@ export default function TransactionsPage() {
                           <TableCell className="font-semibold text-slate-900 dark:text-slate-100 py-4">
                             {transaction.transaction_id}
                           </TableCell>
-                          <TableCell>
-                            {user ? (
-                              <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                  <User className="h-4 w-4 text-primary" />
-                                </div>
-                                <div className="flex flex-col">
-                                  <span className="font-medium text-sm">
-                                    {user.username || user.name}
-                                  </span>
-                                  <span className="text-xs text-muted-foreground">
-                                    {user.email}
-                                  </span>
-                                  {user.balance !== undefined && (
-                                    <span className="text-xs text-primary font-medium">
-                                      Balance: ৳{user.balance}
+                          {isAdmin && (
+                            <TableCell>
+                              {user ? (
+                                <div className="flex items-center gap-2">
+                                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                    <User className="h-4 w-4 text-primary" />
+                                  </div>
+                                  <div className="flex flex-col">
+                                    <span className="font-medium text-sm">
+                                      {user.username || user.name}
                                     </span>
-                                  )}
+                                    <span className="text-xs text-muted-foreground">
+                                      {user.email}
+                                    </span>
+                                    {user.balance !== undefined && (
+                                      <span className="text-xs text-primary font-medium">
+                                        Balance: ৳{user.balance}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            ) : (
-                              <span className="text-muted-foreground text-sm">
-                                N/A
-                              </span>
-                            )}
-                          </TableCell>
+                              ) : (
+                                <span className="text-muted-foreground text-sm">
+                                  N/A
+                                </span>
+                              )}
+                            </TableCell>
+                          )}
                           <TableCell>
                             <span className="font-semibold text-success">
                               ৳{transaction.amount.toLocaleString()}
@@ -464,7 +477,7 @@ export default function TransactionsPage() {
                                     View Details
                                   </Link>
                                 </DropdownMenuItem>
-                                {activeTab === "deposit" && (
+                                {isAdmin && activeTab === "deposit" && (
                                   <DropdownMenuItem asChild>
                                     <Link
                                       to={`/dashboard/transactions/edit/${transaction._id}`}
@@ -474,48 +487,67 @@ export default function TransactionsPage() {
                                     </Link>
                                   </DropdownMenuItem>
                                 )}
-                                {transaction.status === "Pending" && (
-                                  <>
+                                {isAdmin &&
+                                  transaction.status === "Pending" && (
+                                    <>
+                                      <DropdownMenuItem
+                                        onClick={() =>
+                                          handleStatusUpdate(
+                                            transaction._id,
+                                            "Completed"
+                                          )
+                                        }
+                                      >
+                                        <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                                        {activeTab === "withdraw"
+                                          ? "Approve & Complete"
+                                          : "Mark Completed"}
+                                      </DropdownMenuItem>
+                                      <DropdownMenuItem
+                                        onClick={() =>
+                                          handleStatusUpdate(
+                                            transaction._id,
+                                            "Failed"
+                                          )
+                                        }
+                                      >
+                                        <XCircle className="h-4 w-4 mr-2 text-red-600" />
+                                        {activeTab === "withdraw"
+                                          ? "Reject"
+                                          : "Mark Failed"}
+                                      </DropdownMenuItem>
+                                    </>
+                                  )}
+                                {!isAdmin &&
+                                  activeTab === "withdraw" &&
+                                  transaction.status === "Pending" && (
                                     <DropdownMenuItem
                                       onClick={() =>
                                         handleStatusUpdate(
                                           transaction._id,
-                                          "Completed"
+                                          "Cancelled"
                                         )
                                       }
+                                      className="text-orange-600"
                                     >
-                                      <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                      {activeTab === "withdraw"
-                                        ? "Approve & Complete"
-                                        : "Mark Completed"}
+                                      <XCircle className="h-4 w-4 mr-2" />
+                                      Cancel Request
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem
-                                      onClick={() =>
-                                        handleStatusUpdate(
-                                          transaction._id,
-                                          "Failed"
-                                        )
-                                      }
-                                    >
-                                      <XCircle className="h-4 w-4 mr-2 text-red-600" />
-                                      {activeTab === "withdraw"
-                                        ? "Reject"
-                                        : "Mark Failed"}
-                                    </DropdownMenuItem>
-                                  </>
+                                  )}
+                                {isAdmin && (
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleDelete(
+                                        transaction._id,
+                                        transaction.transaction_id
+                                      )
+                                    }
+                                    className="text-red-600"
+                                  >
+                                    <Trash2 className="h-4 w-4 mr-2" />
+                                    Delete
+                                  </DropdownMenuItem>
                                 )}
-                                <DropdownMenuItem
-                                  onClick={() =>
-                                    handleDelete(
-                                      transaction._id,
-                                      transaction.transaction_id
-                                    )
-                                  }
-                                  className="text-red-600"
-                                >
-                                  <Trash2 className="h-4 w-4 mr-2" />
-                                  Delete
-                                </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>

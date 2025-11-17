@@ -91,17 +91,39 @@ const TabNavigation = ({
       label: "APK Management",
       icon: <Save className="w-4 h-4" />,
     },
-    { id: "all", label: "All Settings" },
+    {
+      id: "all",
+      label: "All Settings",
+      icon: (
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      ),
+    },
   ];
 
   return (
-    <div className="flex flex-wrap gap-2 mb-6">
+    <div className="flex flex-wrap gap-2 p-2 bg-gradient-to-r from-purple-100/50 via-blue-100/50 to-indigo-100/50 dark:from-purple-950/30 dark:via-blue-950/30 dark:to-indigo-950/30 rounded-xl border border-purple-200 dark:border-purple-800">
       {tabs.map((tab) => (
         <Button
           key={tab.id}
-          variant={activeTab === tab.id ? "default" : "outline"}
+          variant={activeTab === tab.id ? "default" : "ghost"}
           onClick={() => setActiveTab(tab.id)}
-          className="flex items-center gap-2"
+          className={
+            activeTab === tab.id
+              ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300 flex items-center gap-2"
+              : "hover:bg-purple-100 dark:hover:bg-purple-950 transition-all duration-300 flex items-center gap-2"
+          }
         >
           {tab.icon}
           {tab.label}
@@ -337,25 +359,72 @@ export function NewSettingsPage() {
   };
 
   if (isLoading) {
-    return <div className="p-6">Loading settings...</div>;
+    return (
+      <div className="min-h-screen p-6 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading settings...</p>
+        </div>
+      </div>
+    );
   }
 
   if (isError || !settings) {
     return (
-      <div className="p-6">Error loading settings. Please try again later.</div>
+      <div className="min-h-screen p-6 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-pink-100 dark:from-red-900 dark:to-pink-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="h-8 w-8 text-red-600 dark:text-red-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <p className="text-muted-foreground">
+            Error loading settings. Please try again later.
+          </p>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+    <div className="min-h-screen p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        <div className="animate-fade-in">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
+                <svg
+                  className="h-8 w-8 text-purple-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
                 Settings
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mt-2">
                 Manage your platform preferences and configuration
               </p>
             </div>
@@ -363,6 +432,7 @@ export function NewSettingsPage() {
               variant="outline"
               onClick={handleResetSettings}
               disabled={isSaving}
+              className="hover:bg-red-50 dark:hover:bg-red-950 border-red-200 dark:border-red-800 hover:border-red-400 transition-all duration-300"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Reset to Default
@@ -373,9 +443,14 @@ export function NewSettingsPage() {
         <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {activeTab === "organization" && (
-          <Card>
+          <Card className="border-0 bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 dark:from-slate-900 dark:via-purple-950/30 dark:to-blue-950/30 shadow-lg animate-fade-in">
             <CardHeader>
-              <CardTitle>Organization Settings</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
+                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                  <Building className="h-5 w-5 text-white" />
+                </div>
+                Organization Settings
+              </CardTitle>
               <CardDescription>
                 Manage your organization's information and contact details
               </CardDescription>
@@ -567,10 +642,10 @@ export function NewSettingsPage() {
               <Button
                 onClick={handleSaveOrganizationSettings}
                 disabled={isSaving}
-                className="w-full md:w-auto"
+                className="w-full md:w-auto bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
               >
                 <Save className="w-4 h-4 mr-2" />
-                Save Organization Settings
+                {isSaving ? "Saving..." : "Save Organization Settings"}
               </Button>
             </CardContent>
           </Card>
@@ -592,25 +667,44 @@ export function NewSettingsPage() {
         {activeTab === "apk" && <APKManagementSettings />}
 
         {activeTab === "all" && (
-          <Card>
+          <Card className="border-0 bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 dark:from-slate-900 dark:via-purple-950/30 dark:to-blue-950/30 shadow-lg animate-fade-in">
             <CardHeader>
-              <CardTitle>All Settings</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
+                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                  <svg
+                    className="h-5 w-5 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                </div>
+                All Settings
+              </CardTitle>
               <CardDescription>
                 View and edit all settings in one place
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <pre className="bg-muted p-4 rounded-md text-sm overflow-x-auto">
-                {JSON.stringify(settings, null, 2)}
-              </pre>
+              <div className="p-4 rounded-xl bg-gradient-to-r from-slate-50 to-purple-50/50 dark:from-slate-800 dark:to-purple-900/20 border border-purple-100 dark:border-purple-900/50">
+                <pre className="text-sm overflow-x-auto text-slate-700 dark:text-slate-300">
+                  {JSON.stringify(settings, null, 2)}
+                </pre>
+              </div>
 
               <Button
                 onClick={handleSaveAllSettings}
                 disabled={isSaving}
-                className="w-full md:w-auto"
+                className="w-full md:w-auto bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
               >
                 <Save className="w-4 h-4 mr-2" />
-                Save All Settings
+                {isSaving ? "Saving..." : "Save All Settings"}
               </Button>
             </CardContent>
           </Card>
