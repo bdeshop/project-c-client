@@ -13,14 +13,16 @@ import { UpcomingMatch } from "../../../lib/queries";
 
 interface UpcomingMatchTableProps {
   upcomingMatches: UpcomingMatch[];
-  onEditUpcomingMatch: (upcomingMatch: UpcomingMatch) => void;
-  onDeleteUpcomingMatch: (id: string) => void;
+  onEditUpcomingMatch?: (upcomingMatch: UpcomingMatch) => void;
+  onDeleteUpcomingMatch?: (id: string) => void;
+  isAdmin?: boolean;
 }
 
 export function UpcomingMatchTable({
   upcomingMatches,
   onEditUpcomingMatch,
   onDeleteUpcomingMatch,
+  isAdmin = false,
 }: UpcomingMatchTableProps) {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
@@ -47,9 +49,11 @@ export function UpcomingMatchTable({
             <TableHead className="font-bold text-white">Team B</TableHead>
             <TableHead className="font-bold text-white">Odds B</TableHead>
             <TableHead className="font-bold text-white">Status</TableHead>
-            <TableHead className="text-right font-bold text-white">
-              Actions
-            </TableHead>
+            {isAdmin && (
+              <TableHead className="text-right font-bold text-white">
+                Actions
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -122,26 +126,28 @@ export function UpcomingMatchTable({
                   </Badge>
                 )}
               </TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onEditUpcomingMatch(upcomingMatch)}
-                    className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onDeleteUpcomingMatch(upcomingMatch._id)}
-                    className="hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-                  >
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
-                </div>
-              </TableCell>
+              {isAdmin && (
+                <TableCell className="text-right">
+                  <div className="flex justify-end space-x-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onEditUpcomingMatch?.(upcomingMatch)}
+                      className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onDeleteUpcomingMatch?.(upcomingMatch._id)}
+                      className="hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
+                    >
+                      <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
+                  </div>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

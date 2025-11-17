@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Breadcrumb } from "../../components/ui/breadcrumb";
-import { useUpcomingMatches } from "../../lib/queries";
+import { useUpcomingMatches, useUserProfile } from "../../lib/queries";
 import {
   UpcomingMatchTable,
   AddUpcomingMatchDialog,
@@ -39,6 +39,10 @@ export function UpcomingMatchesPage() {
     handleDeleteUpcomingMatch,
   } = useUpcomingMatchActions();
 
+  // Get user profile to check role
+  const { data: userProfile } = useUserProfile();
+  const isAdmin = userProfile?.user?.role === "admin";
+
   // Fetch upcoming matches using TanStack Query
   const {
     data: upcomingMatchesData,
@@ -58,36 +62,45 @@ export function UpcomingMatchesPage() {
           onAddUpcomingMatch={handleOpenAddUpcomingMatch}
           onRefresh={refetch}
           isLoading={isLoading}
+          isAdmin={isAdmin}
         />
 
-        {/* Add Upcoming Match Dialog */}
-        <AddUpcomingMatchDialog
-          isOpen={isAddUpcomingMatchOpen}
-          onClose={handleCloseAddDialog}
-          newUpcomingMatch={newUpcomingMatch}
-          onUpcomingMatchChange={setNewUpcomingMatch}
-          onSubmit={() => handleAddUpcomingMatch(refetch)}
-          isLoading={createUpcomingMatchMutation.isPending}
-        />
+        {/* Add Upcoming Match Dialog - Admin Only */}
+        {isAdmin && (
+          <AddUpcomingMatchDialog
+            isOpen={isAddUpcomingMatchOpen}
+            onClose={handleCloseAddDialog}
+            newUpcomingMatch={newUpcomingMatch}
+            onUpcomingMatchChange={setNewUpcomingMatch}
+            onSubmit={() => handleAddUpcomingMatch(refetch)}
+            isLoading={createUpcomingMatchMutation.isPending}
+          />
+        )}
 
-        {/* Edit Upcoming Match Dialog */}
-        <EditUpcomingMatchDialog
-          isOpen={isEditUpcomingMatchOpen}
-          onClose={handleCloseEditDialog}
-          editUpcomingMatch={editUpcomingMatch}
-          onUpcomingMatchChange={(match) =>
-            setEditUpcomingMatch(match as UpcomingMatch)
-          }
-          onSubmit={() => handleUpdateUpcomingMatch(refetch)}
-          isLoading={updateUpcomingMatchMutation.isPending}
-        />
+        {/* Edit Upcoming Match Dialog - Admin Only */}
+        {isAdmin && (
+          <EditUpcomingMatchDialog
+            isOpen={isEditUpcomingMatchOpen}
+            onClose={handleCloseEditDialog}
+            editUpcomingMatch={editUpcomingMatch}
+            onUpcomingMatchChange={(match) =>
+              setEditUpcomingMatch(match as UpcomingMatch)
+            }
+            onSubmit={() => handleUpdateUpcomingMatch(refetch)}
+            isLoading={updateUpcomingMatchMutation.isPending}
+          />
+        )}
 
         {/* Upcoming Matches Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Upcoming Matches Management</CardTitle>
+            <CardTitle>
+              {isAdmin ? "Upcoming Matches Management" : "Upcoming Matches"}
+            </CardTitle>
             <CardDescription>
-              Manage your upcoming matches and their details
+              {isAdmin
+                ? "Manage your upcoming matches and their details"
+                : "View upcoming matches and their details"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -105,10 +118,15 @@ export function UpcomingMatchesPage() {
               upcomingMatchesData.length > 0 && (
                 <UpcomingMatchTable
                   upcomingMatches={upcomingMatchesData}
-                  onEditUpcomingMatch={handleEditUpcomingMatch}
-                  onDeleteUpcomingMatch={(id) =>
-                    handleDeleteUpcomingMatch(id, refetch)
+                  onEditUpcomingMatch={
+                    isAdmin ? handleEditUpcomingMatch : undefined
                   }
+                  onDeleteUpcomingMatch={
+                    isAdmin
+                      ? (id) => handleDeleteUpcomingMatch(id, refetch)
+                      : undefined
+                  }
+                  isAdmin={isAdmin}
                 />
               )}
           </CardContent>

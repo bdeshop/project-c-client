@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Breadcrumb } from "../../components/ui/breadcrumb";
-import { useTopWinners } from "../../lib/queries";
+import { useTopWinners, useUserProfile } from "../../lib/queries";
 import {
   TopWinnerTable,
   AddTopWinnerDialog,
@@ -38,6 +38,10 @@ export function TopWinnersPage() {
     handleDeleteTopWinner,
   } = useTopWinnerActions();
 
+  // Get user profile to check role
+  const { data: userProfile } = useUserProfile();
+  const isAdmin = userProfile?.user?.role === "admin";
+
   // Fetch top winners using TanStack Query
   const { data: topWinnersData, isLoading, error, refetch } = useTopWinners();
 
@@ -52,33 +56,46 @@ export function TopWinnersPage() {
           onAddTopWinner={handleOpenAddTopWinner}
           onRefresh={refetch}
           isLoading={isLoading}
+          isAdmin={isAdmin}
         />
 
-        {/* Add Top Winner Dialog */}
-        <AddTopWinnerDialog
-          isOpen={isAddTopWinnerOpen}
-          onClose={handleCloseAddDialog}
-          newTopWinner={newTopWinner}
-          onTopWinnerChange={setNewTopWinner}
-          onSubmit={() => handleAddTopWinner(refetch)}
-          isLoading={createTopWinnerMutation.isPending}
-        />
+        {/* Add Top Winner Dialog - Admin Only */}
+        {isAdmin && (
+          <AddTopWinnerDialog
+            isOpen={isAddTopWinnerOpen}
+            onClose={handleCloseAddDialog}
+            newTopWinner={newTopWinner}
+            onTopWinnerChange={setNewTopWinner}
+            onSubmit={() => handleAddTopWinner(refetch)}
+            isLoading={createTopWinnerMutation.isPending}
+          />
+        )}
 
-        {/* Edit Top Winner Dialog */}
-        <EditTopWinnerDialog
-          isOpen={isEditTopWinnerOpen}
-          onClose={handleCloseEditDialog}
-          editTopWinner={editTopWinner}
-          onTopWinnerChange={setEditTopWinner}
-          onSubmit={() => handleUpdateTopWinner(refetch)}
-          isLoading={updateTopWinnerMutation.isPending}
-        />
+        {/* Edit Top Winner Dialog - Admin Only */}
+        {isAdmin && (
+          <EditTopWinnerDialog
+            isOpen={isEditTopWinnerOpen}
+            onClose={handleCloseEditDialog}
+            editTopWinner={editTopWinner}
+            onTopWinnerChange={(winner) =>
+              setEditTopWinner(winner as TopWinner)
+            }
+            onSubmit={() => handleUpdateTopWinner(refetch)}
+            isLoading={updateTopWinnerMutation.isPending}
+          />
+        )}
 
         {/* Top Winners Table */}
         <Card>
           <CardHeader>
-            <CardTitle>Top Winners Management</CardTitle>
-            <CardDescription>Manage your top winners records</CardDescription>
+            <CardTitle>
+              {isAdmin ? "Top Winners Management" : "Top Winners"}
+            </CardTitle>
+            <CardDescription>
+              {isAdmin
+                ? "Manage your top winners records"
+                : "View top winners records"}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {/* Loading, Error, and Empty States */}
@@ -95,8 +112,13 @@ export function TopWinnersPage() {
               topWinnersData.length > 0 && (
                 <TopWinnerTable
                   topWinners={topWinnersData}
-                  onEditTopWinner={handleEditTopWinner}
-                  onDeleteTopWinner={(id) => handleDeleteTopWinner(id, refetch)}
+                  onEditTopWinner={isAdmin ? handleEditTopWinner : undefined}
+                  onDeleteTopWinner={
+                    isAdmin
+                      ? (id) => handleDeleteTopWinner(id, refetch)
+                      : undefined
+                  }
+                  isAdmin={isAdmin}
                 />
               )}
           </CardContent>

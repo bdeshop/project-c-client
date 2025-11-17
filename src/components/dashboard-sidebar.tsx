@@ -64,13 +64,13 @@ const navigation = [
     name: "Top Winners",
     href: "/dashboard/top-winners",
     icon: Trophy,
-    roles: ["admin"],
+    roles: ["admin", "user"],
   },
   {
     name: "Upcoming Matches",
     href: "/dashboard/upcoming-matches",
     icon: Calendar,
-    roles: ["admin"],
+    roles: ["admin", "user"],
   },
   {
     name: "Transactions",

@@ -13,14 +13,16 @@ import { TopWinner } from "../../../lib/queries";
 
 interface TopWinnerTableProps {
   topWinners: TopWinner[];
-  onEditTopWinner: (topWinner: TopWinner) => void;
-  onDeleteTopWinner: (id: string) => void;
+  onEditTopWinner?: (topWinner: TopWinner) => void;
+  onDeleteTopWinner?: (id: string) => void;
+  isAdmin?: boolean;
 }
 
 export function TopWinnerTable({
   topWinners,
   onEditTopWinner,
   onDeleteTopWinner,
+  isAdmin = false,
 }: TopWinnerTableProps) {
   const formatCurrency = (amount: number, currency: string) => {
     return new Intl.NumberFormat("en-US", {
@@ -48,9 +50,11 @@ export function TopWinnerTable({
             <TableHead className="font-bold text-white">Multiplier</TableHead>
             <TableHead className="font-bold text-white">Win Time</TableHead>
             <TableHead className="font-bold text-white">Status</TableHead>
-            <TableHead className="text-right font-bold text-white">
-              Actions
-            </TableHead>
+            {isAdmin && (
+              <TableHead className="text-right font-bold text-white">
+                Actions
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -131,26 +135,28 @@ export function TopWinnerTable({
                   </Badge>
                 )}
               </TableCell>
-              <TableCell className="text-right">
-                <div className="flex justify-end space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onEditTopWinner(topWinner)}
-                    className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onDeleteTopWinner(topWinner._id)}
-                    className="hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
-                  >
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
-                </div>
-              </TableCell>
+              {isAdmin && (
+                <TableCell className="text-right">
+                  <div className="flex justify-end space-x-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onEditTopWinner?.(topWinner)}
+                      className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onDeleteTopWinner?.(topWinner._id)}
+                      className="hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
+                    >
+                      <Trash2 className="h-4 w-4 text-destructive" />
+                    </Button>
+                  </div>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
