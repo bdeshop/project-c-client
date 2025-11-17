@@ -87,13 +87,196 @@ export interface DashboardStats {
   monthlyGrowth: number;
 }
 
+// Admin Statistics Interface
+export interface AdminStats {
+  users: {
+    total: number;
+    active: number;
+    banned: number;
+    newToday: number;
+    newThisMonth: number;
+    recentWeek: number;
+  };
+  financial: {
+    totalBalance: number;
+    totalDeposits: number;
+    totalWithdrawals: number;
+    netRevenue: number;
+  };
+  transactions: {
+    total: number;
+    pending: number;
+    completed: number;
+    failed: number;
+    today: number;
+    recentWeek: number;
+    byType: Array<{
+      _id: string;
+      count: number;
+    }>;
+  };
+  referrals: {
+    totalEarnings: number;
+    totalTransactions: number;
+    pendingPayouts: number;
+    usersWithReferralCodes: number;
+    totalReferredUsers: number;
+    topReferrers: Array<{
+      _id: string;
+      name: string;
+      email: string;
+      referralCode: string;
+      referralEarnings: number;
+      referredUsers: string[];
+    }>;
+  };
+  content: {
+    promotions: {
+      total: number;
+      active: number;
+    };
+    sliders: number;
+    topWinners: number;
+    upcomingMatches: number;
+  };
+  paymentMethods: {
+    activeDeposit: number;
+    activeWithdrawal: number;
+  };
+}
+
+// User Statistics Interface
+export interface UserStats {
+  account: {
+    balance: number;
+    totalDeposits: number;
+    totalWithdrawals: number;
+  };
+  transactions: {
+    total: number;
+    pending: number;
+    completed: number;
+    byType: Array<{
+      _id: string;
+      count: number;
+    }>;
+    recent: Array<{
+      _id: string;
+      amount: number;
+      transaction_type: string;
+      status: string;
+      createdAt: string;
+    }>;
+  };
+  referrals: {
+    code: string;
+    totalEarnings: number;
+    pendingEarnings: number;
+    totalReferrals: number;
+    recentTransactions: Array<{
+      _id: string;
+      referrer: string;
+      referee: {
+        name: string;
+        email: string;
+      };
+      amount: number;
+      status: string;
+      createdAt: string;
+    }>;
+  };
+  promotions: {
+    available: number;
+  };
+}
+
 export interface Activity {
   id: string;
-  type: "login" | "bet" | "withdrawal" | "deposit";
+  type: "login" | "bet" | "withdrawal" | "deposit" | "transaction";
+  action?: string;
   user: string;
-  description: string;
+  description?: string;
   timestamp: string;
   amount?: number;
+  status?: string;
+}
+
+// Activity Log Response
+export interface ActivityLog {
+  type: string;
+  action: string;
+  amount?: number;
+  status: string;
+  user: string;
+  timestamp: string;
+}
+
+// Transaction Charts
+export interface TransactionCharts {
+  dailyTransactions: Array<{
+    _id: {
+      date: string;
+      type: string;
+    };
+    count: number;
+    totalAmount: number;
+  }>;
+  typeDistribution: Array<{
+    _id: string;
+    count: number;
+    totalAmount: number;
+  }>;
+  statusDistribution: Array<{
+    _id: string;
+    count: number;
+  }>;
+}
+
+// User Growth Chart
+export interface UserGrowthChart {
+  dailySignups: Array<{
+    _id: string;
+    count: number;
+  }>;
+  statusDistribution: Array<{
+    _id: string;
+    count: number;
+  }>;
+}
+
+// Financial Chart
+export interface FinancialChart {
+  dailyFinancials: Array<{
+    _id: {
+      date: string;
+      type: string;
+    };
+    totalAmount: number;
+  }>;
+  topProviders: Array<{
+    _id: string;
+    count: number;
+    totalAmount: number;
+  }>;
+}
+
+// Referral Chart
+export interface ReferralChart {
+  dailyReferrals: Array<{
+    _id: string;
+    count: number;
+  }>;
+  statusDistribution: Array<{
+    _id: string;
+    count: number;
+    totalAmount: number;
+  }>;
+  topReferrers: Array<{
+    name: string;
+    code: string;
+    earnings: number;
+    referrals: number;
+  }>;
 }
 
 export interface AnalyticsData {
@@ -317,6 +500,17 @@ export const queryKeys = {
   // Dashboard
   dashboardStats: ["dashboard", "stats"] as const,
   recentActivity: ["dashboard", "activity"] as const,
+  adminStats: ["stats", "admin"] as const,
+  userStats: ["stats", "user"] as const,
+  activityLog: (limit?: number) => ["stats", "activity-log", limit] as const,
+  transactionCharts: (days?: number) =>
+    ["stats", "charts", "transactions", days] as const,
+  userGrowthChart: (days?: number) =>
+    ["stats", "charts", "user-growth", days] as const,
+  financialChart: (days?: number) =>
+    ["stats", "charts", "financial", days] as const,
+  referralChart: (days?: number) =>
+    ["stats", "charts", "referrals", days] as const,
 
   // Users
   users: ["users"] as const,
@@ -437,6 +631,168 @@ export const useUserProfile = (
     select: (data) => {
       return data.data.data;
     },
+    ...options,
+  });
+};
+
+// Admin Statistics Query
+export const useAdminStats = (
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<AdminStats>>,
+    Error,
+    AdminStats
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.adminStats,
+    queryFn: async () => {
+      console.log("🔵 Fetching admin stats from /stats/admin");
+      try {
+        const response = await apiClient.get<ApiResponse<AdminStats>>(
+          "/stats/admin"
+        );
+        console.log("✅ Admin stats response:", response.data);
+        return response;
+      } catch (error) {
+        console.error("❌ Admin stats error:", error);
+        throw error;
+      }
+    },
+    select: (data) => {
+      return data.data.data;
+    },
+    retry: false, // Disable retry for debugging
+    ...options,
+  });
+};
+
+// User Statistics Query
+export const useUserStats = (
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<UserStats>>,
+    Error,
+    UserStats
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.userStats,
+    queryFn: async () => {
+      console.log("🔵 Fetching user stats from /stats/user");
+      try {
+        const response = await apiClient.get<ApiResponse<UserStats>>(
+          "/stats/user"
+        );
+        console.log("✅ User stats response:", response.data);
+        return response;
+      } catch (error) {
+        console.error("❌ User stats error:", error);
+        throw error;
+      }
+    },
+    select: (data) => {
+      return data.data.data;
+    },
+    retry: false, // Disable retry for debugging
+    ...options,
+  });
+};
+
+// Activity Log Query
+export const useActivityLog = (
+  limit = 10,
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<ActivityLog[]>>,
+    Error,
+    ActivityLog[]
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.activityLog(limit),
+    queryFn: () =>
+      apiClient.get<ApiResponse<ActivityLog[]>>(
+        `/stats/activity-log?limit=${limit}`
+      ),
+    select: (data) => data.data.data,
+    ...options,
+  });
+};
+
+// Transaction Charts Query
+export const useTransactionCharts = (
+  days = 7,
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<TransactionCharts>>,
+    Error,
+    TransactionCharts
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.transactionCharts(days),
+    queryFn: () =>
+      apiClient.get<ApiResponse<TransactionCharts>>(
+        `/stats/charts/transactions?days=${days}`
+      ),
+    select: (data) => data.data.data,
+    ...options,
+  });
+};
+
+// User Growth Chart Query
+export const useUserGrowthChart = (
+  days = 30,
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<UserGrowthChart>>,
+    Error,
+    UserGrowthChart
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.userGrowthChart(days),
+    queryFn: () =>
+      apiClient.get<ApiResponse<UserGrowthChart>>(
+        `/stats/charts/user-growth?days=${days}`
+      ),
+    select: (data) => data.data.data,
+    ...options,
+  });
+};
+
+// Financial Chart Query
+export const useFinancialChart = (
+  days = 30,
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<FinancialChart>>,
+    Error,
+    FinancialChart
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.financialChart(days),
+    queryFn: () =>
+      apiClient.get<ApiResponse<FinancialChart>>(
+        `/stats/charts/financial?days=${days}`
+      ),
+    select: (data) => data.data.data,
+    ...options,
+  });
+};
+
+// Referral Chart Query
+export const useReferralChart = (
+  days = 30,
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<ReferralChart>>,
+    Error,
+    ReferralChart
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.referralChart(days),
+    queryFn: () =>
+      apiClient.get<ApiResponse<ReferralChart>>(
+        `/stats/charts/referrals?days=${days}`
+      ),
+    select: (data) => data.data.data,
     ...options,
   });
 };

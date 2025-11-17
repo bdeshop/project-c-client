@@ -36,9 +36,18 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Handle unauthorized access
-      localStorage.removeItem("authToken");
-      localStorage.removeItem("user");
-      window.location.href = "/login";
+      console.error("🔴 401 Unauthorized Error:", {
+        url: error.config?.url,
+        method: error.config?.method,
+        headers: error.config?.headers,
+        response: error.response?.data,
+        token: localStorage.getItem("authToken") ? "Token exists" : "No token",
+      });
+
+      // TEMPORARILY DISABLED FOR DEBUGGING
+      // localStorage.removeItem("authToken");
+      // localStorage.removeItem("user");
+      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }
