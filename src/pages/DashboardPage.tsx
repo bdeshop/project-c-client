@@ -41,30 +41,6 @@ export function DashboardPage() {
     <div className="p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Debug Info - Remove after debugging */}
-        {statsError && (
-          <Card className="border-red-500 bg-red-50 dark:bg-red-950">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-red-700 dark:text-red-300">
-                <AlertCircle className="h-5 w-5" />
-                API Error - Debug Info
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <pre className="text-xs overflow-auto">
-                {JSON.stringify(
-                  {
-                    error: statsError,
-                    isAdmin,
-                    userRole: userProfile?.user?.role,
-                    endpoint: isAdmin ? "/stats/admin" : "/stats/user",
-                  },
-                  null,
-                  2
-                )}
-              </pre>
-            </CardContent>
-          </Card>
-        )}
 
         {/* Stats Grid */}
         <DashboardStats
