@@ -4,51 +4,7 @@
 
 @layer base {
   :root {
-    /* Modern Gradient Color Scheme */
-    --background: 220 20% 97%;
-    --foreground: 220 13% 18%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 18%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 18%;
-
-    /* Beautiful Purple to Blue Gradient */
-    --primary: 250 84% 64%; /* #6366F1 - Indigo */
-    --primary-foreground: 0 0% 100%;
-
-    /* Complementary Colors */
-    --secondary: 270 95% 75%; /* #A855F7 - Purple */
-    --secondary-foreground: 0 0% 100%;
-
-    /* Soft Supporting Colors */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 262 83% 95%; /* Light purple */
-    --accent-foreground: 270 95% 25%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 250 84% 64%;
-    --radius: 0.75rem;
-
-    /* Modern chart colors */
-    --chart-1: 250 84% 64%; /* Indigo */
-    --chart-2: 270 95% 75%; /* Purple */
-    --chart-3: 292 84% 61%; /* Pink */
-    --chart-4: 330 81% 60%; /* Rose */
-    --chart-5: 346 87% 67%; /* Red-pink */
-
-    /* Success and warning colors */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-  }
-
-  .dark {
-    /* Dark theme with modern gradients */
+    /* Dark theme only - modern gradients */
     --background: 220 18% 8%;
     --foreground: 220 20% 95%;
     --card: 220 15% 10%;
@@ -56,10 +12,10 @@
     --popover: 220 15% 10%;
     --popover-foreground: 220 20% 95%;
 
-    --primary: 250 84% 64%; /* Same beautiful indigo */
+    --primary: 250 84% 64%; /* Beautiful indigo */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 270 95% 75%; /* Same purple */
+    --secondary: 270 95% 75%; /* Purple */
     --secondary-foreground: 0 0% 100%;
 
     --muted: 220 15% 15%;
@@ -72,8 +28,9 @@
     --border: 220 15% 20%;
     --input: 220 15% 20%;
     --ring: 250 84% 64%;
+    --radius: 0.75rem;
 
-    /* Dark theme chart colors */
+    /* Chart colors */
     --chart-1: 250 84% 64%;
     --chart-2: 270 95% 75%;
     --chart-3: 292 84% 61%;
@@ -126,11 +83,7 @@
   }
 
   .glass-effect {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl;
-  }
-
-  .dark .glass-effect {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl;
   }
 
   /* Custom scrollbar for better UX */

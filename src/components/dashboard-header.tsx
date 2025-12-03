@@ -11,7 +11,6 @@ import {
 import { Bell, Settings, LogOut, User, Menu } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AuthService } from "../lib/auth";
-import { ThemeToggle } from "./theme-toggle";
 import { useUserProfile } from "../lib/queries";
 
 export function DashboardHeader() {
@@ -65,11 +64,6 @@ export function DashboardHeader() {
 
         {/* Right Side */}
         <div className="flex items-center space-x-3">
-          {/* Theme Toggle */}
-          <div className="hover:scale-110 transition-transform duration-300">
-            <ThemeToggle />
-          </div>
-
           {/* Notifications */}
           <Button
             variant="ghost"
