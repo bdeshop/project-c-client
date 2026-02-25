@@ -42,6 +42,7 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { AuthService } from "./lib/auth";
 import "./globals.css";
 import { ReferralPage } from "./pages/referral/ReferralPage";
+import { GamesConfigPage } from "./pages/games";
 
 // Protected Route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -149,6 +150,7 @@ function App() {
           <Route path="referral" element={<ReferralPage />} />
           <Route path="contact" element={<ContactSettingsPage />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="games" element={<GamesConfigPage />} />
           {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
         </Route>
       </Routes>

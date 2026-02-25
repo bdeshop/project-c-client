@@ -5,6 +5,7 @@ import { useLocation, Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
 import { useUserProfile } from "../lib/queries";
+import { AuthService } from "../lib/auth";
 import {
   LayoutDashboard,
   Users,
@@ -22,6 +23,7 @@ import {
   UserPlus,
   Wallet,
   MessageSquare,
+  Gamepad2,
 } from "lucide-react";
 
 const navigation = [
@@ -85,6 +87,12 @@ const navigation = [
     roles: ["admin", "user"],
   },
   {
+    name: "Games Config",
+    href: "/dashboard/games",
+    icon: Gamepad2,
+    roles: ["admin"],
+  },
+  {
     name: "Slider",
     href: "/dashboard/slider",
     icon: FileText,
@@ -108,19 +116,23 @@ export function DashboardSidebar() {
     setExpandedMenu(expandedMenu === name ? null : name);
   };
 
-  // Get user role
-  const userRole = userProfile?.user?.role || "user";
+  // Get user role - check multiple possible locations
+  const userRole =
+    userProfile?.user?.role ||
+    userProfile?.role ||
+    localStorage.getItem("userRole") ||
+    (AuthService.isAuthenticated() ? "admin" : "user");
 
   // Filter navigation based on user role
   const filteredNavigation = navigation.filter((item) =>
-    item.roles?.includes(userRole)
+    item.roles?.includes(userRole),
   );
 
   return (
     <div
       className={cn(
         "relative flex flex-col h-full bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 dark:from-slate-950 dark:via-purple-950 dark:to-slate-950 border-r border-purple-500/20 transition-all duration-300 ease-in-out shadow-2xl",
-        collapsed ? "w-20" : "w-72"
+        collapsed ? "w-20" : "w-72",
       )}
     >
       {/* Animated gradient overlay */}
@@ -186,7 +198,7 @@ export function DashboardSidebar() {
                       collapsed ? "px-2" : "px-4",
                       isActive
                         ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 scale-105"
-                        : "text-purple-200 hover:text-white hover:bg-purple-500/20 hover:scale-105"
+                        : "text-purple-200 hover:text-white hover:bg-purple-500/20 hover:scale-105",
                     )}
                     onClick={(e) => {
                       if (item.children) {
@@ -202,7 +214,7 @@ export function DashboardSidebar() {
                       className={cn(
                         "h-5 w-5 relative z-10 transition-transform duration-300 group-hover:scale-110",
                         collapsed ? "" : "mr-3",
-                        isActive ? "animate-pulse" : ""
+                        isActive ? "animate-pulse" : "",
                       )}
                     />
                     {!collapsed && (
@@ -214,7 +226,7 @@ export function DashboardSidebar() {
                           <ChevronDown
                             className={cn(
                               "ml-auto h-4 w-4 transition-all duration-300 relative z-10",
-                              isExpanded ? "rotate-180" : ""
+                              isExpanded ? "rotate-180" : "",
                             )}
                           />
                         )}
@@ -238,7 +250,7 @@ export function DashboardSidebar() {
                               "w-full justify-start transition-all duration-300 h-9 text-sm px-3 rounded-lg group",
                               isChildActive
                                 ? "bg-gradient-to-r from-purple-500/30 to-blue-500/30 text-white shadow-md"
-                                : "text-purple-300 hover:text-white hover:bg-purple-500/10"
+                                : "text-purple-300 hover:text-white hover:bg-purple-500/10",
                             )}
                           >
                             <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mr-2 group-hover:scale-150 transition-transform" />
@@ -287,7 +299,7 @@ export function DashboardSidebar() {
           <div
             className={cn(
               "text-xs text-purple-400 font-semibold",
-              collapsed ? "text-center" : "text-center"
+              collapsed ? "text-center" : "text-center",
             )}
           >
             {collapsed ? "v2.0" : "BetHub v2.0 - Premium Edition"}
