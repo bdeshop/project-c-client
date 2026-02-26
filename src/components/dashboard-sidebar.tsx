@@ -152,7 +152,7 @@ export function DashboardSidebar() {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-white text-xl bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
-                  BetHub
+                  Khela88
                 </span>
                 <span className="text-xs text-purple-300">Admin Panel</span>
               </div>
@@ -302,7 +302,7 @@ export function DashboardSidebar() {
               collapsed ? "text-center" : "text-center",
             )}
           >
-            {collapsed ? "v2.0" : "BetHub v2.0 - Premium Edition"}
+            {collapsed ? "v2.0" : "Khela88 v2.0 - Premium Edition"}
           </div>
         </div>
       </div>

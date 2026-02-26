@@ -51,6 +51,8 @@ export function CreateGameTab() {
       });
       return response.data.categories || [];
     },
+    staleTime: 0,
+    gcTime: 1000 * 60 * 5, // 5 minutes
   });
 
   const createMutation = useMutation({

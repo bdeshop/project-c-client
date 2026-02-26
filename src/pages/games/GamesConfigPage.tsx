@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Gamepad2, Layers, Building2, Star, Plus } from "lucide-react";
+import { Gamepad2, Layers, Building2, Plus } from "lucide-react";
 import { GameCategoriesTab } from "./tabs/GameCategoriesTab";
 import { CreateGameTab } from "./tabs/CreateGameTab";
 import { BulkCreateTab } from "./tabs/BulkCreateTab";
 import { ManageGamesTab } from "./tabs/ManageGamesTab";
-import { PopularGamesTab } from "./tabs/PopularGamesTab";
 
 export function GamesConfigPage() {
   const [activeTab, setActiveTab] = useState("categories");
@@ -21,11 +20,11 @@ export function GamesConfigPage() {
             </div>
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
-                Games Management Console
+                Khela88 Games Management Console
               </h1>
               <p className="text-purple-300 text-sm mt-1">
-                Complete game library management with categories, providers, and
-                bulk operations
+                Complete game library management with categories and bulk
+                operations
               </p>
             </div>
           </div>
@@ -67,13 +66,6 @@ export function GamesConfigPage() {
                 <Gamepad2 className="w-4 h-4 mr-2" />
                 Manage Games
               </TabsTrigger>
-              <TabsTrigger
-                value="popular"
-                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white whitespace-nowrap"
-              >
-                <Star className="w-4 h-4 mr-2" />
-                Popular Games
-              </TabsTrigger>
             </TabsList>
 
             <div className="p-6">
@@ -88,9 +80,6 @@ export function GamesConfigPage() {
               </TabsContent>
               <TabsContent value="manage" className="animate-fade-in">
                 <ManageGamesTab />
-              </TabsContent>
-              <TabsContent value="popular" className="animate-fade-in">
-                <PopularGamesTab />
               </TabsContent>
             </div>
           </Tabs>

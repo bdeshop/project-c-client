@@ -57,7 +57,7 @@ export function DashboardHeader() {
               Dashboard
             </h1>
             <p className="text-sm text-purple-300">
-              Welcome to BetHub Admin Panel
+              Welcome to Khela88 Admin Panel
             </p>
           </div>
         </div>

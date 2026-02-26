@@ -103,6 +103,8 @@ export function BulkCreateTab() {
       });
       return response.data.categories || [];
     },
+    staleTime: 0,
+    gcTime: 1000 * 60 * 5, // 5 minutes
   });
 
   const bulkCreateMutation = useMutation({
