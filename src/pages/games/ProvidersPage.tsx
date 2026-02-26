@@ -16,7 +16,7 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface Provider {
   _id: string;
@@ -39,11 +39,19 @@ export function ProvidersPage() {
 
   const queryClient = useQueryClient();
 
+  // Get auth token
+  const getAuthHeader = () => {
+    const token = localStorage.getItem("authToken");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
   // Fetch providers
   const { data: providers = [], isLoading } = useQuery({
     queryKey: ["providers"],
     queryFn: async () => {
-      const response = await axios.get(`${API_BASE_URL}/providers`);
+      const response = await axios.get(`${API_BASE_URL}/providers`, {
+        headers: getAuthHeader(),
+      });
       return response.data.providers || [];
     },
   });
@@ -52,7 +60,10 @@ export function ProvidersPage() {
   const createMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const response = await axios.post(`${API_BASE_URL}/providers`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          ...getAuthHeader(),
+          "Content-Type": "multipart/form-data",
+        },
       });
       return response.data;
     },
@@ -73,7 +84,12 @@ export function ProvidersPage() {
       const response = await axios.put(
         `${API_BASE_URL}/providers/${editingId}`,
         data,
-        { headers: { "Content-Type": "multipart/form-data" } },
+        {
+          headers: {
+            ...getAuthHeader(),
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
       return response.data;
     },
@@ -91,7 +107,9 @@ export function ProvidersPage() {
   // Delete provider
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const response = await axios.delete(`${API_BASE_URL}/providers/${id}`);
+      const response = await axios.delete(`${API_BASE_URL}/providers/${id}`, {
+        headers: getAuthHeader(),
+      });
       return response.data;
     },
     onSuccess: () => {

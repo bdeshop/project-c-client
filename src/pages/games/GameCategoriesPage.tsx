@@ -17,13 +17,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Edit2, Trash2, Loader2 } from "lucide-react";
+import { Plus, Edit2, Trash2, Loader2, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface GameCategory {
   _id: string;
@@ -41,6 +41,10 @@ interface GameCategory {
 export function GameCategoriesPage() {
   const [open, setOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [iconFile, setIconFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [iconPreview, setIconPreview] = useState<string>("");
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [formData, setFormData] = useState({
     nameEnglish: "",
     nameBangla: "",
@@ -51,21 +55,52 @@ export function GameCategoriesPage() {
 
   const queryClient = useQueryClient();
 
+  // Get auth token
+  const getAuthHeader = () => {
+    const token = localStorage.getItem("authToken");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
   // Fetch categories
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["gameCategories"],
     queryFn: async () => {
-      const response = await axios.get(`${API_BASE_URL}/game-categories`);
+      const response = await axios.get(`${API_BASE_URL}/game-categories`, {
+        headers: getAuthHeader(),
+      });
       return response.data.categories || [];
     },
   });
 
   // Create category
   const createMutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
+    mutationFn: async () => {
+      const formDataObj = new FormData();
+      formDataObj.append("nameEnglish", formData.nameEnglish);
+      formDataObj.append("nameBangla", formData.nameBangla);
+      formDataObj.append("displayType", formData.displayType);
+
+      if (iconFile) {
+        formDataObj.append("icon", iconFile);
+      } else if (formData.icon) {
+        formDataObj.append("icon", formData.icon);
+      }
+
+      if (imageFile) {
+        formDataObj.append("image", imageFile);
+      } else if (formData.image) {
+        formDataObj.append("image", formData.image);
+      }
+
       const response = await axios.post(
         `${API_BASE_URL}/game-categories`,
-        data,
+        formDataObj,
+        {
+          headers: {
+            ...getAuthHeader(),
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
       return response.data;
     },
@@ -82,10 +117,33 @@ export function GameCategoriesPage() {
 
   // Update category
   const updateMutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
+    mutationFn: async () => {
+      const formDataObj = new FormData();
+      formDataObj.append("nameEnglish", formData.nameEnglish);
+      formDataObj.append("nameBangla", formData.nameBangla);
+      formDataObj.append("displayType", formData.displayType);
+
+      if (iconFile) {
+        formDataObj.append("icon", iconFile);
+      } else if (formData.icon) {
+        formDataObj.append("icon", formData.icon);
+      }
+
+      if (imageFile) {
+        formDataObj.append("image", imageFile);
+      } else if (formData.image) {
+        formDataObj.append("image", formData.image);
+      }
+
       const response = await axios.put(
         `${API_BASE_URL}/game-categories/${editingId}`,
-        data,
+        formDataObj,
+        {
+          headers: {
+            ...getAuthHeader(),
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
       return response.data;
     },
@@ -105,6 +163,9 @@ export function GameCategoriesPage() {
     mutationFn: async (id: string) => {
       const response = await axios.delete(
         `${API_BASE_URL}/game-categories/${id}`,
+        {
+          headers: getAuthHeader(),
+        },
       );
       return response.data;
     },
@@ -125,6 +186,10 @@ export function GameCategoriesPage() {
       image: "",
       displayType: "providers",
     });
+    setIconFile(null);
+    setImageFile(null);
+    setIconPreview("");
+    setImagePreview("");
     setEditingId(null);
   };
 
@@ -136,20 +201,51 @@ export function GameCategoriesPage() {
       image: category.image || "",
       displayType: category.displayType,
     });
+    setIconPreview(category.icon);
+    setImagePreview(category.image || "");
     setEditingId(category._id);
     setOpen(true);
   };
 
+  const handleIconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setIconFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setIconPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = () => {
-    if (!formData.nameEnglish || !formData.nameBangla || !formData.icon) {
+    if (!formData.nameEnglish || !formData.nameBangla) {
       toast.error("Please fill all required fields");
       return;
     }
 
+    if (!iconFile && !formData.icon) {
+      toast.error("Please provide an icon");
+      return;
+    }
+
     if (editingId) {
-      updateMutation.mutate(formData);
+      updateMutation.mutate();
     } else {
-      createMutation.mutate(formData);
+      createMutation.mutate();
     }
   };
 
@@ -212,26 +308,40 @@ export function GameCategoriesPage() {
                 />
               </div>
               <div>
-                <Label className="text-purple-200">Icon URL</Label>
-                <Input
-                  placeholder="https://example.com/icon.png"
-                  value={formData.icon}
-                  onChange={(e) =>
-                    setFormData({ ...formData, icon: e.target.value })
-                  }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
-                />
+                <Label className="text-purple-200">Icon (Required)</Label>
+                <div className="flex gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleIconChange}
+                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                  />
+                  {iconPreview && (
+                    <img
+                      src={iconPreview}
+                      alt="icon preview"
+                      className="w-10 h-10 rounded object-cover"
+                    />
+                  )}
+                </div>
               </div>
               <div>
-                <Label className="text-purple-200">Image URL (Optional)</Label>
-                <Input
-                  placeholder="https://example.com/image.png"
-                  value={formData.image}
-                  onChange={(e) =>
-                    setFormData({ ...formData, image: e.target.value })
-                  }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
-                />
+                <Label className="text-purple-200">Image (Optional)</Label>
+                <div className="flex gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                  />
+                  {imagePreview && (
+                    <img
+                      src={imagePreview}
+                      alt="image preview"
+                      className="w-10 h-10 rounded object-cover"
+                    />
+                  )}
+                </div>
               </div>
               <div>
                 <Label className="text-purple-200">Display Type</Label>

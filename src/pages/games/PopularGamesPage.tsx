@@ -16,7 +16,7 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface PopularGame {
   _id: string;
@@ -42,11 +42,19 @@ export function PopularGamesPage() {
 
   const queryClient = useQueryClient();
 
+  // Get auth token
+  const getAuthHeader = () => {
+    const token = localStorage.getItem("authToken");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
   // Fetch popular games
   const { data: games = [], isLoading } = useQuery({
     queryKey: ["popularGames"],
     queryFn: async () => {
-      const response = await axios.get(`${API_BASE_URL}/popular-games`);
+      const response = await axios.get(`${API_BASE_URL}/popular-games`, {
+        headers: getAuthHeader(),
+      });
       return response.data.games || [];
     },
   });
@@ -55,7 +63,10 @@ export function PopularGamesPage() {
   const createMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const response = await axios.post(`${API_BASE_URL}/popular-games`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          ...getAuthHeader(),
+          "Content-Type": "multipart/form-data",
+        },
       });
       return response.data;
     },
@@ -78,7 +89,12 @@ export function PopularGamesPage() {
       const response = await axios.put(
         `${API_BASE_URL}/popular-games/${editingId}`,
         data,
-        { headers: { "Content-Type": "multipart/form-data" } },
+        {
+          headers: {
+            ...getAuthHeader(),
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
       return response.data;
     },
@@ -100,6 +116,9 @@ export function PopularGamesPage() {
     mutationFn: async (id: string) => {
       const response = await axios.delete(
         `${API_BASE_URL}/popular-games/${id}`,
+        {
+          headers: getAuthHeader(),
+        },
       );
       return response.data;
     },

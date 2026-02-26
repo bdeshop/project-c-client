@@ -13,13 +13,27 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
 import { Shield, Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
-import { AuthService, type LoginRequest, type ApiError } from "../lib/auth";
+import {
+  AuthService,
+  type LoginRequest,
+  type ApiError,
+  type DashboardSignupRequest,
+} from "../lib/auth";
 
 export function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"admin" | "user">("user");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -34,7 +48,7 @@ export function LoginPage() {
       password,
     };
     try {
-      const response = await AuthService.login(credentials);
+      const response = await AuthService.dashboardLogin(credentials);
 
       if (response.success) {
         navigate("/dashboard");
@@ -44,11 +58,46 @@ export function LoginPage() {
     } catch (error) {
       const apiError = error as ApiError;
       setError(
-        apiError.message || "An unexpected error occurred. Please try again."
+        apiError.message || "An unexpected error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const response = await AuthService.dashboardSignup({
+        email,
+        password,
+        role,
+      });
+
+      if (response.success) {
+        navigate("/dashboard");
+      } else {
+        setError(response.message || "Signup failed. Please try again.");
+      }
+    } catch (error) {
+      const apiError = error as ApiError;
+      setError(
+        apiError.message || "An unexpected error occurred. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleToggleMode = () => {
+    setIsSignup(!isSignup);
+    setError(null);
+    setEmail("");
+    setPassword("");
+    setRole("user");
   };
 
   return (
@@ -142,7 +191,7 @@ export function LoginPage() {
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
+      {/* Right Side - Login/Signup Form */}
       <div className="w-1/2 flex items-center justify-center p-8 lg:p-16">
         <div className="w-full max-w-md space-y-8">
           {/* Header */}
@@ -155,29 +204,38 @@ export function LoginPage() {
                 Admin Portal
               </h1>
               <p className="text-muted-foreground text-lg">
-                Sign in to your dashboard
+                {isSignup
+                  ? "Create a new account"
+                  : "Sign in to your dashboard"}
               </p>
             </div>
           </div>
 
-          {/* Login Form */}
+          {/* Login/Signup Form */}
           <Card className="glass-effect border-0 shadow-2xl shadow-primary/5">
             <CardHeader className="space-y-2 pb-6">
               <CardTitle className="text-2xl text-center font-semibold text-foreground">
-                Welcome Back
+                {isSignup ? "Create Account" : "Welcome Back"}
               </CardTitle>
               <CardDescription className="text-center text-base text-muted-foreground">
-                Enter your credentials to access your account
+                {isSignup
+                  ? "Register a new dashboard account"
+                  : "Enter your credentials to access your account"}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <form onSubmit={handleLogin} className="space-y-6">
+              <form
+                onSubmit={isSignup ? handleSignup : handleLogin}
+                className="space-y-6"
+              >
                 {/* Error Alert */}
                 {error && (
                   <div className="bg-destructive/10 border-l-4 border-destructive text-destructive px-4 py-4 rounded-lg flex items-start gap-3">
                     <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium">Authentication Error</p>
+                      <p className="font-medium">
+                        {isSignup ? "Signup Error" : "Authentication Error"}
+                      </p>
                       <p className="text-sm opacity-90">{error}</p>
                     </div>
                   </div>
@@ -237,27 +295,56 @@ export function LoginPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-2">
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="checkbox"
-                      id="remember"
-                      className="h-4 w-4 rounded border-2 border-border text-primary focus:ring-primary/20 focus:ring-2"
-                    />
+                {isSignup && (
+                  <div className="space-y-3">
                     <Label
-                      htmlFor="remember"
-                      className="text-sm text-muted-foreground font-medium cursor-pointer"
+                      htmlFor="role"
+                      className="text-base font-medium text-foreground"
                     >
-                      Remember me
+                      User Role
                     </Label>
+                    <Select
+                      value={role}
+                      onValueChange={(value: any) => setRole(value)}
+                    >
+                      <SelectTrigger className="h-14 bg-background/60 border-2 border-border hover:border-primary/50 focus:border-primary transition-all duration-200 text-base">
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-background border-2 border-border">
+                        <SelectItem value="admin" className="text-foreground">
+                          Admin
+                        </SelectItem>
+                        <SelectItem value="user" className="text-foreground">
+                          User
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <Button
-                    variant="link"
-                    className="text-sm p-0 h-auto text-primary hover:text-primary/80 font-medium"
-                  >
-                    Forgot password?
-                  </Button>
-                </div>
+                )}
+
+                {!isSignup && (
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center space-x-3">
+                      <input
+                        type="checkbox"
+                        id="remember"
+                        className="h-4 w-4 rounded border-2 border-border text-primary focus:ring-primary/20 focus:ring-2"
+                      />
+                      <Label
+                        htmlFor="remember"
+                        className="text-sm text-muted-foreground font-medium cursor-pointer"
+                      >
+                        Remember me
+                      </Label>
+                    </div>
+                    <Button
+                      variant="link"
+                      className="text-sm p-0 h-auto text-primary hover:text-primary/80 font-medium"
+                    >
+                      Forgot password?
+                    </Button>
+                  </div>
+                )}
 
                 <Button
                   type="submit"
@@ -267,16 +354,32 @@ export function LoginPage() {
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-3 h-5 w-5 animate-spin" />
-                      Signing In...
+                      {isSignup ? "Creating Account..." : "Signing In..."}
                     </>
                   ) : (
                     <>
                       <Shield className="mr-3 h-5 w-5" />
-                      Sign In to Dashboard
+                      {isSignup ? "Create Account" : "Sign In to Dashboard"}
                     </>
                   )}
                 </Button>
               </form>
+
+              {/* Toggle Mode */}
+              <div className="text-center pt-4 border-t border-border">
+                <p className="text-sm text-muted-foreground">
+                  {isSignup
+                    ? "Already have an account?"
+                    : "Don't have an account?"}{" "}
+                  <Button
+                    variant="link"
+                    className="p-0 h-auto text-primary hover:text-primary/80 font-semibold"
+                    onClick={handleToggleMode}
+                  >
+                    {isSignup ? "Sign In" : "Sign Up"}
+                  </Button>
+                </p>
+              </div>
             </CardContent>
           </Card>
 
