@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GameCategoriesPage } from "./GameCategoriesPage";
-import { ProvidersPage } from "./ProvidersPage";
-import { GamesListPage } from "./GamesListPage";
-import { PopularGamesPage } from "./PopularGamesPage";
-import { Gamepad2, Layers, Building2, Star } from "lucide-react";
+import { Gamepad2, Layers, Building2, Star, Plus } from "lucide-react";
+import { GameCategoriesTab } from "./tabs/GameCategoriesTab";
+import { CreateGameTab } from "./tabs/CreateGameTab";
+import { BulkCreateTab } from "./tabs/BulkCreateTab";
+import { ManageGamesTab } from "./tabs/ManageGamesTab";
+import { PopularGamesTab } from "./tabs/PopularGamesTab";
 
 export function GamesConfigPage() {
   const [activeTab, setActiveTab] = useState("categories");
@@ -20,10 +21,11 @@ export function GamesConfigPage() {
             </div>
             <div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
-                Games Configuration
+                Games Management Console
               </h1>
               <p className="text-purple-300 text-sm mt-1">
-                Manage game categories, providers, games, and popular games
+                Complete game library management with categories, providers, and
+                bulk operations
               </p>
             </div>
           </div>
@@ -36,31 +38,38 @@ export function GamesConfigPage() {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="w-full bg-gradient-to-r from-purple-600/20 to-blue-600/20 border-b border-purple-500/20 rounded-none p-0 h-auto">
+            <TabsList className="w-full bg-gradient-to-r from-purple-600/20 to-blue-600/20 border-b border-purple-500/20 rounded-none p-0 h-auto overflow-x-auto">
               <TabsTrigger
                 value="categories"
-                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white"
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white whitespace-nowrap"
               >
                 <Layers className="w-4 h-4 mr-2" />
                 Categories
               </TabsTrigger>
               <TabsTrigger
-                value="providers"
-                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white"
+                value="create"
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white whitespace-nowrap"
               >
-                <Building2 className="w-4 h-4 mr-2" />
-                Providers
+                <Plus className="w-4 h-4 mr-2" />
+                Create Game
               </TabsTrigger>
               <TabsTrigger
-                value="games"
-                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white"
+                value="bulk"
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white whitespace-nowrap"
+              >
+                <Building2 className="w-4 h-4 mr-2" />
+                Bulk Create
+              </TabsTrigger>
+              <TabsTrigger
+                value="manage"
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white whitespace-nowrap"
               >
                 <Gamepad2 className="w-4 h-4 mr-2" />
-                Games
+                Manage Games
               </TabsTrigger>
               <TabsTrigger
                 value="popular"
-                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white"
+                className="flex-1 rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 data-[state=active]:bg-purple-500/10 transition-all duration-300 py-4 px-6 font-semibold text-purple-200 data-[state=active]:text-white hover:text-white whitespace-nowrap"
               >
                 <Star className="w-4 h-4 mr-2" />
                 Popular Games
@@ -69,16 +78,19 @@ export function GamesConfigPage() {
 
             <div className="p-6">
               <TabsContent value="categories" className="animate-fade-in">
-                <GameCategoriesPage />
+                <GameCategoriesTab />
               </TabsContent>
-              <TabsContent value="providers" className="animate-fade-in">
-                <ProvidersPage />
+              <TabsContent value="create" className="animate-fade-in">
+                <CreateGameTab />
               </TabsContent>
-              <TabsContent value="games" className="animate-fade-in">
-                <GamesListPage />
+              <TabsContent value="bulk" className="animate-fade-in">
+                <BulkCreateTab />
+              </TabsContent>
+              <TabsContent value="manage" className="animate-fade-in">
+                <ManageGamesTab />
               </TabsContent>
               <TabsContent value="popular" className="animate-fade-in">
-                <PopularGamesPage />
+                <PopularGamesTab />
               </TabsContent>
             </div>
           </Tabs>
