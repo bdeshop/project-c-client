@@ -52,3 +52,19 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Oracle Games API endpoints
+export const getOracleProviders = async () => {
+  const response = await apiClient.get("/oracle-games/providers");
+  return response.data;
+};
+
+export const getOracleProviderGames = async (providerCode: string) => {
+  const response = await apiClient.get(`/oracle-games/providers/${providerCode}`);
+  return response.data;
+};
+
+export const getOracleGameDetails = async (gameId: string) => {
+  const response = await apiClient.get(`/oracle-games/games/${gameId}`);
+  return response.data;
+};

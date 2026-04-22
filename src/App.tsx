@@ -42,7 +42,8 @@ import { ProfilePage } from "./pages/profile/ProfilePage";
 import { AuthService } from "./lib/auth";
 import "./globals.css";
 import { ReferralPage } from "./pages/referral/ReferralPage";
-import { GamesConfigPage } from "./pages/games";
+import { GamesConfigPage, GameCategoriesPage, ProvidersPage, PopularGamesPage } from "./pages/games";
+import { OracleGamesPage } from "./pages/games/OracleGamesPage";
 
 // Protected Route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -151,6 +152,10 @@ function App() {
           <Route path="contact" element={<ContactSettingsPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="games" element={<GamesConfigPage />} />
+          <Route path="oracle-games" element={<OracleGamesPage />} />
+          <Route path="game-categories" element={<GameCategoriesPage />} />
+          <Route path="providers" element={<ProvidersPage />} />
+          <Route path="popular-games" element={<PopularGamesPage />} />
           {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
         </Route>
       </Routes>

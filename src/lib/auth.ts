@@ -168,6 +168,16 @@ export class AuthService {
     localStorage.removeItem("userRole");
   }
 
+  // Verify token is valid
+  static async verifyToken(): Promise<boolean> {
+    try {
+      const response = await apiClient.get("/users/dashboard/verify-token");
+      return response.data.success;
+    } catch {
+      return false;
+    }
+  }
+
   // Check if user is authenticated
   static isAuthenticated(): boolean {
     const token = localStorage.getItem("authToken");

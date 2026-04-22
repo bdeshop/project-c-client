@@ -87,11 +87,20 @@ const navigation = [
     roles: ["admin", "user"],
   },
   {
-    name: "Games Config",
+    name: "Games Management",
     href: "/dashboard/games",
     icon: Gamepad2,
     roles: ["admin"],
+    children: [
+      { name: "Oracle Games", href: "/dashboard/oracle-games" },
+      { name: "Games Library", href: "/dashboard/games" },
+      { name: "Popular Games", href: "/dashboard/popular-games" },
+      { name: "Categories", href: "/dashboard/game-categories" },
+      { name: "Providers", href: "/dashboard/providers" },
+    ],
+
   },
+
   {
     name: "Slider",
     href: "/dashboard/slider",
