@@ -44,6 +44,7 @@ import "./globals.css";
 import { ReferralPage } from "./pages/referral/ReferralPage";
 import { GamesConfigPage, GameCategoriesPage, ProvidersPage, PopularGamesPage } from "./pages/games";
 import { OracleGamesPage } from "./pages/games/OracleGamesPage";
+import { DepositBonusPage } from "./pages/deposit-bonus";
 
 // Protected Route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -156,6 +157,7 @@ function App() {
           <Route path="game-categories" element={<GameCategoriesPage />} />
           <Route path="providers" element={<ProvidersPage />} />
           <Route path="popular-games" element={<PopularGamesPage />} />
+          <Route path="deposit-bonuses" element={<DepositBonusPage />} />
           {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
         </Route>
       </Routes>

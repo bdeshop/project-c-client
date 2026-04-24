@@ -51,6 +51,7 @@ const navigation = [
     roles: ["admin"],
     children: [
       { name: "Deposit Methods", href: "/dashboard/deposit" },
+      { name: "Deposit Bonuses", href: "/dashboard/deposit-bonuses" },
       { name: "Promotions", href: "/dashboard/promotions" },
       { name: "Deposit Requests", href: "/dashboard/deposit/requests" },
     ],
