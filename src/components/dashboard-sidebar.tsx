@@ -61,7 +61,10 @@ const navigation = [
     href: "/dashboard/withdraw",
     icon: TrendingDown,
     roles: ["admin"],
-    children: [{ name: "Withdraw Methods", href: "/dashboard/withdraw" }],
+    children: [
+      { name: "Withdraw Methods", href: "/dashboard/withdraw" },
+      { name: "Withdraw Requests", href: "/dashboard/transactions?tab=withdraw" },
+    ],
   },
   {
     name: "Top Winners",

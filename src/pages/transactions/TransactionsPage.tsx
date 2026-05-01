@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import {
@@ -88,7 +88,9 @@ const getStatusColor = (status: string) => {
 };
 
 export default function TransactionsPage() {
-  const [activeTab, setActiveTab] = useState<"deposit" | "withdraw">("deposit");
+  const [searchParams] = useSearchParams();
+  const initialTab = (searchParams.get("tab") as "deposit" | "withdraw") || "deposit";
+  const [activeTab, setActiveTab] = useState<"deposit" | "withdraw">(initialTab);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [providerFilter, setProviderFilter] = useState<string>("");
@@ -339,6 +341,11 @@ export default function TransactionsPage() {
                       <TableHead className="font-bold text-white">
                         Amount
                       </TableHead>
+                      {activeTab === "deposit" && (
+                        <TableHead className="font-bold text-white">
+                          Bonus
+                        </TableHead>
+                      )}
                       <TableHead className="font-bold text-white">
                         Provider
                       </TableHead>
@@ -418,6 +425,22 @@ export default function TransactionsPage() {
                               ৳{transaction.amount.toLocaleString()}
                             </span>
                           </TableCell>
+                          {activeTab === "deposit" && (
+                            <TableCell>
+                              {transaction.bonusAmount && transaction.bonusAmount > 0 ? (
+                                <div className="flex flex-col gap-1">
+                                  <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200 text-xs">
+                                    +৳{transaction.bonusAmount.toLocaleString()}
+                                  </Badge>
+                                  <span className="text-xs text-muted-foreground">
+                                    Wagering Active
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-xs text-muted-foreground">—</span>
+                              )}
+                            </TableCell>
+                          )}
                           <TableCell>
                             <Badge variant="outline" className="capitalize">
                               {transaction.wallet_provider}

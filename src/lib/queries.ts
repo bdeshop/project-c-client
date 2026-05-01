@@ -2078,6 +2078,8 @@ export interface Transaction {
   transaction_type: "Deposit" | "Withdrawal" | "Transfer";
   description?: string;
   reference_number?: string;
+  bonusAmount?: number;
+  depositBonusId?: string;
   createdAt: string;
   updatedAt: string;
 }

@@ -94,21 +94,21 @@ export default function DepositRequestsPage() {
     switch (status) {
       case "pending":
         return (
-          <Badge className="bg-yellow-100 text-yellow-800">
+          <Badge className="bg-yellow-500 text-white dark:bg-yellow-600 dark:text-white">
             <Clock className="h-3 w-3 mr-1" />
             Pending
           </Badge>
         );
       case "approved":
         return (
-          <Badge className="bg-green-100 text-green-800">
+          <Badge className="bg-green-500 text-white dark:bg-green-600 dark:text-white">
             <Check className="h-3 w-3 mr-1" />
             Approved
           </Badge>
         );
       case "rejected":
         return (
-          <Badge className="bg-red-100 text-red-800">
+          <Badge className="bg-red-500 text-white dark:bg-red-600 dark:text-white">
             <X className="h-3 w-3 mr-1" />
             Rejected
           </Badge>
@@ -171,7 +171,7 @@ export default function DepositRequestsPage() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-md bg-white"
+          className="px-3 py-2 border border-gray-600 rounded-md bg-gray-800 text-white"
         >
           <option value="all">All Status</option>
           <option value="pending">Pending</option>
@@ -269,11 +269,14 @@ export default function DepositRequestsPage() {
               </thead>
               <tbody>
                 {filteredRequests.map((request) => (
-                  <tr key={request.id} className="border-b hover:bg-gray-50">
+                  <tr
+                    key={request.id}
+                    className="border-b hover:bg-gray-900 dark:hover:bg-gray-800 transition-colors"
+                  >
                     <td className="p-3">
                       <div>
                         <p className="font-medium">{request.user.name}</p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 group-hover:text-gray-300">
                           {request.user.email}
                         </p>
                       </div>
@@ -285,17 +288,21 @@ export default function DepositRequestsPage() {
                       {formatAmount(request.amount, request.currency)}
                     </td>
                     <td className="p-3">
-                      <code className="text-sm bg-gray-100 px-2 py-1 rounded">
+                      <code className="text-sm bg-gray-700 text-white px-2 py-1 rounded group-hover:bg-gray-600">
                         {request.transactionId}
                       </code>
                     </td>
                     <td className="p-3">{getStatusBadge(request.status)}</td>
-                    <td className="p-3 text-sm text-gray-600">
+                    <td className="p-3 text-sm text-gray-600 group-hover:text-gray-300">
                       {formatDate(request.submittedAt)}
                     </td>
                     <td className="p-3">
                       <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="hover:bg-gray-700 hover:text-white"
+                        >
                           <Eye className="h-4 w-4" />
                         </Button>
                         {request.status === "pending" && (
@@ -303,14 +310,14 @@ export default function DepositRequestsPage() {
                             <Button
                               variant="outline"
                               size="sm"
-                              className="text-green-600"
+                              className="text-green-400 hover:bg-green-600 hover:text-white border-green-400"
                             >
                               <Check className="h-4 w-4" />
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
-                              className="text-red-600"
+                              className="text-red-400 hover:bg-red-600 hover:text-white border-red-400"
                             >
                               <X className="h-4 w-4" />
                             </Button>
