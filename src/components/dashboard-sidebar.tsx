@@ -24,6 +24,7 @@ import {
   Wallet,
   MessageSquare,
   Gamepad2,
+  Share2,
 } from "lucide-react";
 
 const navigation = [
@@ -64,6 +65,20 @@ const navigation = [
     children: [
       { name: "Withdraw Methods", href: "/dashboard/withdraw" },
       { name: "Withdraw Requests", href: "/dashboard/transactions?tab=withdraw" },
+    ],
+  },
+  {
+    name: "Affiliate System",
+    href: "/dashboard/affiliates",
+    icon: Share2,
+    roles: ["admin"],
+    children: [
+      { name: "Partner List", href: "/dashboard/affiliates" },
+      { name: "Manage Commission", href: "/dashboard/affiliate/commission" },
+      { name: "Payout Requests", href: "/dashboard/affiliate/payout-requests" },
+      { name: "Settlement Audit", href: "/dashboard/affiliate/distribution-history" },
+      { name: "Withdraw Channels", href: "/dashboard/affiliate/payment-methods" },
+      { name: "Theme Settings", href: "/dashboard/affiliate/theme-config" },
     ],
   },
   {

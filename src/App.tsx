@@ -45,6 +45,12 @@ import { ReferralPage } from "./pages/referral/ReferralPage";
 import { GamesConfigPage, GameCategoriesPage, ProvidersPage, PopularGamesPage } from "./pages/games";
 import { OracleGamesPage } from "./pages/games/OracleGamesPage";
 import { DepositBonusPage } from "./pages/deposit-bonus";
+import AllAffiliates from "./pages/affiliate/AllAffiliates";
+import ManageCommission from "./pages/affiliate/ManageCommission";
+import PayoutRequests from "./pages/affiliate/PayoutRequests";
+import PayoutDistributionHistory from "./pages/affiliate/PayoutDistributionHistory";
+import AffiliatePaymentMethods from "./pages/affiliate/AffiliatePaymentMethods";
+import AffiliateThemeConfig from "./pages/affiliate/AffiliateThemeConfig";
 
 // Protected Route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -158,6 +164,15 @@ function App() {
           <Route path="providers" element={<ProvidersPage />} />
           <Route path="popular-games" element={<PopularGamesPage />} />
           <Route path="deposit-bonuses" element={<DepositBonusPage />} />
+          
+          {/* Affiliate Routes */}
+          <Route path="affiliates" element={<AllAffiliates />} />
+          <Route path="affiliate/commission" element={<ManageCommission />} />
+          <Route path="affiliate/payout-requests" element={<PayoutRequests />} />
+          <Route path="affiliate/distribution-history" element={<PayoutDistributionHistory />} />
+          <Route path="affiliate/payment-methods" element={<AffiliatePaymentMethods />} />
+          <Route path="affiliate/theme-config" element={<AffiliateThemeConfig />} />
+          
           {/* <Route path="referral/settings" element={<ReferralSettingsPage />} /> */}
         </Route>
       </Routes>
