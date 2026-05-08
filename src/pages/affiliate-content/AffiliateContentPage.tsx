@@ -54,6 +54,20 @@ interface CommissionLevel {
   order: number;
 }
 
+interface FooterLink {
+  labelEn: string;
+  labelBn: string;
+  url: string;
+  order: number;
+}
+
+interface FooterSocial {
+  platform: string;
+  icon: string;
+  url: string;
+  order: number;
+}
+
 interface AffiliateContent {
   _id?: string;
   slides: Slide[];
@@ -68,6 +82,12 @@ interface AffiliateContent {
   mainTitleBn: string;
   mainDescriptionEn: string;
   mainDescriptionBn: string;
+  footerAboutEn: string;
+  footerAboutBn: string;
+  footerLinks: FooterLink[];
+  footerSocial: FooterSocial[];
+  footerCopyrightEn: string;
+  footerCopyrightBn: string;
 }
 
 export function AffiliateContentPage() {
@@ -75,7 +95,7 @@ export function AffiliateContentPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<
-    "banner" | "slides" | "features" | "commission" | "main"
+    "banner" | "slides" | "features" | "commission" | "main" | "footer"
   >("slides");
   const [newSlide, setNewSlide] = useState<Slide & { imageFile?: File }>({
     titleEn: "",
@@ -254,19 +274,21 @@ export function AffiliateContentPage() {
 
         {/* Tabs */}
         <div className="flex gap-2 border-b border-purple-500/20">
-          {["banner", "slides", "features", "commission", "main"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab as any)}
-              className={`px-4 py-3 font-semibold capitalize transition-all ${
-                activeTab === tab
-                  ? "border-b-2 border-purple-600 text-purple-400"
-                  : "text-gray-400 hover:text-gray-300"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+          {["banner", "slides", "features", "commission", "main", "footer"].map(
+            (tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab as any)}
+                className={`px-4 py-3 font-semibold capitalize transition-all ${
+                  activeTab === tab
+                    ? "border-b-2 border-purple-600 text-purple-400"
+                    : "text-gray-400 hover:text-gray-300"
+                }`}
+              >
+                {tab}
+              </button>
+            ),
+          )}
         </div>
 
         {/* Slides Tab */}
@@ -1004,6 +1026,279 @@ export function AffiliateContentPage() {
               </div>
             </CardContent>
           </Card>
+        )}
+
+        {/* Footer Tab */}
+        {activeTab === "footer" && (
+          <div className="space-y-6">
+            {/* Footer About Section */}
+            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+              <CardHeader>
+                <CardTitle className="text-white">
+                  Footer About Section
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label className="text-gray-300">About Text (EN)</Label>
+                  <textarea
+                    value={content.footerAboutEn}
+                    onChange={(e) =>
+                      setContent({ ...content, footerAboutEn: e.target.value })
+                    }
+                    className="w-full bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24 border"
+                    placeholder="Enter footer about text in English"
+                  />
+                </div>
+                <div>
+                  <Label className="text-gray-300">About Text (BN)</Label>
+                  <textarea
+                    value={content.footerAboutBn}
+                    onChange={(e) =>
+                      setContent({ ...content, footerAboutBn: e.target.value })
+                    }
+                    className="w-full bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24 border"
+                    placeholder="বাংলায় ফুটার সম্পর্কে লিখুন"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Footer Links Section */}
+            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Plus className="w-5 h-5" />
+                  Footer Links
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {content.footerLinks?.map((link, index) => (
+                  <div
+                    key={index}
+                    className="bg-slate-800/50 p-4 rounded-lg space-y-3 border border-purple-500/20"
+                  >
+                    <div className="flex justify-between items-center mb-3">
+                      <h4 className="text-white font-semibold">
+                        Link {index + 1}
+                      </h4>
+                      <button
+                        onClick={() => {
+                          const newLinks = content.footerLinks.filter(
+                            (_, i) => i !== index,
+                          );
+                          setContent({ ...content, footerLinks: newLinks });
+                        }}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <Label className="text-gray-300 text-sm">
+                          Label (EN)
+                        </Label>
+                        <Input
+                          value={link.labelEn}
+                          onChange={(e) => {
+                            const newLinks = [...content.footerLinks];
+                            newLinks[index].labelEn = e.target.value;
+                            setContent({ ...content, footerLinks: newLinks });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          placeholder="e.g., Privacy"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300 text-sm">
+                          Label (BN)
+                        </Label>
+                        <Input
+                          value={link.labelBn}
+                          onChange={(e) => {
+                            const newLinks = [...content.footerLinks];
+                            newLinks[index].labelBn = e.target.value;
+                            setContent({ ...content, footerLinks: newLinks });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          placeholder="e.g., প্রাইভেসি"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-gray-300 text-sm">URL</Label>
+                      <Input
+                        value={link.url}
+                        onChange={(e) => {
+                          const newLinks = [...content.footerLinks];
+                          newLinks[index].url = e.target.value;
+                          setContent({ ...content, footerLinks: newLinks });
+                        }}
+                        className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                        placeholder="e.g., https://example.com/privacy"
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  onClick={() => {
+                    setContent({
+                      ...content,
+                      footerLinks: [
+                        ...content.footerLinks,
+                        {
+                          labelEn: "",
+                          labelBn: "",
+                          url: "",
+                          order: content.footerLinks.length + 1,
+                        },
+                      ],
+                    });
+                  }}
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white w-full"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Footer Link
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Footer Social Section */}
+            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Plus className="w-5 h-5" />
+                  Footer Social Links
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {content.footerSocial?.map((social, index) => (
+                  <div
+                    key={index}
+                    className="bg-slate-800/50 p-4 rounded-lg space-y-3 border border-purple-500/20"
+                  >
+                    <div className="flex justify-between items-center mb-3">
+                      <h4 className="text-white font-semibold">
+                        Social {index + 1}
+                      </h4>
+                      <button
+                        onClick={() => {
+                          const newSocial = content.footerSocial.filter(
+                            (_, i) => i !== index,
+                          );
+                          setContent({ ...content, footerSocial: newSocial });
+                        }}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <Label className="text-gray-300 text-sm">
+                          Platform
+                        </Label>
+                        <Input
+                          value={social.platform}
+                          onChange={(e) => {
+                            const newSocial = [...content.footerSocial];
+                            newSocial[index].platform = e.target.value;
+                            setContent({ ...content, footerSocial: newSocial });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          placeholder="e.g., Facebook"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300 text-sm">Icon</Label>
+                        <Input
+                          value={social.icon}
+                          onChange={(e) => {
+                            const newSocial = [...content.footerSocial];
+                            newSocial[index].icon = e.target.value;
+                            setContent({ ...content, footerSocial: newSocial });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          placeholder="e.g., Facebook"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-gray-300 text-sm">URL</Label>
+                      <Input
+                        value={social.url}
+                        onChange={(e) => {
+                          const newSocial = [...content.footerSocial];
+                          newSocial[index].url = e.target.value;
+                          setContent({ ...content, footerSocial: newSocial });
+                        }}
+                        className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                        placeholder="e.g., https://facebook.com/yourpage"
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  onClick={() => {
+                    setContent({
+                      ...content,
+                      footerSocial: [
+                        ...content.footerSocial,
+                        {
+                          platform: "",
+                          url: "",
+                          icon: "",
+                          order: content.footerSocial.length + 1,
+                        },
+                      ],
+                    });
+                  }}
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white w-full"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Social Link
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Footer Copyright Section */}
+            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+              <CardHeader>
+                <CardTitle className="text-white">Footer Copyright</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label className="text-gray-300">Copyright Text (EN)</Label>
+                  <Input
+                    value={content.footerCopyrightEn}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        footerCopyrightEn: e.target.value,
+                      })
+                    }
+                    className="bg-slate-800 border-purple-500/30 text-white"
+                    placeholder="e.g., Copyright © 2025. All rights reserved"
+                  />
+                </div>
+                <div>
+                  <Label className="text-gray-300">Copyright Text (BN)</Label>
+                  <Input
+                    value={content.footerCopyrightBn}
+                    onChange={(e) =>
+                      setContent({
+                        ...content,
+                        footerCopyrightBn: e.target.value,
+                      })
+                    }
+                    className="bg-slate-800 border-purple-500/30 text-white"
+                    placeholder="e.g., কপিরাইট © २०२५। সর্বাধিকার সংরক্ষিত"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
       </div>
     </div>
