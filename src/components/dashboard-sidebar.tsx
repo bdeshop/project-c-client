@@ -64,7 +64,10 @@ const navigation = [
     roles: ["admin"],
     children: [
       { name: "Withdraw Methods", href: "/dashboard/withdraw" },
-      { name: "Withdraw Requests", href: "/dashboard/transactions?tab=withdraw" },
+      {
+        name: "Withdraw Requests",
+        href: "/dashboard/transactions?tab=withdraw",
+      },
     ],
   },
   {
@@ -76,9 +79,16 @@ const navigation = [
       { name: "Partner List", href: "/dashboard/affiliates" },
       { name: "Manage Commission", href: "/dashboard/affiliate/commission" },
       { name: "Payout Requests", href: "/dashboard/affiliate/payout-requests" },
-      { name: "Settlement Audit", href: "/dashboard/affiliate/distribution-history" },
-      { name: "Withdraw Channels", href: "/dashboard/affiliate/payment-methods" },
+      {
+        name: "Settlement Audit",
+        href: "/dashboard/affiliate/distribution-history",
+      },
+      {
+        name: "Withdraw Channels",
+        href: "/dashboard/affiliate/payment-methods",
+      },
       { name: "Theme Settings", href: "/dashboard/affiliate/theme-config" },
+      { name: "Content Management", href: "/dashboard/affiliate/content" },
     ],
   },
   {
@@ -117,7 +127,6 @@ const navigation = [
       { name: "Categories", href: "/dashboard/game-categories" },
       { name: "Providers", href: "/dashboard/providers" },
     ],
-
   },
 
   {
