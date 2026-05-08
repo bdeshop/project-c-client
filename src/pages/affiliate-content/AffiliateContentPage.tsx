@@ -38,6 +38,22 @@ interface CommissionCard {
   buttonTextBn: string;
 }
 
+interface CommissionLevel {
+  levelEn: string;
+  levelBn: string;
+  depositEn: string;
+  depositBn: string;
+  commissionEn: string;
+  commissionBn: string;
+  bonusEn: string;
+  bonusBn: string;
+  statusEn: string;
+  statusBn: string;
+  dailyBonusEn: string;
+  dailyBonusBn: string;
+  order: number;
+}
+
 interface AffiliateContent {
   _id?: string;
   slides: Slide[];
@@ -47,6 +63,7 @@ interface AffiliateContent {
   };
   features: Feature[];
   commissionCard: CommissionCard;
+  commissionLevels: CommissionLevel[];
   mainTitleEn: string;
   mainTitleBn: string;
   mainDescriptionEn: string;
@@ -69,6 +86,16 @@ export function AffiliateContentPage() {
     order: 0,
   });
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [editingLevelIndex, setEditingLevelIndex] = useState<number | null>(
+    null,
+  );
+  const [editingLevel, setEditingLevel] = useState<CommissionLevel | null>(
+    null,
+  );
+  const [editingFeatureIndex, setEditingFeatureIndex] = useState<number | null>(
+    null,
+  );
+  const [editingFeature, setEditingFeature] = useState<Feature | null>(null);
 
   useEffect(() => {
     fetchContent();
@@ -442,116 +469,510 @@ export function AffiliateContentPage() {
 
         {/* Features Tab */}
         {activeTab === "features" && (
-          <div className="space-y-4">
-            {content.features.map((feature, index) => (
-              <Card
-                key={index}
-                className="bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900 border-purple-500/20"
-              >
-                <CardContent className="pt-6 space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-300">Title (EN)</Label>
-                      <Input
-                        value={feature.titleEn}
-                        onChange={(e) => {
-                          const updatedFeatures = [...content.features];
-                          updatedFeatures[index].titleEn = e.target.value;
-                          setContent({ ...content, features: updatedFeatures });
+          <div className="space-y-6">
+            {/* Features List */}
+            <div className="space-y-4">
+              {content.features?.map((feature, index) => (
+                <Card
+                  key={index}
+                  className="bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900 border-purple-500/20"
+                >
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-white font-semibold">
+                        Feature {index + 1}
+                      </h3>
+                      <button
+                        onClick={() => {
+                          const newFeatures = content.features.filter(
+                            (_, i) => i !== index,
+                          );
+                          setContent({ ...content, features: newFeatures });
                         }}
-                        className="bg-slate-800 border-purple-500/30 text-white"
-                      />
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-300">Title (BN)</Label>
-                      <Input
-                        value={feature.titleBn}
-                        onChange={(e) => {
-                          const updatedFeatures = [...content.features];
-                          updatedFeatures[index].titleBn = e.target.value;
-                          setContent({ ...content, features: updatedFeatures });
-                        }}
-                        className="bg-slate-800 border-purple-500/30 text-white"
-                      />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-gray-300">Title (EN)</Label>
+                        <Input
+                          value={feature.titleEn}
+                          onChange={(e) => {
+                            const updatedFeatures = [...content.features];
+                            updatedFeatures[index].titleEn = e.target.value;
+                            setContent({
+                              ...content,
+                              features: updatedFeatures,
+                            });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., Easy Commission"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-gray-300">Title (BN)</Label>
+                        <Input
+                          value={feature.titleBn}
+                          onChange={(e) => {
+                            const updatedFeatures = [...content.features];
+                            updatedFeatures[index].titleBn = e.target.value;
+                            setContent({
+                              ...content,
+                              features: updatedFeatures,
+                            });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., সহজ কমিশন"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-300">Description (EN)</Label>
-                      <textarea
-                        value={feature.descriptionEn}
-                        onChange={(e) => {
-                          const updatedFeatures = [...content.features];
-                          updatedFeatures[index].descriptionEn = e.target.value;
-                          setContent({ ...content, features: updatedFeatures });
-                        }}
-                        className="w-full px-3 py-2 bg-slate-800 border border-purple-500/30 rounded-lg text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
-                        rows={2}
-                      />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-gray-300">
+                          Description (EN)
+                        </Label>
+                        <textarea
+                          value={feature.descriptionEn}
+                          onChange={(e) => {
+                            const updatedFeatures = [...content.features];
+                            updatedFeatures[index].descriptionEn =
+                              e.target.value;
+                            setContent({
+                              ...content,
+                              features: updatedFeatures,
+                            });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24"
+                          placeholder="Enter description in English"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-gray-300">
+                          Description (BN)
+                        </Label>
+                        <textarea
+                          value={feature.descriptionBn}
+                          onChange={(e) => {
+                            const updatedFeatures = [...content.features];
+                            updatedFeatures[index].descriptionBn =
+                              e.target.value;
+                            setContent({
+                              ...content,
+                              features: updatedFeatures,
+                            });
+                          }}
+                          className="bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24"
+                          placeholder="বাংলায় বর্ণনা লিখুন"
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-300">Description (BN)</Label>
-                      <textarea
-                        value={feature.descriptionBn}
-                        onChange={(e) => {
-                          const updatedFeatures = [...content.features];
-                          updatedFeatures[index].descriptionBn = e.target.value;
-                          setContent({ ...content, features: updatedFeatures });
-                        }}
-                        className="w-full px-3 py-2 bg-slate-800 border border-purple-500/30 rounded-lg text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
-                        rows={2}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Add New Feature Button */}
+            <Button
+              onClick={() => {
+                const newFeature: Feature = {
+                  titleEn: "",
+                  titleBn: "",
+                  descriptionEn: "",
+                  descriptionBn: "",
+                  order: content.features.length + 1,
+                };
+                setContent({
+                  ...content,
+                  features: [...content.features, newFeature],
+                });
+              }}
+              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white w-full"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add New Feature
+            </Button>
           </div>
         )}
 
         {/* Commission Tab */}
         {activeTab === "commission" && (
-          <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
-            <CardHeader>
-              <CardTitle className="text-white">Commission Card</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-gray-300">Percentage (EN)</Label>
-                  <Input
-                    value={content.commissionCard.percentageEn}
-                    onChange={(e) =>
-                      setContent({
-                        ...content,
-                        commissionCard: {
-                          ...content.commissionCard,
-                          percentageEn: e.target.value,
-                        },
-                      })
-                    }
-                    className="bg-slate-800 border-purple-500/30 text-white"
-                  />
+          <div className="space-y-6">
+            {/* Commission Card Section */}
+            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+              <CardHeader>
+                <CardTitle className="text-white">Commission Card</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-gray-300">Percentage (EN)</Label>
+                    <Input
+                      value={content.commissionCard.percentageEn}
+                      onChange={(e) =>
+                        setContent({
+                          ...content,
+                          commissionCard: {
+                            ...content.commissionCard,
+                            percentageEn: e.target.value,
+                          },
+                        })
+                      }
+                      className="bg-slate-800 border-purple-500/30 text-white"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-gray-300">Percentage (BN)</Label>
+                    <Input
+                      value={content.commissionCard.percentageBn}
+                      onChange={(e) =>
+                        setContent({
+                          ...content,
+                          commissionCard: {
+                            ...content.commissionCard,
+                            percentageBn: e.target.value,
+                          },
+                        })
+                      }
+                      className="bg-slate-800 border-purple-500/30 text-white"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <Label className="text-gray-300">Percentage (BN)</Label>
-                  <Input
-                    value={content.commissionCard.percentageBn}
-                    onChange={(e) =>
-                      setContent({
-                        ...content,
-                        commissionCard: {
-                          ...content.commissionCard,
-                          percentageBn: e.target.value,
-                        },
-                      })
-                    }
-                    className="bg-slate-800 border-purple-500/30 text-white"
-                  />
+              </CardContent>
+            </Card>
+
+            {/* Commission Levels Section */}
+            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Plus className="w-5 h-5" />
+                  Commission Levels
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Commission Levels Table */}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-purple-500/30">
+                        <th className="text-left py-2 px-3 text-gray-300">
+                          Level (EN)
+                        </th>
+                        <th className="text-left py-2 px-3 text-gray-300">
+                          Level (BN)
+                        </th>
+                        <th className="text-left py-2 px-3 text-gray-300">
+                          Commission
+                        </th>
+                        <th className="text-left py-2 px-3 text-gray-300">
+                          Status
+                        </th>
+                        <th className="text-left py-2 px-3 text-gray-300">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {content.commissionLevels?.map((level, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-purple-500/20 hover:bg-purple-500/10"
+                        >
+                          <td className="py-3 px-3 text-white">
+                            {level.levelEn}
+                          </td>
+                          <td className="py-3 px-3 text-white">
+                            {level.levelBn}
+                          </td>
+                          <td className="py-3 px-3 text-white">
+                            {level.commissionEn}
+                          </td>
+                          <td className="py-3 px-3 text-white">
+                            {level.statusEn}
+                          </td>
+                          <td className="py-3 px-3">
+                            <button
+                              onClick={() => {
+                                setEditingLevelIndex(index);
+                                setEditingLevel(level);
+                              }}
+                              className="text-purple-400 hover:text-purple-300 mr-3"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => {
+                                const newLevels =
+                                  content.commissionLevels.filter(
+                                    (_, i) => i !== index,
+                                  );
+                                setContent({
+                                  ...content,
+                                  commissionLevels: newLevels,
+                                });
+                              }}
+                              className="text-red-400 hover:text-red-300"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+
+                {/* Edit/Add Commission Level Form */}
+                {editingLevel && (
+                  <div className="bg-slate-800/50 p-4 rounded-lg space-y-4 border border-purple-500/20">
+                    <h3 className="text-white font-semibold">
+                      {editingLevelIndex !== null
+                        ? "Edit Commission Level"
+                        : "Add Commission Level"}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label className="text-gray-300">Level (EN)</Label>
+                        <Input
+                          value={editingLevel.levelEn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              levelEn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., Level 1"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Level (BN)</Label>
+                        <Input
+                          value={editingLevel.levelBn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              levelBn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., লেভেল ১"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Deposit (EN)</Label>
+                        <Input
+                          value={editingLevel.depositEn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              depositEn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., 5 - 10 Thousand"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Deposit (BN)</Label>
+                        <Input
+                          value={editingLevel.depositBn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              depositBn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., ৫ - ১০ হাজার"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Commission (EN)</Label>
+                        <Input
+                          value={editingLevel.commissionEn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              commissionEn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., 25%"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Commission (BN)</Label>
+                        <Input
+                          value={editingLevel.commissionBn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              commissionBn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., २५%"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Bonus (EN)</Label>
+                        <Input
+                          value={editingLevel.bonusEn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              bonusEn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., 5%"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Bonus (BN)</Label>
+                        <Input
+                          value={editingLevel.bonusBn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              bonusBn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., ५%"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Status (EN)</Label>
+                        <Input
+                          value={editingLevel.statusEn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              statusEn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., Regular Affiliate"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">Status (BN)</Label>
+                        <Input
+                          value={editingLevel.statusBn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              statusBn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., সাধারণ এফিলিয়েট"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">
+                          Daily Bonus (EN)
+                        </Label>
+                        <Input
+                          value={editingLevel.dailyBonusEn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              dailyBonusEn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., 25%"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300">
+                          Daily Bonus (BN)
+                        </Label>
+                        <Input
+                          value={editingLevel.dailyBonusBn}
+                          onChange={(e) =>
+                            setEditingLevel({
+                              ...editingLevel,
+                              dailyBonusBn: e.target.value,
+                            })
+                          }
+                          className="bg-slate-800 border-purple-500/30 text-white"
+                          placeholder="e.g., २५%"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => {
+                          if (editingLevelIndex !== null) {
+                            const newLevels = [...content.commissionLevels];
+                            newLevels[editingLevelIndex] = editingLevel;
+                            setContent({
+                              ...content,
+                              commissionLevels: newLevels,
+                            });
+                          } else {
+                            setContent({
+                              ...content,
+                              commissionLevels: [
+                                ...content.commissionLevels,
+                                editingLevel,
+                              ],
+                            });
+                          }
+                          setEditingLevel(null);
+                          setEditingLevelIndex(null);
+                        }}
+                        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+                      >
+                        {editingLevelIndex !== null ? "Update" : "Add"} Level
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setEditingLevel(null);
+                          setEditingLevelIndex(null);
+                        }}
+                        className="bg-slate-700 hover:bg-slate-600 text-white"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Add New Level Button */}
+                {!editingLevel && (
+                  <Button
+                    onClick={() => {
+                      setEditingLevel({
+                        levelEn: "",
+                        levelBn: "",
+                        depositEn: "",
+                        depositBn: "",
+                        commissionEn: "",
+                        commissionBn: "",
+                        bonusEn: "",
+                        bonusBn: "",
+                        statusEn: "",
+                        statusBn: "",
+                        dailyBonusEn: "",
+                        dailyBonusBn: "",
+                        order: content.commissionLevels.length + 1,
+                      });
+                    }}
+                    className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add New Commission Level
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         )}
 
         {/* Main Tab */}
