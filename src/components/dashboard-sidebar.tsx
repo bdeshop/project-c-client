@@ -142,6 +142,12 @@ const navigation = [
     href: "/dashboard/settings",
     icon: Settings,
     roles: ["admin", "user"],
+    children: [
+      { name: "Platform Settings", href: "/dashboard/settings?tab=organization" },
+      { name: "UI Customization", href: "/dashboard/settings?tab=ui" },
+      { name: "APK Management", href: "/dashboard/settings?tab=apk" },
+      { name: "VIP Settings", href: "/dashboard/settings?tab=vip" },
+    ],
   },
 ];
 

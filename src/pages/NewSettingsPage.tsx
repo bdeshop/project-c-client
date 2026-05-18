@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useSettings } from "../lib/queries";
 import {
   useResetSettings,
@@ -18,9 +19,9 @@ import {
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 
-import { RotateCcw, Save, Building, Globe } from "lucide-react";
+import { RotateCcw, Save, Building, Globe, Crown } from "lucide-react";
 import { Settings as SettingsType } from "../lib/queries";
-import { UICustomizationSettings } from "./components";
+import { UICustomizationSettings, VipSettings } from "./components";
 import { APKManagementSettings } from "./components/APKManagementSettings";
 
 // Color picker component for better UX
@@ -67,72 +68,6 @@ const ColorPicker = ({
   );
 };
 
-// Tab navigation component
-const TabNavigation = ({
-  activeTab,
-  setActiveTab,
-}: {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-}) => {
-  const tabs = [
-    {
-      id: "organization",
-      label: "Organization",
-      icon: <Building className="w-4 h-4" />,
-    },
-    {
-      id: "ui",
-      label: "UI Customization",
-      icon: <Globe className="w-4 h-4" />,
-    },
-    {
-      id: "apk",
-      label: "APK Management",
-      icon: <Save className="w-4 h-4" />,
-    },
-    {
-      id: "all",
-      label: "All Settings",
-      icon: (
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      ),
-    },
-  ];
-
-  return (
-    <div className="flex flex-wrap gap-2 p-2 bg-gradient-to-r from-purple-100/50 via-blue-100/50 to-indigo-100/50 dark:from-purple-950/30 dark:via-blue-950/30 dark:to-indigo-950/30 rounded-xl border border-purple-200 dark:border-purple-800">
-      {tabs.map((tab) => (
-        <Button
-          key={tab.id}
-          variant={activeTab === tab.id ? "default" : "ghost"}
-          onClick={() => setActiveTab(tab.id)}
-          className={
-            activeTab === tab.id
-              ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300 flex items-center gap-2"
-              : "hover:bg-purple-100 dark:hover:bg-purple-950 transition-all duration-300 flex items-center gap-2"
-          }
-        >
-          {tab.icon}
-          {tab.label}
-        </Button>
-      ))}
-    </div>
-  );
-};
-
 export function NewSettingsPage() {
   const { data: settingsData, isLoading, isError } = useSettings();
 
@@ -143,7 +78,22 @@ export function NewSettingsPage() {
 
   const [settings, setSettings] = useState<SettingsType | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState("organization");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get("tab") || "organization",
+  );
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && tab !== activeTab) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    setSearchParams({ tab: tabId });
+  };
 
   // Initialize form with settings data
   useEffect(() => {
@@ -196,7 +146,7 @@ export function NewSettingsPage() {
             path: string;
             icon?: string;
           }>;
-        }>
+        }>,
   ) => {
     if (!settings) return;
 
@@ -295,7 +245,7 @@ export function NewSettingsPage() {
           setIsSaving(false);
           // Show error message
         },
-      }
+      },
     );
   };
 
@@ -333,7 +283,7 @@ export function NewSettingsPage() {
           setIsSaving(false);
           // Show error message
         },
-      }
+      },
     );
   };
 
@@ -341,7 +291,7 @@ export function NewSettingsPage() {
   const handleResetSettings = () => {
     if (
       window.confirm(
-        "Are you sure you want to reset all settings to default values?"
+        "Are you sure you want to reset all settings to default values?",
       )
     ) {
       setIsSaving(true);
@@ -440,8 +390,6 @@ export function NewSettingsPage() {
           </div>
         </div>
 
-        <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-
         {activeTab === "organization" && (
           <Card className="border-0 bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 dark:from-slate-900 dark:via-purple-950/30 dark:to-blue-950/30 shadow-lg animate-fade-in">
             <CardHeader>
@@ -466,7 +414,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "organizationName",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="Betting Platform"
@@ -484,7 +432,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "organizationImage",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="https://example.com/logo.png"
@@ -500,7 +448,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "logoUrl",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="https://example.com/logo.png"
@@ -516,7 +464,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "faviconUrl",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="https://example.com/favicon.ico"
@@ -533,7 +481,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "supportEmail",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="support@bettingsite.com"
@@ -549,7 +497,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "supportPhone",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="+1234567890"
@@ -565,7 +513,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "websiteUrl",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="https://www.bettingsite.com"
@@ -581,7 +529,7 @@ export function NewSettingsPage() {
                       handleInputChange(
                         "organization",
                         "address",
-                        e.target.value
+                        e.target.value,
                       )
                     }
                     placeholder="123 Betting Street, City, Country"
@@ -665,6 +613,8 @@ export function NewSettingsPage() {
         )}
 
         {activeTab === "apk" && <APKManagementSettings />}
+
+        {activeTab === "vip" && <VipSettings />}
 
         {activeTab === "all" && (
           <Card className="border-0 bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 dark:from-slate-900 dark:via-purple-950/30 dark:to-blue-950/30 shadow-lg animate-fade-in">

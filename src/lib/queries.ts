@@ -559,6 +559,7 @@ export const queryKeys = {
 
   // Settings
   settings: ["settings"] as const,
+  vipSettings: ["vipSettings"] as const,
 
   // Banner Text
   bannerText: ["bannerText"] as const,
@@ -1208,6 +1209,54 @@ export const useSettings = (
     queryKey: queryKeys.settings,
     queryFn: () => apiClient.get<ApiResponse<SettingsResponse>>("/settings"),
     select: (data) => data.data.data.settings,
+    ...options,
+  });
+};
+
+export interface VipLevel {
+  _id?: string;
+  levelNumber: number;
+  name: string;
+  badgeImage?: string;
+  privilegeImage?: string;
+  slotsRebate: string;
+  liveCasinoRebate: string;
+  sportRebate: string;
+  upgradeDepositRequirement: string;
+  upgradeTurnoverRequirement: string;
+  upgradeBonus: string;
+  downgradeCriteria: string;
+}
+
+export interface VipSettings {
+  _id?: string;
+  levels: VipLevel[];
+  upgradeDescription: {
+    title: string;
+    subtitle: string;
+    points: string[];
+  };
+  faqs: Array<{
+    _id?: string;
+    question: string;
+    answer: string;
+  }>;
+  termsAndConditions: string[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export const useVipSettings = (
+  options?: UseQueryOptions<
+    AxiosResponse<ApiResponse<VipSettings>>,
+    Error,
+    VipSettings
+  >
+) => {
+  return useQuery({
+    queryKey: queryKeys.vipSettings,
+    queryFn: () => apiClient.get<ApiResponse<VipSettings>>("/vip-settings"),
+    select: (data) => data.data.data,
     ...options,
   });
 };

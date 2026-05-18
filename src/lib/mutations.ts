@@ -14,6 +14,7 @@ import {
   PromoSection,
   PromoSectionResponse,
   ReferralSettings,
+  VipSettings,
 } from "./queries";
 import { AxiosResponse, AxiosError } from "axios";
 
@@ -417,6 +418,24 @@ export const useUpdateSettings = () => {
     },
     onError: (error) => {
       console.error("Update settings failed:", error);
+    },
+  });
+};
+
+export const useUpdateVipSettings = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (
+      vipData: Partial<VipSettings>
+    ): Promise<AxiosResponse<ApiResponse<VipSettings>>> =>
+      apiClient.put<ApiResponse<VipSettings>>("/vip-settings", vipData),
+    onSuccess: (response) => {
+      queryClient.setQueryData(queryKeys.vipSettings, response);
+      queryClient.invalidateQueries({ queryKey: queryKeys.vipSettings });
+    },
+    onError: (error) => {
+      console.error("Update VIP settings failed:", error);
     },
   });
 };
