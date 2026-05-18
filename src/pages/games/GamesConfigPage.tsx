@@ -1,19 +1,67 @@
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Gamepad2, Layers, Building2, Plus, Settings, Package, FolderTree } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import {
+  Gamepad2,
+  Plus,
+  Settings,
+  Package,
+  FolderTree,
+} from "lucide-react";
 import GameCategoryTab from "./tabs/GameCategoryTab";
 import GameListTab from "./tabs/GameListTab";
 import ManageGamesTab from "./tabs/ManageGamesTab";
 import { CreateGameTab } from "./tabs/CreateGameTab";
 import ManageProvidersTab from "./tabs/ManageProvidersTab";
 
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  component: React.ReactNode;
+}
+
 export function GamesConfigPage() {
-  const [activeTab, setActiveTab] = useState("categories");
+  const [searchParams] = useSearchParams();
+  const activeMenu = searchParams.get("tab") || "categories";
+
+  const menuItems: MenuItem[] = [
+    {
+      id: "categories",
+      label: "Game Categories",
+      icon: <FolderTree className="w-5 h-5" />,
+      component: <GameCategoryTab />,
+    },
+    {
+      id: "create",
+      label: "Create Game",
+      icon: <Plus className="w-5 h-5" />,
+      component: <CreateGameTab />,
+    },
+    {
+      id: "bulk",
+      label: "Bulk Deploy",
+      icon: <Gamepad2 className="w-5 h-5" />,
+      component: <GameListTab />,
+    },
+    {
+      id: "manage",
+      label: "Manage All Games",
+      icon: <Settings className="w-5 h-5" />,
+      component: <ManageGamesTab />,
+    },
+    {
+      id: "providers",
+      label: "Game Providers",
+      icon: <Package className="w-5 h-5" />,
+      component: <ManageProvidersTab />,
+    },
+  ];
+
+  const activeItem = menuItems.find((item) => item.id === activeMenu) || menuItems[0];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 dark:from-slate-950 dark:via-purple-950 dark:to-slate-950 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header Section from Jaya Style */}
+        {/* Header Section */}
         <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl p-10 shadow-2xl border border-white/10 mb-10 animate-fade-in">
           <div className="absolute top-0 right-0 -mr-20 -mt-20 h-80 w-80 rounded-full bg-purple-500/10 blur-[100px]"></div>
           <div className="relative flex flex-col md:flex-row items-center gap-8">
@@ -31,69 +79,21 @@ export function GamesConfigPage() {
           </div>
         </div>
 
-        {/* Tabs Control Area */}
+        {/* Content Area */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] shadow-2xl overflow-hidden">
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <TabsList className="w-full bg-white/5 border-b border-white/10 rounded-none p-2 h-auto flex flex-wrap gap-2">
-              <TabsTrigger
-                value="categories"
-                className="flex-1 min-w-[150px] rounded-xl transition-all duration-300 py-4 px-6 font-black uppercase text-[11px] tracking-widest text-purple-200/50 data-[state=active]:bg-purple-500 data-[state=active]:text-white hover:bg-white/5 hover:text-white"
-              >
-                <FolderTree className="w-4 h-4 mr-2" />
-                Categories
-              </TabsTrigger>
-              <TabsTrigger
-                value="create"
-                className="flex-1 min-w-[150px] rounded-xl transition-all duration-300 py-4 px-6 font-black uppercase text-[11px] tracking-widest text-purple-200/50 data-[state=active]:bg-purple-500 data-[state=active]:text-white hover:bg-white/5 hover:text-white"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Create Game
-              </TabsTrigger>
-              <TabsTrigger
-                value="bulk"
-                className="flex-1 min-w-[150px] rounded-xl transition-all duration-300 py-4 px-6 font-black uppercase text-[11px] tracking-widest text-purple-200/50 data-[state=active]:bg-purple-500 data-[state=active]:text-white hover:bg-white/5 hover:text-white"
-              >
-                <Gamepad2 className="w-4 h-4 mr-2" />
-                Bulk Deploy
-              </TabsTrigger>
-              <TabsTrigger
-                value="manage"
-                className="flex-1 min-w-[150px] rounded-xl transition-all duration-300 py-4 px-6 font-black uppercase text-[11px] tracking-widest text-purple-200/50 data-[state=active]:bg-purple-500 data-[state=active]:text-white hover:bg-white/5 hover:text-white"
-              >
-                <Settings className="w-4 h-4 mr-2" />
-                Manage All
-              </TabsTrigger>
-              <TabsTrigger
-                value="providers"
-                className="flex-1 min-w-[150px] rounded-xl transition-all duration-300 py-4 px-6 font-black uppercase text-[11px] tracking-widest text-purple-200/50 data-[state=active]:bg-purple-500 data-[state=active]:text-white hover:bg-white/5 hover:text-white"
-              >
-                <Package className="w-4 h-4 mr-2" />
-                Providers
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="p-8 min-h-[600px]">
-              <TabsContent value="categories" className="animate-fade-in outline-none">
-                <GameCategoryTab />
-              </TabsContent>
-              <TabsContent value="create" className="animate-fade-in outline-none">
-                <CreateGameTab />
-              </TabsContent>
-              <TabsContent value="bulk" className="animate-fade-in outline-none">
-                <GameListTab />
-              </TabsContent>
-              <TabsContent value="manage" className="animate-fade-in outline-none">
-                <ManageGamesTab />
-              </TabsContent>
-              <TabsContent value="providers" className="animate-fade-in outline-none">
-                <ManageProvidersTab />
-              </TabsContent>
+          <div className="border-b border-white/10 px-8 py-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-indigo-500 text-white">
+                {activeItem.icon}
+              </div>
+              <h2 className="text-2xl font-black uppercase tracking-tight text-white">
+                {activeItem.label}
+              </h2>
             </div>
-          </Tabs>
+          </div>
+          <div className="p-8 min-h-[600px] animate-fade-in">
+            {activeItem.component}
+          </div>
         </div>
       </div>
     </div>

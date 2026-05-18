@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
@@ -122,10 +122,12 @@ const navigation = [
     roles: ["admin"],
     children: [
       { name: "Oracle Games", href: "/dashboard/oracle-games" },
-      { name: "Games Library", href: "/dashboard/games" },
       { name: "Popular Games", href: "/dashboard/popular-games" },
-      { name: "Categories", href: "/dashboard/game-categories" },
-      { name: "Providers", href: "/dashboard/providers" },
+      { name: "Game Categories", href: "/dashboard/games?tab=categories" },
+      { name: "Create Game", href: "/dashboard/games?tab=create" },
+      { name: "Bulk Deploy", href: "/dashboard/games?tab=bulk" },
+      { name: "Games Library", href: "/dashboard/games?tab=manage" },
+      { name: "Game Providers", href: "/dashboard/games?tab=providers" },
     ],
   },
 
@@ -152,6 +154,21 @@ export function DashboardSidebar() {
   const toggleMenu = (name: string) => {
     setExpandedMenu(expandedMenu === name ? null : name);
   };
+
+  // Auto-expand the active parent menu on load or location change
+  useEffect(() => {
+    const currentPath = location.pathname + location.search;
+    const activeParent = navigation.find(item =>
+      item.children?.some(child =>
+        child.href.includes("?")
+          ? currentPath === child.href
+          : location.pathname === child.href
+      )
+    );
+    if (activeParent) {
+      setExpandedMenu(activeParent.name);
+    }
+  }, [location.pathname, location.search]);
 
   // Get user role - check multiple possible locations
   const userRole =
@@ -278,7 +295,9 @@ export function DashboardSidebar() {
                 {!collapsed && item.children && isExpanded && (
                   <div className="ml-8 mt-2 space-y-1 animate-slide-down">
                     {item.children.map((child) => {
-                      const isChildActive = location.pathname === child.href;
+                      const isChildActive = child.href.includes("?")
+                        ? (location.pathname + location.search) === child.href
+                        : location.pathname === child.href;
                       return (
                         <Link key={child.name} to={child.href}>
                           <Button

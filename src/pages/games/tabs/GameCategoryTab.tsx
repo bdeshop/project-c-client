@@ -368,8 +368,8 @@ function GameCategoryTab() {
 
       {/* Form Section */}
       {isEditing && (
-        <div className="rounded-[2.5rem] bg-white border border-slate-200 p-8 shadow-2xl dark:bg-[#1a1a1a] dark:border-white/10 animate-in zoom-in-95 duration-300">
-          <div className="flex items-center justify-between mb-10 pb-6 border-b dark:border-white/5">
+        <div className="rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 p-6 shadow-xl animate-in zoom-in-95 duration-300">
+          <div className="flex items-center justify-between mb-8 pb-6 border-b dark:border-white/5">
             <div className="flex items-center gap-3">
               <div className="h-10 w-1 rounded-full bg-brand-primary"></div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white">
@@ -526,136 +526,6 @@ function GameCategoryTab() {
               </div>
             </div>
 
-            {/* Provider and Games Integration */}
-            <section className="space-y-6 pt-6 border-t dark:border-white/5">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="h-2 w-2 rounded-full bg-brand-primary"></div>
-                <h4 className="text-sm font-black uppercase tracking-widest text-slate-800 dark:text-slate-200">
-                  Provider & Game Sync
-                </h4>
-              </div>
-
-              <div className="space-y-6">
-                <div className="max-w-md space-y-3">
-                  <Label className="text-[11px] font-black uppercase tracking-widest text-slate-400">
-                    Target Provider
-                  </Label>
-                  <Select
-                    value={formData.providerId}
-                    onValueChange={handleProviderChange}
-                  >
-                    <SelectTrigger className="rounded-2xl h-12 bg-slate-50 border-slate-200 dark:bg-white/5 dark:border-white/10 font-bold">
-                      <SelectValue placeholder="Select a game provider" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-2xl border-slate-200 dark:border-white/10 dark:bg-[#1e1e1e]">
-                      <SelectItem value="none" className="rounded-lg">
-                        None (Static Category)
-                      </SelectItem>
-                      {providers.map((p) => (
-                        <SelectItem
-                          key={p._id}
-                          value={p._id}
-                          className="rounded-lg font-bold"
-                        >
-                          {p.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {formData.providerId && (
-                  <div className="space-y-4 animate-in slide-in-from-top-2">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-[11px] font-black uppercase tracking-widest text-brand-primary">
-                        Select Games ({formData.games.length} Selected)
-                      </Label>
-                      <div className="flex gap-4">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setFormData((p) => ({
-                              ...p,
-                              games: filteredGames.map((g) => g._id),
-                            }))
-                          }
-                          className="text-[10px] font-black uppercase text-brand-primary hover:underline"
-                        >
-                          Select All
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setFormData((p) => ({ ...p, games: [] }))
-                          }
-                          className="text-[10px] font-black uppercase text-slate-400 hover:text-red-500 hover:underline"
-                        >
-                          Clear selection
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="max-h-[300px] overflow-y-auto rounded-3xl border border-slate-100 dark:border-white/5 p-4 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 bg-slate-50/50 dark:bg-black/20">
-                      {fetchingGames ? (
-                        <div className="col-span-full py-12 flex flex-col items-center gap-3 text-slate-400">
-                          <RefreshCw size={32} className="animate-spin" />
-                          <span className="text-[10px] font-black uppercase tracking-widest">
-                            Bridging Game API...
-                          </span>
-                        </div>
-                      ) : filteredGames.length > 0 ? (
-                        filteredGames.map((game) => {
-                          const isSelected = formData.games.includes(game._id);
-                          return (
-                            <div
-                              key={game._id}
-                              onClick={() => handleGameToggle(game._id)}
-                              className={`
-                                relative group flex flex-col gap-2 p-2 rounded-2xl cursor-pointer transition-all
-                                ${isSelected ? "bg-brand-primary/10 ring-1 ring-brand-primary/30" : "hover:bg-white dark:hover:bg-white/5"}
-                              `}
-                            >
-                              <div className="aspect-square rounded-xl overflow-hidden bg-slate-200">
-                                <img
-                                  src={
-                                    game.image && game.image.startsWith("http")
-                                      ? game.image
-                                      : `https://api.oraclegames.live${game.image}`
-                                  }
-                                  className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                                  alt={game.name}
-                                />
-                              </div>
-                              <span
-                                className={`text-[9px] font-bold text-center truncate px-1 ${isSelected ? "text-brand-primary" : "text-slate-500"}`}
-                              >
-                                {game.name}
-                              </span>
-                              {isSelected && (
-                                <div className="absolute top-1 right-1 h-5 w-5 rounded-full bg-brand-primary text-white flex items-center justify-center shadow-md">
-                                  <Check size={10} strokeWidth={4} />
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })
-                      ) : (
-                        <div className="col-span-full py-12 text-center text-slate-400">
-                          <LayoutGrid
-                            size={32}
-                            className="mx-auto mb-2 opacity-20"
-                          />
-                          <p className="text-[10px] font-black uppercase tracking-widest">
-                            No games found for this provider
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </section>
-
             {/* Submission Actions */}
             <div className="flex flex-col sm:flex-row gap-4 pt-10">
               <Button
@@ -696,7 +566,7 @@ function GameCategoryTab() {
           </p>
         </div>
       ) : categories.length === 0 ? (
-        <div className="py-32 flex flex-col items-center text-center bg-slate-50 dark:bg-white/5 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-white/10">
+        <div className="py-24 flex flex-col items-center text-center bg-slate-50 dark:bg-white/5 rounded-2xl border-2 border-dashed border-slate-200 dark:border-white/10">
           <FolderTree
             size={80}
             className="text-slate-300 mb-6"
@@ -717,134 +587,136 @@ function GameCategoryTab() {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {categories
             .slice()
             .sort((a, b) => (a.order || 0) - (b.order || 0))
             .map((category) => (
               <div
                 key={category._id}
-                className="group relative flex flex-col rounded-[2.5rem] bg-white border border-slate-200 p-6 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-primary/10 hover:translate-y-[-8px] dark:bg-[#1a1a1a] dark:border-white/10"
+                className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-white/10 p-4 transition-all duration-300 hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1"
               >
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    <div className="h-16 w-16 p-3 rounded-2xl bg-slate-50 dark:bg-black/30 border border-slate-100 dark:border-white/5 shadow-inner transition-transform group-hover:scale-110">
-                      <img
-                        src={getImageUrl(category.icon)}
-                        className="h-full w-full object-contain"
-                        alt="Icon"
-                        onError={(e) =>
-                          (e.currentTarget.src =
-                            "https://placehold.co/100x100?text=Icon")
-                        }
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight underline decoration-transparent group-hover:decoration-brand-primary/30 transition-all">
-                        {category.nameEnglish || category.name}
-                      </h3>
-                      <p className="text-slate-400 font-bengali font-bold text-sm mt-0.5">
-                        {category.nameBangla || "N/A"}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex bg-slate-100/50 dark:bg-white/5 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-all">
-                    <button
-                      onClick={() => handleEdit(category)}
-                      className="p-2 text-slate-600 dark:text-slate-400 hover:text-brand-primary transition-colors"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(category._id)}
-                      className="p-2 text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="relative aspect-[16/9] rounded-3xl overflow-hidden mb-6 border-4 border-slate-50 dark:border-white/5 shadow-sm">
+                {/* Compact Card Cover Banner */}
+                <div className="relative h-28 w-full rounded-xl overflow-hidden mb-3 border border-white/5 bg-slate-950">
                   <img
                     src={getImageUrl(category.image)}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     alt="Banner"
                     onError={(e) =>
                       (e.currentTarget.src =
-                        "https://placehold.co/400x225?text=Preview")
+                        "https://placehold.co/400x150?text=Preview")
                     }
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                    <p className="text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2">
-                      Visual Architecture{" "}
-                      <ChevronRight
-                        size={10}
-                        className="text-brand-primary"
-                        strokeWidth={4}
-                      />
-                    </p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                  {/* Overlay Category Icon */}
+                  <div className="absolute bottom-2 left-2 h-10 w-10 p-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center">
+                    <img
+                      src={getImageUrl(category.icon)}
+                      className="h-full w-full object-contain"
+                      alt="Icon"
+                      onError={(e) =>
+                        (e.currentTarget.src =
+                          "https://placehold.co/100x100?text=Icon")
+                      }
+                    />
+                  </div>
+
+                  {/* Overlay Action Buttons */}
+                  <div className="absolute top-2 right-2 flex bg-black/60 backdrop-blur-md border border-white/10 rounded-lg p-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      onClick={() => handleEdit(category)}
+                      className="p-1.5 text-purple-300 hover:text-white transition-colors"
+                    >
+                      <Edit size={14} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(category._id)}
+                      className="p-1.5 text-purple-300 hover:text-red-400 transition-colors"
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   </div>
                 </div>
 
-                <div className="flex-1 space-y-4">
-                  <div className="flex flex-wrap gap-2">
+                {/* Card Content */}
+                <div className="flex-1 flex flex-col justify-between space-y-3">
+                  <div>
+                    <h3 className="text-base font-black text-white leading-tight truncate">
+                      {category.nameEnglish || category.name}
+                    </h3>
+                    <p className="text-purple-200/60 font-bengali font-bold text-xs mt-0.5 truncate">
+                      {category.nameBangla || "N/A"}
+                    </p>
+                  </div>
+
+                  {/* Sub-categories Badges */}
+                  <div className="flex flex-wrap gap-1 mb-1 min-h-[22px] items-center">
                     {category.subCategories &&
                     category.subCategories.length > 0 ? (
-                      category.subCategories.slice(0, 3).map((sub, idx) => (
+                      category.subCategories.slice(0, 2).map((sub, idx) => (
                         <Badge
                           key={idx}
                           variant="secondary"
-                          className="rounded-lg bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-slate-400 font-bold text-[9px] uppercase tracking-wider py-1"
+                          className="rounded bg-white/5 border border-white/10 text-purple-200 font-bold text-[9px] uppercase tracking-wider py-0.5 px-1.5"
                         >
                           {typeof sub === "string" ? sub : sub.name}
                         </Badge>
                       ))
                     ) : (
-                      <span className="text-[10px] font-black uppercase text-slate-300 italic">
-                        No Sub-Architecture defined
+                      <span className="text-[9px] font-semibold text-purple-300/40 uppercase italic">
+                        No Sub-categories
                       </span>
                     )}
                     {category.subCategories &&
-                      category.subCategories.length > 3 && (
-                        <span className="text-[9px] font-black text-slate-400 bg-slate-50 dark:bg-white/5 px-2 py-1 rounded-lg">
-                          +{category.subCategories.length - 3}
-                        </span>
+                      category.subCategories.length > 2 && (
+                        <Badge
+                          variant="secondary"
+                          className="rounded bg-purple-500/10 border border-purple-500/20 text-purple-300 font-bold text-[9px] py-0.5 px-1.5"
+                        >
+                          +{category.subCategories.length - 2}
+                        </Badge>
                       )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 pt-4 border-t dark:border-white/5">
+                  {/* Metadata Stats */}
+                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-white/5">
                     <div className="flex flex-col">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">
                         Index Order
                       </span>
-                      <span className="text-sm font-black text-brand-primary">
+                      <span className="text-xs font-black text-brand-primary">
                         #{(category.order || 0).toString().padStart(2, "0")}
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-                        Total Payload
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">
+                        Total Games
                       </span>
-                      <span className="text-sm font-black text-slate-700 dark:text-slate-200">
+                      <span className="text-xs font-black text-slate-200">
                         {category.games?.length || 0} Units
                       </span>
                     </div>
                   </div>
-                </div>
 
-                {category.providerId && (
-                  <div className="mt-6 p-3 rounded-2xl bg-brand-primary/5 border border-brand-primary/10 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <RefreshCw size={12} className="text-brand-primary" />
-                      <span className="text-[10px] font-black uppercase text-brand-primary tracking-widest">
-                        Active API Sync
+                  {/* API Sync Tag */}
+                  {category.providerId && (
+                    <div className="mt-2 p-1.5 rounded-lg bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between text-[9px]">
+                      <div className="flex items-center gap-1.5">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                        </span>
+                        <span className="font-black uppercase tracking-widest text-emerald-400">
+                          API Active
+                        </span>
+                      </div>
+                      <span className="font-bold text-slate-400">
+                        {category.providerId.substring(0, 8)}
                       </span>
                     </div>
-                    <span className="text-[9px] font-bold text-slate-500 bg-white/50 px-2 py-0.5 rounded-full">
-                      {category.providerId.substring(0, 8)}...
-                    </span>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))}
         </div>
