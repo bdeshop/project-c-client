@@ -176,9 +176,12 @@ export const getAllAffiliates = async () => {
 // Get pending affiliates (Admin only)
 export const getPendingAffiliates = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/affiliate/users/pending`, {
-      headers: getAuthHeaders(),
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/api/affiliate/users/pending`,
+      {
+        headers: getAuthHeaders(),
+      },
+    );
     return response.data;
   } catch (error) {
     throw new Error(handleApiError(error));
@@ -247,9 +250,12 @@ export const getAffiliateStats = async () => {
 // Get affiliate complete info (Admin only)
 export const getAffiliateCompleteInfo = async (userId: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/affiliate/users/${userId}`, {
-      headers: getAuthHeaders(),
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/api/affiliate/users/${userId}`,
+      {
+        headers: getAuthHeaders(),
+      },
+    );
     return response.data;
   } catch (error) {
     throw new Error(handleApiError(error));
@@ -257,7 +263,10 @@ export const getAffiliateCompleteInfo = async (userId: string) => {
 };
 
 // Distribute payouts (Admin only)
-export const distributeAffiliatePayouts = async (affiliateIds: string[], notes?: string) => {
+export const distributeAffiliatePayouts = async (
+  affiliateIds: string[],
+  notes?: string,
+) => {
   try {
     const response = await axios.post(
       `${API_BASE_URL}/api/payout/distribute`,
@@ -330,7 +339,10 @@ export const approvePayoutRequest = async (id: string) => {
 };
 
 // Reject payout request (Admin only)
-export const rejectPayoutRequest = async (id: string, rejectionReason: string) => {
+export const rejectPayoutRequest = async (
+  id: string,
+  rejectionReason: string,
+) => {
   try {
     const response = await axios.patch(
       `${API_BASE_URL}/api/payout/requests/${id}/reject`,
@@ -348,10 +360,13 @@ export const rejectPayoutRequest = async (id: string, rejectionReason: string) =
 // Get payout distribution history (Admin only)
 export const getPayoutDistributionHistory = async (params?: any) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/payout/distribution-history`, {
-      headers: getAuthHeaders(),
-      params,
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/api/payout/distribution-history`,
+      {
+        headers: getAuthHeaders(),
+        params,
+      },
+    );
     return response.data;
   } catch (error) {
     throw new Error(handleApiError(error));
@@ -361,9 +376,12 @@ export const getPayoutDistributionHistory = async (params?: any) => {
 // Get all affiliate withdraw methods (Admin only)
 export const getAllAffiliateWithdrawMethods = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/affiliate/withdraw-methods`, {
-      headers: getAuthHeaders(),
-    });
+    const response = await axios.get(
+      `${API_BASE_URL}/api/affiliate/withdraw-methods`,
+      {
+        headers: getAuthHeaders(),
+      },
+    );
     return response.data;
   } catch (error) {
     throw new Error(handleApiError(error));
@@ -390,7 +408,10 @@ export const createAffiliateWithdrawMethod = async (formData: FormData) => {
 };
 
 // Update affiliate withdraw method (Admin only)
-export const updateAffiliateWithdrawMethod = async (id: string, formData: FormData) => {
+export const updateAffiliateWithdrawMethod = async (
+  id: string,
+  formData: FormData,
+) => {
   try {
     const response = await axios.put(
       `${API_BASE_URL}/api/affiliate/withdraw-methods/${id}`,
@@ -413,6 +434,21 @@ export const deleteAffiliateWithdrawMethod = async (id: string) => {
   try {
     const response = await axios.delete(
       `${API_BASE_URL}/api/affiliate/withdraw-methods/${id}`,
+      {
+        headers: getAuthHeaders(),
+      },
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+// Get user complete information (Admin only)
+export const getUserCompleteInfo = async (userId: string) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/api/users/${userId}/complete-info`,
       {
         headers: getAuthHeaders(),
       },

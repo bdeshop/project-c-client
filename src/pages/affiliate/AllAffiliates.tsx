@@ -239,7 +239,7 @@ function AllAffiliates() {
   );
 
   const handleViewDetails = (id: string) => {
-    navigate(`/users/${id}`);
+    navigate(`/dashboard/affiliates/${id}`);
   };
 
   const handleDelete = async (id: string, userName: string) => {
@@ -262,7 +262,9 @@ function AllAffiliates() {
     return (
       <div className="flex h-[400px] w-full flex-col items-center justify-center gap-4">
         <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-        <p className="text-muted-foreground animate-pulse">Loading affiliates...</p>
+        <p className="text-muted-foreground animate-pulse">
+          Loading affiliates...
+        </p>
       </div>
     );
   }
@@ -276,8 +278,12 @@ function AllAffiliates() {
             <Users size={32} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-foreground">All Affiliates</h1>
-            <p className="text-muted-foreground">Manage and monitor all affiliate partners</p>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+              All Affiliates
+            </h1>
+            <p className="text-muted-foreground">
+              Manage and monitor all affiliate partners
+            </p>
           </div>
         </div>
       </div>
@@ -294,15 +300,42 @@ function AllAffiliates() {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: "Total Affiliates", value: totalAffiliates, icon: Users, color: "bg-blue-500/10 text-blue-600 dark:text-blue-400" },
-          { label: "Active Affiliates", value: activeAffiliates, icon: CheckCircle, color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" },
-          { label: "Total Referrals", value: totalReferrals, icon: TrendingUp, color: "bg-amber-500/10 text-amber-600 dark:text-amber-400" },
-          { label: "Total Earnings", value: `৳${totalEarnings.toLocaleString()}`, icon: TrendingUp, color: "bg-primary/10 text-primary" },
+          {
+            label: "Total Affiliates",
+            value: totalAffiliates,
+            icon: Users,
+            color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+          },
+          {
+            label: "Active Affiliates",
+            value: activeAffiliates,
+            icon: CheckCircle,
+            color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+          },
+          {
+            label: "Total Referrals",
+            value: totalReferrals,
+            icon: TrendingUp,
+            color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+          },
+          {
+            label: "Total Earnings",
+            value: `৳${totalEarnings.toLocaleString()}`,
+            icon: TrendingUp,
+            color: "bg-primary/10 text-primary",
+          },
         ].map((stat, idx) => (
-          <div key={idx} className="rounded-2xl border bg-card p-6 shadow-sm transition-all hover:shadow-md dark:border-border dark:bg-card">
+          <div
+            key={idx}
+            className="rounded-2xl border bg-card p-6 shadow-sm transition-all hover:shadow-md dark:border-border dark:bg-card"
+          >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-muted-foreground">{stat.label}</span>
-              <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${stat.color}`}>
+              <span className="text-sm font-medium text-muted-foreground">
+                {stat.label}
+              </span>
+              <div
+                className={`flex h-10 w-10 items-center justify-center rounded-xl ${stat.color}`}
+              >
                 <stat.icon size={20} />
               </div>
             </div>
@@ -319,30 +352,45 @@ function AllAffiliates() {
             <div className="flex p-1 bg-muted rounded-xl w-fit">
               {[
                 { id: "all", label: "All Users", count: allUsers.length },
-                { id: "active", label: "Active Users", count: affiliates.length },
-                { id: "pending", label: "Pending Users", count: pendingUsers.length },
+                {
+                  id: "active",
+                  label: "Active Users",
+                  count: affiliates.length,
+                },
+                {
+                  id: "pending",
+                  label: "Pending Users",
+                  count: pendingUsers.length,
+                },
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${activeTab === tab.id
-                    ? "bg-background text-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground"
-                    }`}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                    activeTab === tab.id
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                   onClick={() => setActiveTab(tab.id as any)}
                 >
-                  {tab.label} <span className="ml-1 opacity-60">({tab.count})</span>
+                  {tab.label}{" "}
+                  <span className="ml-1 opacity-60">({tab.count})</span>
                 </button>
               ))}
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
               <div className="relative w-full sm:w-64">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                <Search
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                  size={18}
+                />
                 <Input
                   className="pl-10"
                   placeholder="Search..."
                   value={searchTerm}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSearchTerm(e.target.value)
+                  }
                 />
               </div>
 
@@ -372,22 +420,41 @@ function AllAffiliates() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gradient-to-r from-primary to-secondary border-b dark:border-border">
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">User</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Referral Code</th>
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">
+                    User
+                  </th>
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">
+                    Referral Code
+                  </th>
                   {(activeTab === "active" || activeTab === "all") && (
                     <>
-                      <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Referrals</th>
-                      <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white text-center">Commission Rates</th>
-                      <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Status</th>
+                      <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">
+                        Referrals
+                      </th>
+                      <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white text-center">
+                        Commission Rates
+                      </th>
+                      <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">
+                        Status
+                      </th>
                     </>
                   )}
-                  {activeTab === "pending" && <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">Status</th>}
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white text-right">Actions</th>
+                  {activeTab === "pending" && (
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white">
+                      Status
+                    </th>
+                  )}
+                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-white text-right">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y dark:divide-border">
                 {displayList.map((user) => (
-                  <tr key={user.id} className="transition-colors hover:bg-muted/50 dark:hover:bg-muted/5">
+                  <tr
+                    key={user.id}
+                    className="transition-colors hover:bg-muted/50 dark:hover:bg-muted/5"
+                  >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 text-primary font-bold">
@@ -408,22 +475,38 @@ function AllAffiliates() {
                     </td>
                     {(activeTab === "active" || activeTab === "all") && (
                       <>
-                        <td className="px-6 py-4 font-medium">{user.totalReferrals || 0}</td>
+                        <td className="px-6 py-4 font-medium">
+                          {user.totalReferrals || 0}
+                        </td>
                         <td className="px-6 py-4">
                           <div className="flex items-center justify-center gap-2 flex-wrap">
-                            <span className="text-[10px] bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold">W: {user.betWinCommission}%</span>
-                            <span className="text-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 px-2 py-0.5 rounded-full font-bold">L: {user.betLossCommission}%</span>
-                            <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-bold">D: {user.depositCommission}%</span>
-                            <span className="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded-full font-bold">R: ৳{user.registrationCommission}</span>
+                            <span className="text-[10px] bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full font-bold">
+                              W: {user.betWinCommission}%
+                            </span>
+                            <span className="text-[10px] bg-rose-500/10 text-rose-600 dark:text-rose-400 px-2 py-0.5 rounded-full font-bold">
+                              L: {user.betLossCommission}%
+                            </span>
+                            <span className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded-full font-bold">
+                              D: {user.depositCommission}%
+                            </span>
+                            <span className="text-[10px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded-full font-bold">
+                              R: ৳{user.registrationCommission}
+                            </span>
                           </div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium border ${user.status === "active"
-                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                            : "bg-slate-500/10 text-slate-600 border-slate-500/20"
-                            }`}>
-                            <span className={`h-1.5 w-1.5 rounded-full ${user.status === "active" ? "bg-emerald-500" : "bg-slate-500"}`}></span>
-                            {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                          <span
+                            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium border ${
+                              user.status === "active"
+                                ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                                : "bg-slate-500/10 text-slate-600 border-slate-500/20"
+                            }`}
+                          >
+                            <span
+                              className={`h-1.5 w-1.5 rounded-full ${user.status === "active" ? "bg-emerald-500" : "bg-slate-500"}`}
+                            ></span>
+                            {user.status.charAt(0).toUpperCase() +
+                              user.status.slice(1)}
                           </span>
                         </td>
                       </>
@@ -438,7 +521,8 @@ function AllAffiliates() {
                     )}
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        {activeTab === "pending" || user.status === "pending" ? (
+                        {activeTab === "pending" ||
+                        user.status === "pending" ? (
                           <Button
                             variant="outline"
                             size="sm"
@@ -462,14 +546,20 @@ function AllAffiliates() {
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-50"
-                              onClick={() => handleDelete(user.id, user.userName)}
+                              onClick={() =>
+                                handleDelete(user.id, user.userName)
+                              }
                             >
                               <Trash2 size={14} />
                             </Button>
                             <Button
                               variant="outline"
                               size="sm"
-                              className={user.status === "active" ? "text-slate-600" : "text-emerald-600"}
+                              className={
+                                user.status === "active"
+                                  ? "text-slate-600"
+                                  : "text-emerald-600"
+                              }
                               onClick={() => {
                                 if (user.status === "inactive") {
                                   setSelectedUser(user);
@@ -478,8 +568,14 @@ function AllAffiliates() {
                                 }
                               }}
                             >
-                              {user.status === "active" ? <XCircle size={14} className="mr-2" /> : <CheckCircle size={14} className="mr-2" />}
-                              {user.status === "active" ? "Deactivate" : "Activate"}
+                              {user.status === "active" ? (
+                                <XCircle size={14} className="mr-2" />
+                              ) : (
+                                <CheckCircle size={14} className="mr-2" />
+                              )}
+                              {user.status === "active"
+                                ? "Deactivate"
+                                : "Activate"}
                             </Button>
                           </>
                         )}
@@ -497,7 +593,9 @@ function AllAffiliates() {
               <div>
                 <h3 className="text-lg font-semibold">No users found</h3>
                 <p className="text-muted-foreground max-w-xs mx-auto">
-                  {searchTerm ? "Try adjusting your search criteria to find what you're looking for." : "No affiliate partners are registered in this category at the moment."}
+                  {searchTerm
+                    ? "Try adjusting your search criteria to find what you're looking for."
+                    : "No affiliate partners are registered in this category at the moment."}
                 </p>
               </div>
             </div>

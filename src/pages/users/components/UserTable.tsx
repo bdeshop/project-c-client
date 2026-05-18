@@ -14,8 +14,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { MoreHorizontal, Edit, Trash2 } from "lucide-react";
+import { MoreHorizontal, Edit, Trash2, Eye } from "lucide-react";
 import { User } from "../../../lib/queries";
+import { useNavigate } from "react-router-dom";
 
 interface UserTableProps {
   users: User[];
@@ -24,6 +25,8 @@ interface UserTableProps {
 }
 
 export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
+  const navigate = useNavigate();
+
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
       case "admin":
@@ -39,6 +42,10 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
 
   const getStatusBadgeVariant = (isActive: boolean) => {
     return isActive ? "default" : "secondary";
+  };
+
+  const handleViewDetails = (userId: string) => {
+    navigate(`/dashboard/users/${userId}`);
   };
 
   return (
@@ -153,6 +160,13 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="shadow-lg">
+                    <DropdownMenuItem
+                      onClick={() => handleViewDetails(user._id)}
+                      className="cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950"
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      View Details
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => onEditUser(user)}
                       className="cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950"

@@ -10,6 +10,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { DashboardLayout } from "./components/DashboardLayout";
 import { DashboardPage } from "./pages/DashboardPage";
 import { UsersPage } from "./pages/UsersPage";
+import { UserDetailPage } from "./pages/users/UserDetailPage";
 import { SlidersPage } from "./pages/SlidersPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { ReportsPage } from "./pages/ReportsPage";
@@ -51,6 +52,7 @@ import {
 import { OracleGamesPage } from "./pages/games/OracleGamesPage";
 import { DepositBonusPage } from "./pages/deposit-bonus";
 import AllAffiliates from "./pages/affiliate/AllAffiliates";
+import AffiliateDetailPage from "./pages/affiliate/AffiliateDetailPage";
 import ManageCommission from "./pages/affiliate/ManageCommission";
 import PayoutRequests from "./pages/affiliate/PayoutRequests";
 import PayoutDistributionHistory from "./pages/affiliate/PayoutDistributionHistory";
@@ -118,6 +120,7 @@ function App() {
         >
           <Route index element={<DashboardPage />} />
           <Route path="users" element={<UsersPage />} />
+          <Route path="users/:userId" element={<UserDetailPage />} />
           <Route path="slider" element={<SlidersPage />} />
           <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="reports" element={<ReportsPage />} />
@@ -173,6 +176,10 @@ function App() {
 
           {/* Affiliate Routes */}
           <Route path="affiliates" element={<AllAffiliates />} />
+          <Route
+            path="affiliates/:affiliateId"
+            element={<AffiliateDetailPage />}
+          />
           <Route path="affiliate/commission" element={<ManageCommission />} />
           <Route
             path="affiliate/payout-requests"
