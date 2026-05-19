@@ -200,33 +200,33 @@ export function BulkCreateTab() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-br from-slate-800/50 to-purple-800/50 border border-purple-500/20 rounded-xl p-6">
+      <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-6">
         <h2 className="text-2xl font-bold text-white mb-4">
           Bulk Create Games
         </h2>
-        <p className="text-purple-300 text-sm mb-6">
+        <p className="text-gray-400 text-sm mb-6">
           Import games from external Oracle Games API providers and create them
           in bulk
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
-            <Label className="text-purple-200 mb-2 block">
+            <Label className="text-gray-300 mb-2 block">
               Select Provider
             </Label>
             {providersLoading ? (
               <div className="flex items-center justify-center p-2">
-                <Loader2 className="w-4 h-4 animate-spin text-purple-500" />
+                <Loader2 className="w-4 h-4 animate-spin text-yellow-400" />
               </div>
             ) : (
               <Select
                 value={selectedProvider}
                 onValueChange={setSelectedProvider}
               >
-                <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                   <SelectValue placeholder="Choose provider" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-purple-500/30">
+                <SelectContent className="bg-gray-800 border-gray-700/50">
                   {providers.map((p: Provider) => (
                     <SelectItem
                       key={p.providerCode}
@@ -242,17 +242,17 @@ export function BulkCreateTab() {
           </div>
 
           <div>
-            <Label className="text-purple-200 mb-2 block">
+            <Label className="text-gray-300 mb-2 block">
               Select Category
             </Label>
             <Select
               value={selectedCategory}
               onValueChange={setSelectedCategory}
             >
-              <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+              <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                 <SelectValue placeholder="Choose category" />
               </SelectTrigger>
-              <SelectContent className="bg-slate-800 border-purple-500/30">
+              <SelectContent className="bg-gray-800 border-gray-700/50">
                 {categories.map((c: any) => (
                   <SelectItem key={c._id} value={c._id} className="text-white">
                     {c.nameEnglish}
@@ -264,7 +264,7 @@ export function BulkCreateTab() {
         </div>
 
         {selectedProvider && (
-          <div className="text-sm text-purple-300 mb-4">
+          <div className="text-sm text-gray-400 mb-4">
             Selected: {selectedGames.size} games
           </div>
         )}
@@ -272,11 +272,11 @@ export function BulkCreateTab() {
 
       {gamesLoading ? (
         <div className="flex justify-center items-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-yellow-400" />
         </div>
       ) : externalGames.length === 0 ? (
-        <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-purple-500/20">
-          <p className="text-purple-300">
+        <div className="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+          <p className="text-gray-400">
             {selectedProvider
               ? "No games found for this provider"
               : "Select a provider to view games"}
@@ -288,14 +288,14 @@ export function BulkCreateTab() {
             {externalGames.map((game: ExternalGame) => (
               <div
                 key={game._id}
-                className="bg-gradient-to-br from-slate-800/50 to-purple-800/50 border border-purple-500/20 rounded-xl p-4 hover:border-purple-500/50 transition-all duration-300"
+                className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4 hover:border-gray-600/50 transition-all duration-300"
               >
                 <div className="flex items-start gap-3 mb-3">
                   <input
                     type="checkbox"
                     checked={selectedGames.has(game.game_code)}
                     onChange={() => toggleGameSelection(game.game_code)}
-                    className="w-5 h-5 rounded mt-1 cursor-pointer"
+                    className="w-5 h-5 rounded mt-1 cursor-pointer accent-yellow-400"
                   />
                   <div className="flex-1">
                     <img
@@ -306,41 +306,41 @@ export function BulkCreateTab() {
                     <h3 className="text-white font-semibold text-sm">
                       {game.gameName}
                     </h3>
-                    <p className="text-purple-300 text-xs">{game.game_code}</p>
-                    <p className="text-purple-400 text-xs mt-1">
+                    <p className="text-gray-400 text-xs">{game.game_code}</p>
+                    <p className="text-gray-400 text-xs mt-1">
                       Type: {game.game_type}
                     </p>
                   </div>
                 </div>
 
                 {selectedGames.has(game.game_code) && (
-                  <div className="space-y-2 pt-3 border-t border-purple-500/20">
+                  <div className="space-y-2 pt-3 border-t border-gray-700/50">
                     <label className="flex items-center gap-2 cursor-pointer text-xs">
                       <input
                         type="checkbox"
                         checked={gameTags[game.game_code]?.isHot || false}
                         onChange={() => toggleTag(game.game_code, "isHot")}
-                        className="w-3 h-3 rounded"
+                        className="w-3 h-3 rounded accent-yellow-400"
                       />
-                      <span className="text-purple-200">🔥 Hot</span>
+                      <span className="text-gray-300">🔥 Hot</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer text-xs">
                       <input
                         type="checkbox"
                         checked={gameTags[game.game_code]?.isNew || false}
                         onChange={() => toggleTag(game.game_code, "isNew")}
-                        className="w-3 h-3 rounded"
+                        className="w-3 h-3 rounded accent-yellow-400"
                       />
-                      <span className="text-purple-200">✨ New</span>
+                      <span className="text-gray-300">✨ New</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer text-xs">
                       <input
                         type="checkbox"
                         checked={gameTags[game.game_code]?.isLobby || false}
                         onChange={() => toggleTag(game.game_code, "isLobby")}
-                        className="w-3 h-3 rounded"
+                        className="w-3 h-3 rounded accent-yellow-400"
                       />
-                      <span className="text-purple-200">⭐ Lobby</span>
+                      <span className="text-gray-300">⭐ Lobby</span>
                     </label>
                   </div>
                 )}
@@ -354,7 +354,7 @@ export function BulkCreateTab() {
               disabled={
                 bulkCreateMutation.isPending || selectedGames.size === 0
               }
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
             >
               {bulkCreateMutation.isPending ? (
                 <>

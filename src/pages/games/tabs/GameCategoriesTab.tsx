@@ -216,7 +216,7 @@ export function GameCategoriesTab() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-white">Game Categories</h2>
-          <p className="text-purple-300 text-sm mt-1">
+          <p className="text-gray-400 text-sm mt-1">
             Create and manage game categories with bilingual support
           </p>
         </div>
@@ -224,18 +224,18 @@ export function GameCategoriesTab() {
           <DialogTrigger asChild>
             <Button
               onClick={() => resetForm()}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-lg hover:shadow-yellow-400/50 transition-all duration-300"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Category
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-gradient-to-br from-slate-800 to-purple-800 border border-purple-500/20 text-white max-w-2xl">
+          <DialogContent className="bg-gray-900 border border-gray-700/50 text-white max-w-2xl">
             <DialogHeader>
               <DialogTitle>
                 {editingId ? "Edit Category" : "Create New Category"}
               </DialogTitle>
-              <DialogDescription className="text-purple-300">
+              <DialogDescription className="text-gray-400">
                 {editingId
                   ? "Update the category details"
                   : "Add a new game category with bilingual support"}
@@ -243,7 +243,7 @@ export function GameCategoriesTab() {
             </DialogHeader>
             <div className="space-y-4 max-h-[70vh] overflow-y-auto">
               <div>
-                <Label className="text-purple-200">
+                <Label className="text-gray-300">
                   Category Name (English)
                 </Label>
                 <Input
@@ -252,11 +252,11 @@ export function GameCategoriesTab() {
                   onChange={(e) =>
                     setFormData({ ...formData, nameEnglish: e.target.value })
                   }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
+                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-400"
                 />
               </div>
               <div>
-                <Label className="text-purple-200">
+                <Label className="text-gray-300">
                   Category Name (Bangla)
                 </Label>
                 <Input
@@ -265,17 +265,17 @@ export function GameCategoriesTab() {
                   onChange={(e) =>
                     setFormData({ ...formData, nameBangla: e.target.value })
                   }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
+                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-400"
                 />
               </div>
               <div>
-                <Label className="text-purple-200">Icon (Required)</Label>
+                <Label className="text-gray-300">Icon (Required)</Label>
                 <div className="flex gap-2 items-end">
                   <Input
                     type="file"
                     accept="image/*"
                     onChange={handleIconChange}
-                    className="bg-slate-700/50 border-purple-500/30 text-white flex-1"
+                    className="bg-gray-800/50 border-gray-700/50 text-white flex-1"
                   />
                   {iconPreview && (
                     <img
@@ -287,7 +287,7 @@ export function GameCategoriesTab() {
                 </div>
               </div>
               <div>
-                <Label className="text-purple-200">
+                <Label className="text-gray-300">
                   Banner Image (Optional)
                 </Label>
                 <div className="flex gap-2 items-end">
@@ -295,7 +295,7 @@ export function GameCategoriesTab() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="bg-slate-700/50 border-purple-500/30 text-white flex-1"
+                    className="bg-gray-800/50 border-gray-700/50 text-white flex-1"
                   />
                   {imagePreview && (
                     <img
@@ -307,17 +307,17 @@ export function GameCategoriesTab() {
                 </div>
               </div>
               <div>
-                <Label className="text-purple-200">Display Type</Label>
+                <Label className="text-gray-300">Display Type</Label>
                 <Select
                   value={formData.displayType}
                   onValueChange={(value: "providers" | "games") =>
                     setFormData({ ...formData, displayType: value })
                   }
                 >
-                  <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                  <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-purple-500/30">
+                  <SelectContent className="bg-gray-800 border-gray-700/50">
                     <SelectItem value="providers" className="text-white">
                       Providers
                     </SelectItem>
@@ -330,7 +330,7 @@ export function GameCategoriesTab() {
               <Button
                 onClick={handleSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold"
+                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
               >
                 {createMutation.isPending || updateMutation.isPending ? (
                   <>
@@ -348,11 +348,11 @@ export function GameCategoriesTab() {
 
       {isLoading ? (
         <div className="flex justify-center items-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-yellow-400" />
         </div>
       ) : categories.length === 0 ? (
-        <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-purple-500/20">
-          <p className="text-purple-300">
+        <div className="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+          <p className="text-gray-400">
             No categories found. Create one to get started!
           </p>
         </div>
@@ -361,14 +361,14 @@ export function GameCategoriesTab() {
           {categories.map((category: GameCategory) => (
             <div
               key={category._id}
-              className="bg-gradient-to-br from-slate-800/50 to-purple-800/50 border border-purple-500/20 rounded-xl p-4 hover:border-purple-500/50 transition-all duration-300 group"
+              className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4 hover:border-yellow-400/50 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
                   <h3 className="text-white font-semibold text-lg">
                     {category.nameEnglish}
                   </h3>
-                  <p className="text-purple-300 text-sm">
+                  <p className="text-gray-400 text-sm">
                     {category.nameBangla}
                   </p>
                 </div>
@@ -394,14 +394,14 @@ export function GameCategoriesTab() {
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <span className="text-purple-400">Type:</span>
-                  <span className="text-white bg-purple-500/20 px-2 py-1 rounded">
+                  <span className="text-gray-400">Type:</span>
+                  <span className="text-white bg-yellow-400/20 px-2 py-1 rounded">
                     {category.displayType}
                   </span>
                 </div>
                 {category.icon && (
                   <div className="flex items-center gap-2">
-                    <span className="text-purple-400">Icon:</span>
+                    <span className="text-gray-400">Icon:</span>
                     <img
                       src={getImageUrl(category.icon)}
                       alt="icon"

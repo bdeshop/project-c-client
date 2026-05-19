@@ -52,20 +52,20 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
     <div className="rounded-lg border border-border/50 overflow-hidden shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-700 dark:via-blue-700 dark:to-indigo-700 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 dark:hover:from-purple-600 dark:hover:via-blue-600 dark:hover:to-indigo-600 border-b-2 border-purple-400 dark:border-purple-500 transition-all duration-300">
-            <TableHead className="font-bold text-white dark:text-white bg-gradient-to-r from-transparent to-transparent">
+          <TableRow className="bg-yellow-400 hover:bg-yellow-500 border-b-2 border-yellow-500 transition-all duration-300">
+            <TableHead className="font-bold text-gray-900">
               User
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Role
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Status
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Last Login
             </TableHead>
-            <TableHead className="text-right font-bold text-white dark:text-white">
+            <TableHead className="text-right font-bold text-gray-900">
               Actions
             </TableHead>
           </TableRow>
@@ -76,21 +76,20 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
               key={user._id}
               className={`
                 transition-all duration-300 ease-in-out
-                hover:bg-gradient-to-r hover:from-purple-50 hover:via-blue-50 hover:to-indigo-50 
-                dark:hover:from-purple-950/40 dark:hover:via-blue-950/40 dark:hover:to-indigo-950/40
-                hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-purple-500
+                hover:bg-gray-700/40
+                hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-yellow-400
                 ${
                   index % 2 === 0
-                    ? "bg-white dark:bg-slate-950"
-                    : "bg-slate-50/50 dark:bg-slate-900/50"
+                    ? "bg-gray-800/30"
+                    : "bg-gray-800/10"
                 }
-                border-b border-slate-100 dark:border-slate-800
+                border-b border-gray-700/50
               `}
             >
               <TableCell className="py-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 dark:from-blue-600 dark:to-indigo-700 flex items-center justify-center shadow-md ring-2 ring-blue-100 dark:ring-blue-900">
-                    <span className="text-sm font-semibold text-white">
+                  <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center shadow-md ring-2 ring-yellow-300/50">
+                    <span className="text-sm font-semibold text-gray-900">
                       {user.username
                         ? user.username
                             .split(" ")
@@ -101,22 +100,22 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
                     </span>
                   </div>
                   <div>
-                    <div className="font-semibold text-slate-900 dark:text-slate-100">
+                    <div className="font-semibold text-white">
                       {user.username || "Unknown"}
                     </div>
-                    <div className="text-sm text-slate-600 dark:text-slate-400">
+                    <div className="text-sm text-gray-400">
                       {user.email || "No email"}
                     </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-500 mt-0.5">
-                      <span className="font-medium text-green-600 dark:text-green-400">
+                    <div className="text-xs text-gray-500 mt-0.5">
+                      <span className="font-medium text-yellow-400">
                         ${user.balance || 0}
                       </span>
                       {" • "}
                       <span
                         className={
                           user.isVerified
-                            ? "text-blue-600 dark:text-blue-400"
-                            : "text-amber-600 dark:text-amber-400"
+                            ? "text-yellow-400"
+                            : "text-amber-400"
                         }
                       >
                         {user.isVerified ? "✓ Verified" : "⚠ Unverified"}
@@ -143,7 +142,7 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
                   {user.isActive ? "Active" : "Inactive"}
                 </Badge>
               </TableCell>
-              <TableCell className="text-slate-600 dark:text-slate-400 font-medium">
+              <TableCell className="text-gray-400 font-medium">
                 {user.lastLogin
                   ? new Date(user.lastLogin).toLocaleDateString()
                   : "Never"}
@@ -154,7 +153,7 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                      className="hover:bg-gray-700/50 transition-colors"
                     >
                       <MoreHorizontal className="w-4 h-4" />
                     </Button>
@@ -162,20 +161,20 @@ export function UserTable({ users, onEditUser, onDeleteUser }: UserTableProps) {
                   <DropdownMenuContent align="end" className="shadow-lg">
                     <DropdownMenuItem
                       onClick={() => handleViewDetails(user._id)}
-                      className="cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950"
+                      className="cursor-pointer hover:bg-yellow-400/10 text-gray-300 hover:text-yellow-400"
                     >
                       <Eye className="w-4 h-4 mr-2" />
                       View Details
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => onEditUser(user)}
-                      className="cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-950"
+                      className="cursor-pointer hover:bg-yellow-400/10 text-gray-300 hover:text-yellow-400"
                     >
                       <Edit className="w-4 h-4 mr-2" />
                       Edit User
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      className="text-destructive cursor-pointer hover:bg-red-50 dark:hover:bg-red-950"
+                      className="text-red-400 cursor-pointer hover:bg-red-500/10"
                       onClick={() => onDeleteUser(user)}
                     >
                       <Trash2 className="w-4 h-4 mr-2" />

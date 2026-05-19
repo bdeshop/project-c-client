@@ -54,26 +54,26 @@ export function WithdrawTable({
     <div className="rounded-lg border border-border/50 overflow-hidden shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-700 dark:via-blue-700 dark:to-indigo-700 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 dark:hover:from-purple-600 dark:hover:via-blue-600 dark:hover:to-indigo-600 border-b-2 border-purple-400 dark:border-purple-500 transition-all duration-300">
-            <TableHead className="font-bold text-white dark:text-white">
+          <TableRow className="bg-yellow-400 border-b-2 border-yellow-500 transition-all duration-300">
+            <TableHead className="font-bold text-gray-900">
               Method
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Min/Max
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Fee
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Processing Time
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               User Fields
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Status
             </TableHead>
-            <TableHead className="font-bold text-white dark:text-white">
+            <TableHead className="font-bold text-gray-900">
               Actions
             </TableHead>
           </TableRow>
@@ -81,12 +81,10 @@ export function WithdrawTable({
         <TableBody>
           {methods.map((method, index) => (
             <TableRow
-              key={method._id}
-              className={`
+              key={method._id}                className={`
                 transition-all duration-300 ease-in-out
-                hover:bg-gradient-to-r hover:from-purple-50 hover:via-blue-50 hover:to-indigo-50 
-                dark:hover:from-purple-950/40 dark:hover:via-blue-950/40 dark:hover:to-indigo-950/40
-                hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-purple-500
+                hover:bg-gray-700/40
+                hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-yellow-400
                 ${
                   index % 2 === 0
                     ? "bg-white dark:bg-slate-950"

@@ -241,7 +241,7 @@ function ManageCommission() {
           { label: "Total Affiliates", value: stats?.platformTotals?.totalAffiliates || 0, icon: Users, color: "text-blue-500 bg-blue-500/10" },
           { label: "Active Affiliates", value: stats?.platformTotals?.activeAffiliates || 0, icon: CheckCircle2, color: "text-emerald-500 bg-emerald-500/10" },
           { label: "Total Earnings", value: `৳${(stats?.platformTotals?.totalEarnings || 0).toLocaleString()}`, icon: DollarSign, color: "text-primary bg-primary/10" },
-          { label: "Network Users", value: stats?.platformTotals?.totalUsers || 0, icon: Users, color: "text-purple-500 bg-purple-500/10" },
+          { label: "Network Users", value: stats?.platformTotals?.totalUsers || 0, icon: Users, color: "text-yellow-500 bg-yellow-500/10" },
         ].map((stat, idx) => (
           <div key={idx} className="rounded-2xl border bg-card p-6 shadow-sm dark:border-border">
             <div className="flex items-center justify-between mb-4">
@@ -404,7 +404,7 @@ function ManageCommission() {
           {/* Settings Section */}
           <div className="rounded-3xl border bg-card shadow-sm dark:border-border p-8 space-y-8">
             <div className="flex items-center gap-4">
-              <div className="h-10 w-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-xl bg-yellow-400/10 text-yellow-400 flex items-center justify-center">
                 <Settings size={20} />
               </div>
               <h2 className="text-lg font-bold">Payout Rules</h2>

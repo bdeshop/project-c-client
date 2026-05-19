@@ -31,7 +31,7 @@ export default function ViewPromotionPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
         </div>
       </div>
     );
@@ -262,7 +262,7 @@ export default function ViewPromotionPage() {
                       <label className="text-sm font-medium text-gray-500">
                         Bonus Value
                       </label>
-                      <p className="text-lg font-semibold text-purple-700">
+                      <p className="text-lg font-semibold text-yellow-400">
                         {promotion.bonus_settings.bonus_value}
                         {promotion.bonus_settings.bonus_type === "percentage"
                           ? "%"
@@ -274,7 +274,7 @@ export default function ViewPromotionPage() {
                         <label className="text-sm font-medium text-gray-500">
                           Maximum Bonus Limit
                         </label>
-                        <p className="text-lg font-semibold text-purple-700">
+                        <p className="text-lg font-semibold text-yellow-400">
                           {promotion.bonus_settings.max_bonus_limit}
                         </p>
                       </div>
@@ -284,7 +284,7 @@ export default function ViewPromotionPage() {
                         <label className="text-sm font-medium text-gray-500">
                           Minimum Deposit Amount
                         </label>
-                        <p className="text-lg font-semibold text-purple-700">
+                        <p className="text-lg font-semibold text-yellow-400">
                           {promotion.bonus_settings.min_deposit_amount}
                         </p>
                       </div>

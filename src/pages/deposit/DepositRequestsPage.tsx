@@ -191,7 +191,7 @@ export default function DepositRequestsPage() {
                   {mockDepositRequests.length}
                 </p>
               </div>
-              <DollarSign className="h-8 w-8 text-blue-600" />
+              <DollarSign className="h-8 w-8 text-yellow-400" />
             </div>
           </CardContent>
         </Card>

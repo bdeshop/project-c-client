@@ -126,11 +126,11 @@ export function ProfileInfo({ user }: ProfileInfoProps) {
               </div>
             </div>
 
-            <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+            <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <div className="text-sm font-medium text-muted-foreground mb-1">
                 Total Withdrawals
               </div>
-              <div className="text-xl font-bold text-purple-600 dark:text-purple-400">
+              <div className="text-xl font-bold text-orange-600 dark:text-orange-400">
                 {user.currency} {user.withdraw.toFixed(2)}
               </div>
             </div>

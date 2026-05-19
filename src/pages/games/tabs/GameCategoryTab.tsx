@@ -594,7 +594,7 @@ function GameCategoryTab() {
             .map((category) => (
               <div
                 key={category._id}
-                className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-white/10 p-4 transition-all duration-300 hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1"
+                className="group relative flex flex-col rounded-2xl bg-slate-900/40 border border-white/10 p-4 transition-all duration-300 hover:border-yellow-400/40 hover:shadow-xl hover:shadow-yellow-400/5 hover:-translate-y-1"
               >
                 {/* Compact Card Cover Banner */}
                 <div className="relative h-28 w-full rounded-xl overflow-hidden mb-3 border border-white/5 bg-slate-950">
@@ -626,13 +626,13 @@ function GameCategoryTab() {
                   <div className="absolute top-2 right-2 flex bg-black/60 backdrop-blur-md border border-white/10 rounded-lg p-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button
                       onClick={() => handleEdit(category)}
-                      className="p-1.5 text-purple-300 hover:text-white transition-colors"
+                      className="p-1.5 text-gray-300 hover:text-white transition-colors"
                     >
                       <Edit size={14} />
                     </button>
                     <button
                       onClick={() => handleDelete(category._id)}
-                      className="p-1.5 text-purple-300 hover:text-red-400 transition-colors"
+                      className="p-1.5 text-gray-300 hover:text-red-400 transition-colors"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -645,7 +645,7 @@ function GameCategoryTab() {
                     <h3 className="text-base font-black text-white leading-tight truncate">
                       {category.nameEnglish || category.name}
                     </h3>
-                    <p className="text-purple-200/60 font-bengali font-bold text-xs mt-0.5 truncate">
+                    <p className="text-gray-400 font-bengali font-bold text-xs mt-0.5 truncate">
                       {category.nameBangla || "N/A"}
                     </p>
                   </div>
@@ -658,13 +658,13 @@ function GameCategoryTab() {
                         <Badge
                           key={idx}
                           variant="secondary"
-                          className="rounded bg-white/5 border border-white/10 text-purple-200 font-bold text-[9px] uppercase tracking-wider py-0.5 px-1.5"
+                          className="rounded bg-white/5 border border-white/10 text-gray-300 font-bold text-[9px] uppercase tracking-wider py-0.5 px-1.5"
                         >
                           {typeof sub === "string" ? sub : sub.name}
                         </Badge>
                       ))
                     ) : (
-                      <span className="text-[9px] font-semibold text-purple-300/40 uppercase italic">
+                      <span className="text-[9px] font-semibold text-gray-500 uppercase italic">
                         No Sub-categories
                       </span>
                     )}
@@ -672,7 +672,7 @@ function GameCategoryTab() {
                       category.subCategories.length > 2 && (
                         <Badge
                           variant="secondary"
-                          className="rounded bg-purple-500/10 border border-purple-500/20 text-purple-300 font-bold text-[9px] py-0.5 px-1.5"
+                          className="rounded bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 font-bold text-[9px] py-0.5 px-1.5"
                         >
                           +{category.subCategories.length - 2}
                         </Badge>

@@ -40,17 +40,17 @@ export function UpcomingMatchTable({
     <div className="rounded-lg border border-border/50 overflow-hidden shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-700 dark:via-blue-700 dark:to-indigo-700 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 dark:hover:from-purple-600 dark:hover:via-blue-600 dark:hover:to-indigo-600 border-b-2 border-purple-400 dark:border-purple-500 transition-all duration-300">
-            <TableHead className="font-bold text-white">Match</TableHead>
-            <TableHead className="font-bold text-white">Category</TableHead>
-            <TableHead className="font-bold text-white">Date & Time</TableHead>
-            <TableHead className="font-bold text-white">Team A</TableHead>
-            <TableHead className="font-bold text-white">Odds A</TableHead>
-            <TableHead className="font-bold text-white">Team B</TableHead>
-            <TableHead className="font-bold text-white">Odds B</TableHead>
-            <TableHead className="font-bold text-white">Status</TableHead>
+          <TableRow className="bg-yellow-400 hover:bg-yellow-500 border-b-2 border-yellow-500 transition-all duration-300">
+            <TableHead className="font-bold text-gray-900">Match</TableHead>
+            <TableHead className="font-bold text-gray-900">Category</TableHead>
+            <TableHead className="font-bold text-gray-900">Date & Time</TableHead>
+            <TableHead className="font-bold text-gray-900">Team A</TableHead>
+            <TableHead className="font-bold text-gray-900">Odds A</TableHead>
+            <TableHead className="font-bold text-gray-900">Team B</TableHead>
+            <TableHead className="font-bold text-gray-900">Odds B</TableHead>
+            <TableHead className="font-bold text-gray-900">Status</TableHead>
             {isAdmin && (
-              <TableHead className="text-right font-bold text-white">
+              <TableHead className="text-right font-bold text-gray-900">
                 Actions
               </TableHead>
             )}
@@ -62,19 +62,18 @@ export function UpcomingMatchTable({
               key={upcomingMatch._id}
               className={`
               transition-all duration-300 ease-in-out
-              hover:bg-gradient-to-r hover:from-purple-50 hover:via-blue-50 hover:to-indigo-50 
-              dark:hover:from-purple-950/40 dark:hover:via-blue-950/40 dark:hover:to-indigo-950/40
-              hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-purple-500
+              hover:bg-gray-700/40
+              hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-yellow-400
               ${
                 index % 2 === 0
-                  ? "bg-white dark:bg-slate-950"
-                  : "bg-slate-50/50 dark:bg-slate-900/50"
+                  ? "bg-gray-800/30"
+                  : "bg-gray-800/10"
               }
-              border-b border-slate-100 dark:border-slate-800
+              border-b border-gray-700/50
             `}
             >
               <TableCell className="py-4">
-                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                <div className="font-semibold text-white">
                   {upcomingMatch.matchType}
                 </div>
               </TableCell>
@@ -84,17 +83,17 @@ export function UpcomingMatchTable({
                 </Badge>
               </TableCell>
               <TableCell>
-                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                <div className="font-semibold text-white">
                   {formatDate(upcomingMatch.matchDate)}
                 </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">
+                <div className="text-sm text-gray-400">
                   {getDaysUntilMatch(upcomingMatch.matchDate) > 0
                     ? `${getDaysUntilMatch(upcomingMatch.matchDate)} days`
                     : "Today"}
                 </div>
               </TableCell>
               <TableCell>
-                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                <div className="font-semibold text-white">
                   {upcomingMatch.teamA.name}
                 </div>
               </TableCell>
@@ -104,7 +103,7 @@ export function UpcomingMatchTable({
                 </Badge>
               </TableCell>
               <TableCell>
-                <div className="font-semibold text-slate-900 dark:text-slate-100">
+                <div className="font-semibold text-white">
                   {upcomingMatch.teamB.name}
                 </div>
               </TableCell>
@@ -133,7 +132,7 @@ export function UpcomingMatchTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onEditUpcomingMatch?.(upcomingMatch)}
-                      className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+                      className="hover:bg-gray-700/50 transition-colors"
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
@@ -141,7 +140,7 @@ export function UpcomingMatchTable({
                       variant="ghost"
                       size="sm"
                       onClick={() => onDeleteUpcomingMatch?.(upcomingMatch._id)}
-                      className="hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
+                      className="hover:bg-red-500/10 transition-colors text-red-400"
                     >
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>

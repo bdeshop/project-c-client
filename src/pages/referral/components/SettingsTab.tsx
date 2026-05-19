@@ -203,9 +203,9 @@ function ReferralDataDisplay({ data }: { data: ReferralCodesWithUsers }) {
             {data.data.summary.totalReferredUsers}
           </p>
         </div>
-        <div className="bg-purple-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-purple-800">Total Earnings</h3>
-          <p className="text-2xl font-bold text-purple-600">
+        <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
+          <h3 className="font-semibold text-yellow-400">Total Earnings</h3>
+          <p className="text-2xl font-bold text-yellow-400">
             ${data.data.summary.totalEarnings}
           </p>
         </div>

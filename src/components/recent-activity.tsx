@@ -65,7 +65,7 @@ export function RecentActivity() {
             activities.map((activity, index) => (
               <div key={index} className="flex items-center space-x-4">
                 <Avatar className="h-9 w-9">
-                  <AvatarFallback className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
+                  <AvatarFallback className="bg-yellow-400 text-gray-900">
                     {activity.user
                       .split(" ")
                       .map((n) => n[0])
@@ -91,7 +91,7 @@ export function RecentActivity() {
                   <p className="text-sm text-muted-foreground">
                     {activity.action}
                     {activity.amount && (
-                      <span className="font-semibold text-green-600 dark:text-green-400">
+                      <span className="font-semibold text-yellow-400">
                         {" "}
                         ৳{activity.amount.toLocaleString()}
                       </span>

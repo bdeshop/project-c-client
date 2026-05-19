@@ -36,12 +36,12 @@ export function SliderTable({
     <div className="rounded-lg border border-border/50 overflow-hidden shadow-sm">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-700 dark:via-blue-700 dark:to-indigo-700 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 dark:hover:from-purple-600 dark:hover:via-blue-600 dark:hover:to-indigo-600 border-b-2 border-purple-400 dark:border-purple-500 transition-all duration-300">
-            <TableHead className="font-bold text-white">Title</TableHead>
-            <TableHead className="font-bold text-white">Status</TableHead>
-            <TableHead className="font-bold text-white">Image</TableHead>
-            <TableHead className="font-bold text-white">Created At</TableHead>
-            <TableHead className="font-bold text-white">Actions</TableHead>
+          <TableRow className="bg-yellow-400 hover:bg-yellow-500 border-b-2 border-yellow-500 transition-all duration-300">
+            <TableHead className="font-bold text-gray-900">Title</TableHead>
+            <TableHead className="font-bold text-gray-900">Status</TableHead>
+            <TableHead className="font-bold text-gray-900">Image</TableHead>
+            <TableHead className="font-bold text-gray-900">Created At</TableHead>
+            <TableHead className="font-bold text-gray-900">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,18 +50,17 @@ export function SliderTable({
               key={slider._id}
               className={`
                 transition-all duration-300 ease-in-out
-                hover:bg-gradient-to-r hover:from-purple-50 hover:via-blue-50 hover:to-indigo-50 
-                dark:hover:from-purple-950/40 dark:hover:via-blue-950/40 dark:hover:to-indigo-950/40
-                hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-purple-500
+                hover:bg-gray-700/40
+                hover:shadow-md hover:scale-[1.01] hover:border-l-4 hover:border-l-yellow-400
                 ${
                   index % 2 === 0
-                    ? "bg-white dark:bg-slate-950"
-                    : "bg-slate-50/50 dark:bg-slate-900/50"
+                    ? "bg-gray-800/30"
+                    : "bg-gray-800/10"
                 }
-                border-b border-slate-100 dark:border-slate-800
+                border-b border-gray-700/50
               `}
             >
-              <TableCell className="font-semibold text-slate-900 dark:text-slate-100 py-4">
+              <TableCell className="font-semibold text-white py-4">
                 {slider.title}
               </TableCell>
               <TableCell>
@@ -77,11 +76,11 @@ export function SliderTable({
                   <img
                     src={`${API_URL}/${slider.imageUrl}`}
                     alt={slider.title}
-                    className="w-16 h-16 object-cover rounded-lg shadow-md ring-2 ring-slate-200 dark:ring-slate-700"
+                    className="w-16 h-16 object-cover rounded-lg shadow-md ring-2 ring-gray-700/50"
                   />
                 )}
               </TableCell>
-              <TableCell className="text-slate-600 dark:text-slate-400 font-medium">
+              <TableCell className="text-gray-400 font-medium">
                 {new Date(slider.createdAt).toLocaleDateString()}
               </TableCell>
               <TableCell>
@@ -90,7 +89,7 @@ export function SliderTable({
                     variant="outline"
                     size="sm"
                     onClick={() => onEditSlider(slider)}
-                    className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+                    className="hover:bg-gray-700/50 transition-colors"
                   >
                     <Pencil className="w-4 h-4" />
                   </Button>
@@ -98,7 +97,7 @@ export function SliderTable({
                     variant="outline"
                     size="sm"
                     onClick={() => onDeleteSlider(slider._id)}
-                    className="hover:bg-red-50 dark:hover:bg-red-950 transition-colors"
+                    className="hover:bg-red-500/10 transition-colors text-red-400"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

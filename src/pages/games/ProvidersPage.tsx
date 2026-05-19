@@ -181,7 +181,7 @@ export function ProvidersPage() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-white">Game Providers</h2>
-          <p className="text-purple-300 text-sm mt-1">
+          <p className="text-gray-400 text-sm mt-1">
             Manage game providers and their logos
           </p>
         </div>
@@ -189,18 +189,18 @@ export function ProvidersPage() {
           <DialogTrigger asChild>
             <Button
               onClick={() => resetForm()}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-lg hover:shadow-yellow-400/50 transition-all duration-300"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Provider
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-gradient-to-br from-slate-800 to-purple-800 border border-purple-500/20 text-white">
+          <DialogContent className="bg-gray-900 border border-gray-700/50 text-white">
             <DialogHeader>
               <DialogTitle>
                 {editingId ? "Edit Provider" : "Create New Provider"}
               </DialogTitle>
-              <DialogDescription className="text-purple-300">
+              <DialogDescription className="text-gray-400">
                 {editingId
                   ? "Update the provider details"
                   : "Add a new game provider"}
@@ -208,21 +208,21 @@ export function ProvidersPage() {
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label className="text-purple-200">Provider Name</Label>
+                <Label className="text-gray-300">Provider Name</Label>
                 <Input
                   placeholder="e.g., Pragmatic Play"
                   value={formData.name}
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
+                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-400"
                 />
               </div>
               <div>
-                <Label className="text-purple-200">Provider Logo</Label>
+                <Label className="text-gray-300">Provider Logo</Label>
                 <div className="flex gap-4">
                   {logoPreview && (
-                    <div className="w-20 h-20 rounded-lg bg-slate-700/50 border border-purple-500/30 flex items-center justify-center overflow-hidden">
+                    <div                  className="w-20 h-20 rounded-lg bg-gray-800/50 border border-gray-700/50 flex items-center justify-center overflow-hidden">
                       <img
                         src={logoPreview}
                         alt="logo preview"
@@ -235,7 +235,7 @@ export function ProvidersPage() {
                       type="file"
                       accept="image/*"
                       onChange={handleLogoChange}
-                      className="w-full px-3 py-2 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-gray-900 hover:file:bg-yellow-500"
                     />
                   </div>
                 </div>
@@ -243,7 +243,7 @@ export function ProvidersPage() {
               <Button
                 onClick={handleSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold"
+                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
               >
                 {createMutation.isPending || updateMutation.isPending ? (
                   <>
@@ -262,11 +262,11 @@ export function ProvidersPage() {
       {/* Providers Grid */}
       {isLoading ? (
         <div className="flex justify-center items-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-yellow-400" />
         </div>
       ) : providers.length === 0 ? (
-        <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-purple-500/20">
-          <p className="text-purple-300">
+        <div className="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+          <p className="text-gray-400">
             No providers found. Create one to get started!
           </p>
         </div>
@@ -275,7 +275,7 @@ export function ProvidersPage() {
           {providers.map((provider: Provider) => (
             <div
               key={provider._id}
-              className="bg-gradient-to-br from-slate-800/50 to-purple-800/50 border border-purple-500/20 rounded-xl p-4 hover:border-purple-500/50 transition-all duration-300 group"
+              className="bg-gray-800/50 border border-gray-700/50 rounded-xl p-4 hover:border-yellow-400/50 transition-all duration-300 group"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
@@ -299,7 +299,7 @@ export function ProvidersPage() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleEdit(provider)}
-                    className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/20"
+                    className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/20"
                   >
                     <Edit2 className="w-4 h-4" />
                   </Button>

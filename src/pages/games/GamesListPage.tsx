@@ -244,7 +244,7 @@ export function GamesListPage() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-white">Games</h2>
-          <p className="text-purple-300 text-sm mt-1">
+          <p className="text-gray-400 text-sm mt-1">
             Manage all games in the system
           </p>
         </div>
@@ -252,47 +252,47 @@ export function GamesListPage() {
           <DialogTrigger asChild>
             <Button
               onClick={() => resetForm()}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-lg hover:shadow-yellow-400/30 transition-all duration-300"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Game
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-gradient-to-br from-slate-800 to-purple-800 border border-purple-500/20 text-white max-w-2xl">
+          <DialogContent className="bg-gray-900 border border-gray-700/50 text-white max-w-2xl">
             <DialogHeader>
               <DialogTitle>
                 {editingId ? "Edit Game" : "Create New Game"}
               </DialogTitle>
-              <DialogDescription className="text-purple-300">
+              <DialogDescription className="text-gray-400">
                 {editingId ? "Update the game details" : "Add a new game"}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 max-h-96 overflow-y-auto">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-purple-200">Game UUID</Label>
+                  <Label className="text-gray-300">Game UUID</Label>
                   <Input
                     placeholder="e.g., game_001"
                     value={formData.gameUuid}
                     onChange={(e) =>
                       setFormData({ ...formData, gameUuid: e.target.value })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
+                    className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-500"
                     disabled={!!editingId}
                   />
                 </div>
                 <div>
-                  <Label className="text-purple-200">Category</Label>
+                  <Label className="text-gray-300">Category</Label>
                   <Select
                     value={formData.category}
                     onValueChange={(value) =>
                       setFormData({ ...formData, category: value })
                     }
                   >
-                    <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                    <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-purple-500/30">
+                    <SelectContent className="bg-gray-800 border-gray-700/50">
                       {categories.map((cat: GameCategory) => (
                         <SelectItem key={cat._id} value={cat._id}>
                           {cat.nameEnglish}
@@ -303,32 +303,32 @@ export function GamesListPage() {
                 </div>
               </div>
               <div>
-                <Label className="text-purple-200">Game Name (English)</Label>
+                <Label className="text-gray-300">Game Name (English)</Label>
                 <Input
                   placeholder="e.g., Mega Slots"
                   value={formData.nameEnglish}
                   onChange={(e) =>
                     setFormData({ ...formData, nameEnglish: e.target.value })
                   }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
+                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-500"
                 />
               </div>
               <div>
-                <Label className="text-purple-200">Game Name (Bangla)</Label>
+                <Label className="text-gray-300">Game Name (Bangla)</Label>
                 <Input
                   placeholder="e.g., মেগা স্লট"
                   value={formData.nameBangla}
                   onChange={(e) =>
                     setFormData({ ...formData, nameBangla: e.target.value })
                   }
-                  className="bg-slate-700/50 border-purple-500/30 text-white placeholder:text-purple-400"
+                  className="bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-500"
                 />
               </div>
               <div>
-                <Label className="text-purple-200">Game Image</Label>
+                <Label className="text-gray-300">Game Image</Label>
                 <div className="flex gap-4">
                   {imagePreview && (
-                    <div className="w-20 h-20 rounded-lg bg-slate-700/50 border border-purple-500/30 flex items-center justify-center overflow-hidden">
+                    <div className="w-20 h-20 rounded-lg bg-gray-800/50 border border-gray-700/50 flex items-center justify-center overflow-hidden">
                       <img
                         src={imagePreview}
                         alt="preview"
@@ -341,16 +341,16 @@ export function GamesListPage() {
                       type="file"
                       accept="image/*"
                       onChange={handleImageChange}
-                      className="w-full px-3 py-2 bg-slate-700/50 border border-purple-500/30 rounded-lg text-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700"
+                      className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-gray-900 hover:file:bg-yellow-500"
                     />
                   </div>
                 </div>
               </div>
               <div className="space-y-3">
-                <Label className="text-purple-200">Game Flags</Label>
+                <Label className="text-gray-300">Game Flags</Label>
                 <div className="space-y-2">
                   <div
-                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-purple-500/10 cursor-pointer transition-colors"
+                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700/30 cursor-pointer transition-colors"
                     onClick={() =>
                       setFormData({ ...formData, isHot: !formData.isHot })
                     }
@@ -358,20 +358,20 @@ export function GamesListPage() {
                     <div
                       className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
                         formData.isHot
-                          ? "bg-purple-600 border-purple-600"
-                          : "border-purple-400"
+                          ? "bg-yellow-400 border-yellow-400"
+                          : "border-gray-500"
                       }`}
                     >
                       {formData.isHot && (
-                        <Check className="w-3 h-3 text-white" />
+                        <Check className="w-3 h-3 text-gray-900" />
                       )}
                     </div>
-                    <Label className="text-purple-200 cursor-pointer">
+                    <Label className="text-gray-300 cursor-pointer">
                       Mark as Hot Game
                     </Label>
                   </div>
                   <div
-                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-purple-500/10 cursor-pointer transition-colors"
+                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700/30 cursor-pointer transition-colors"
                     onClick={() =>
                       setFormData({
                         ...formData,
@@ -382,20 +382,20 @@ export function GamesListPage() {
                     <div
                       className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
                         formData.isNewGame
-                          ? "bg-purple-600 border-purple-600"
-                          : "border-purple-400"
+                          ? "bg-yellow-400 border-yellow-400"
+                          : "border-gray-500"
                       }`}
                     >
                       {formData.isNewGame && (
-                        <Check className="w-3 h-3 text-white" />
+                        <Check className="w-3 h-3 text-gray-900" />
                       )}
                     </div>
-                    <Label className="text-purple-200 cursor-pointer">
+                    <Label className="text-gray-300 cursor-pointer">
                       Mark as New Game
                     </Label>
                   </div>
                   <div
-                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-purple-500/10 cursor-pointer transition-colors"
+                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-700/30 cursor-pointer transition-colors"
                     onClick={() =>
                       setFormData({ ...formData, isLobby: !formData.isLobby })
                     }
@@ -403,15 +403,15 @@ export function GamesListPage() {
                     <div
                       className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
                         formData.isLobby
-                          ? "bg-purple-600 border-purple-600"
-                          : "border-purple-400"
+                          ? "bg-yellow-400 border-yellow-400"
+                          : "border-gray-500"
                       }`}
                     >
                       {formData.isLobby && (
-                        <Check className="w-3 h-3 text-white" />
+                        <Check className="w-3 h-3 text-gray-900" />
                       )}
                     </div>
-                    <Label className="text-purple-200 cursor-pointer">
+                    <Label className="text-gray-300 cursor-pointer">
                       Show in Lobby
                     </Label>
                   </div>
@@ -420,7 +420,7 @@ export function GamesListPage() {
               <Button
                 onClick={handleSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold"
+                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
               >
                 {createMutation.isPending || updateMutation.isPending ? (
                   <>
@@ -438,23 +438,23 @@ export function GamesListPage() {
 
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-3 w-5 h-5 text-purple-400" />
+        <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
         <Input
           placeholder="Search games by name or UUID..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-slate-800/50 border-purple-500/30 text-white placeholder:text-purple-400"
+          className="pl-10 bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-500"
         />
       </div>
 
       {/* Games Table */}
       {isLoading ? (
         <div className="flex justify-center items-center py-12">
-          <Loader2 className="w-8 h-8 animate-spin text-purple-500" />
+          <Loader2 className="w-8 h-8 animate-spin text-yellow-400" />
         </div>
       ) : filteredGames.length === 0 ? (
-        <div className="text-center py-12 bg-slate-800/50 rounded-xl border border-purple-500/20">
-          <p className="text-purple-300">
+        <div className="text-center py-12 bg-gray-800/50 rounded-xl border border-gray-700/50">
+          <p className="text-gray-400">
             {games.length === 0
               ? "No games found. Create one to get started!"
               : "No games match your search."}
@@ -464,20 +464,20 @@ export function GamesListPage() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-purple-500/20 bg-purple-500/10">
-                <th className="px-4 py-3 text-left text-purple-200 font-semibold">
+              <tr className="border-b border-gray-700/50 bg-gray-700/30">
+                <th className="px-4 py-3 text-left text-yellow-400 font-semibold">
                   Game
                 </th>
-                <th className="px-4 py-3 text-left text-purple-200 font-semibold">
+                <th className="px-4 py-3 text-left text-yellow-400 font-semibold">
                   UUID
                 </th>
-                <th className="px-4 py-3 text-left text-purple-200 font-semibold">
+                <th className="px-4 py-3 text-left text-yellow-400 font-semibold">
                   Category
                 </th>
-                <th className="px-4 py-3 text-left text-purple-200 font-semibold">
+                <th className="px-4 py-3 text-left text-yellow-400 font-semibold">
                   Flags
                 </th>
-                <th className="px-4 py-3 text-right text-purple-200 font-semibold">
+                <th className="px-4 py-3 text-right text-yellow-400 font-semibold">
                   Actions
                 </th>
               </tr>
@@ -486,7 +486,7 @@ export function GamesListPage() {
               {filteredGames.map((game: Game) => (
                 <tr
                   key={game._id}
-                  className="border-b border-purple-500/10 hover:bg-purple-500/10 transition-colors"
+                  className="border-b border-gray-700/30 hover:bg-gray-700/30 transition-colors"
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
@@ -499,14 +499,14 @@ export function GamesListPage() {
                         <p className="text-white font-semibold">
                           {game.nameEnglish}
                         </p>
-                        <p className="text-purple-300 text-sm">
+                        <p className="text-gray-400 text-sm">
                           {game.nameBangla}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-purple-300">{game.gameUuid}</td>
-                  <td className="px-4 py-3 text-purple-300">
+                  <td className="px-4 py-3 text-gray-400">{game.gameUuid}</td>
+                  <td className="px-4 py-3 text-gray-400">
                     {game.category.nameEnglish}
                   </td>
                   <td className="px-4 py-3">
@@ -534,7 +534,7 @@ export function GamesListPage() {
                         size="sm"
                         variant="ghost"
                         onClick={() => handleEdit(game)}
-                        className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/20"
+                        className="text-yellow-400 hover:text-yellow-300 hover:bg-gray-700/50"
                       >
                         <Edit2 className="w-4 h-4" />
                       </Button>

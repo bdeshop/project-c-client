@@ -266,14 +266,14 @@ export function AffiliateContentPage() {
           <Button
             onClick={saveContent}
             disabled={saving}
-            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+            className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
           >
             {saving ? "Saving..." : "Save All Changes"}
           </Button>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-purple-500/20">
+        <div className="flex gap-2 border-b border-gray-700/50">
           {["banner", "slides", "features", "commission", "main", "footer"].map(
             (tab) => (
               <button
@@ -281,7 +281,7 @@ export function AffiliateContentPage() {
                 onClick={() => setActiveTab(tab as any)}
                 className={`px-4 py-3 font-semibold capitalize transition-all ${
                   activeTab === tab
-                    ? "border-b-2 border-purple-600 text-purple-400"
+                    ? "border-b-2 border-yellow-400 text-yellow-400"
                     : "text-gray-400 hover:text-gray-300"
                 }`}
               >
@@ -295,9 +295,9 @@ export function AffiliateContentPage() {
         {activeTab === "slides" && (
           <div className="space-y-6">
             {/* Add New Slide Card */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2">
                   <Plus className="w-5 h-5" />
                   Add New Slide
                 </CardTitle>
@@ -312,7 +312,7 @@ export function AffiliateContentPage() {
                       onChange={(e) =>
                         setNewSlide({ ...newSlide, titleEn: e.target.value })
                       }
-                      className="bg-slate-800 border-purple-500/30 text-white placeholder-gray-500 focus:border-purple-500"
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 focus:border-yellow-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -323,7 +323,7 @@ export function AffiliateContentPage() {
                       onChange={(e) =>
                         setNewSlide({ ...newSlide, titleBn: e.target.value })
                       }
-                      className="bg-slate-800 border-purple-500/30 text-white placeholder-gray-500 focus:border-purple-500"
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 focus:border-yellow-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -334,18 +334,18 @@ export function AffiliateContentPage() {
                       onChange={(e) =>
                         setNewSlide({ ...newSlide, subtitleEn: e.target.value })
                       }
-                      className="bg-slate-800 border-purple-500/30 text-white placeholder-gray-500 focus:border-purple-500"
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 focus:border-yellow-400"
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-gray-300">Subtitle (Bangla)</Label>
                     <Input
-                      placeholder="e.g., २५०% দৈনিক স্পোর্টস বোনাস"
+                      placeholder="e.g., ২৫০% দৈনিক স্পোর্টস বোনাস"
                       value={newSlide.subtitleBn}
                       onChange={(e) =>
                         setNewSlide({ ...newSlide, subtitleBn: e.target.value })
                       }
-                      className="bg-slate-800 border-purple-500/30 text-white placeholder-gray-500 focus:border-purple-500"
+                      className="bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 focus:border-yellow-400"
                     />
                   </div>
                 </div>
@@ -359,14 +359,14 @@ export function AffiliateContentPage() {
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="bg-slate-800 border-purple-500/30 text-gray-300 file:bg-purple-600 file:text-white file:border-0 file:rounded file:px-3 file:py-1 cursor-pointer"
+                    className="bg-gray-800/50 border-gray-700/50 text-gray-300 file:bg-yellow-400 file:text-gray-900 file:border-0 file:rounded file:px-3 file:py-1 file:font-semibold cursor-pointer"
                   />
                   {previewUrl && (
                     <div className="mt-3">
                       <img
                         src={previewUrl}
                         alt="Preview"
-                        className="w-full h-40 object-cover rounded-lg border border-purple-500/30"
+                        className="w-full h-40 object-cover rounded-lg border border-gray-700/50"
                       />
                     </div>
                   )}
@@ -374,7 +374,7 @@ export function AffiliateContentPage() {
 
                 <Button
                   onClick={addSlide}
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold"
+                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Slide
@@ -390,7 +390,7 @@ export function AffiliateContentPage() {
               {content.slides.map((slide, index) => (
                 <Card
                   key={index}
-                  className="bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900 border-purple-500/20"
+                  className="bg-gray-800/50 border-gray-700/50"
                 >
                   <CardContent className="pt-6">
                     <div className="grid grid-cols-2 gap-4 mb-4">
@@ -424,7 +424,7 @@ export function AffiliateContentPage() {
                         <img
                           src={`http://localhost:8000${slide.image}`}
                           alt={slide.titleEn}
-                          className="w-full h-32 object-cover rounded-lg border border-purple-500/30"
+                          className="w-full h-32 object-cover rounded-lg border border-gray-700/50"
                         />
                       </div>
                     )}
@@ -444,11 +444,9 @@ export function AffiliateContentPage() {
 
         {/* Banner Tab */}
         {activeTab === "banner" && (
-          <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+          <Card className="bg-gray-800/50 border-gray-700/50">
             <CardHeader>
-              <CardTitle className="text-white">
-                Scrolling Banner Text
-              </CardTitle>
+              <CardTitle>Scrolling Banner Text</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -464,7 +462,7 @@ export function AffiliateContentPage() {
                       },
                     })
                   }
-                  className="w-full px-3 py-2 bg-slate-800 border border-purple-500/30 rounded-lg text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:border-yellow-400 focus:outline-none"
                   rows={3}
                 />
               </div>
@@ -481,7 +479,7 @@ export function AffiliateContentPage() {
                       },
                     })
                   }
-                  className="w-full px-3 py-2 bg-slate-800 border border-purple-500/30 rounded-lg text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none"
+                  className="w-full px-3 py-2 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-500 focus:border-yellow-400 focus:outline-none"
                   rows={3}
                 />
               </div>
@@ -497,7 +495,7 @@ export function AffiliateContentPage() {
               {content.features?.map((feature, index) => (
                 <Card
                   key={index}
-                  className="bg-gradient-to-br from-slate-900 via-purple-900/50 to-slate-900 border-purple-500/20"
+                  className="bg-gray-800/50 border-gray-700/50"
                 >
                   <CardContent className="pt-6 space-y-4">
                     <div className="flex justify-between items-start mb-4">
@@ -529,7 +527,7 @@ export function AffiliateContentPage() {
                               features: updatedFeatures,
                             });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., Easy Commission"
                         />
                       </div>
@@ -545,7 +543,7 @@ export function AffiliateContentPage() {
                               features: updatedFeatures,
                             });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., সহজ কমিশন"
                         />
                       </div>
@@ -566,7 +564,7 @@ export function AffiliateContentPage() {
                               features: updatedFeatures,
                             });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24"
+                          className="bg-gray-800/50 border-gray-700/50 text-white rounded px-3 py-2 min-h-24"
                           placeholder="Enter description in English"
                         />
                       </div>
@@ -585,7 +583,7 @@ export function AffiliateContentPage() {
                               features: updatedFeatures,
                             });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24"
+                          className="bg-gray-800/50 border-gray-700/50 text-white rounded px-3 py-2 min-h-24"
                           placeholder="বাংলায় বর্ণনা লিখুন"
                         />
                       </div>
@@ -610,7 +608,7 @@ export function AffiliateContentPage() {
                   features: [...content.features, newFeature],
                 });
               }}
-              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white w-full"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold w-full"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add New Feature
@@ -622,9 +620,9 @@ export function AffiliateContentPage() {
         {activeTab === "commission" && (
           <div className="space-y-6">
             {/* Commission Card Section */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white">Commission Card</CardTitle>
+                <CardTitle>Commission Card</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -641,7 +639,7 @@ export function AffiliateContentPage() {
                           },
                         })
                       }
-                      className="bg-slate-800 border-purple-500/30 text-white"
+                      className="bg-gray-800/50 border-gray-700/50 text-white"
                     />
                   </div>
                   <div>
@@ -657,7 +655,7 @@ export function AffiliateContentPage() {
                           },
                         })
                       }
-                      className="bg-slate-800 border-purple-500/30 text-white"
+                      className="bg-gray-800/50 border-gray-700/50 text-white"
                     />
                   </div>
                 </div>
@@ -665,9 +663,9 @@ export function AffiliateContentPage() {
             </Card>
 
             {/* Commission Levels Section */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2">
                   <Plus className="w-5 h-5" />
                   Commission Levels
                 </CardTitle>
@@ -677,7 +675,7 @@ export function AffiliateContentPage() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-purple-500/30">
+                      <tr className="border-b border-gray-700/50">
                         <th className="text-left py-2 px-3 text-gray-300">
                           Level (EN)
                         </th>
@@ -699,7 +697,7 @@ export function AffiliateContentPage() {
                       {content.commissionLevels?.map((level, index) => (
                         <tr
                           key={index}
-                          className="border-b border-purple-500/20 hover:bg-purple-500/10"
+                          className="border-b border-gray-700/30 hover:bg-gray-700/30"
                         >
                           <td className="py-3 px-3 text-white">
                             {level.levelEn}
@@ -719,7 +717,7 @@ export function AffiliateContentPage() {
                                 setEditingLevelIndex(index);
                                 setEditingLevel(level);
                               }}
-                              className="text-purple-400 hover:text-purple-300 mr-3"
+                              className="text-yellow-400 hover:text-yellow-300 mr-3"
                             >
                               Edit
                             </button>
@@ -747,7 +745,7 @@ export function AffiliateContentPage() {
 
                 {/* Edit/Add Commission Level Form */}
                 {editingLevel && (
-                  <div className="bg-slate-800/50 p-4 rounded-lg space-y-4 border border-purple-500/20">
+                  <div className="bg-gray-800/50 p-4 rounded-lg space-y-4 border border-gray-700/50">
                     <h3 className="text-white font-semibold">
                       {editingLevelIndex !== null
                         ? "Edit Commission Level"
@@ -764,7 +762,7 @@ export function AffiliateContentPage() {
                               levelEn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., Level 1"
                         />
                       </div>
@@ -778,7 +776,7 @@ export function AffiliateContentPage() {
                               levelBn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., লেভেল ১"
                         />
                       </div>
@@ -792,7 +790,7 @@ export function AffiliateContentPage() {
                               depositEn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., 5 - 10 Thousand"
                         />
                       </div>
@@ -806,7 +804,7 @@ export function AffiliateContentPage() {
                               depositBn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., ৫ - ১০ হাজার"
                         />
                       </div>
@@ -820,7 +818,7 @@ export function AffiliateContentPage() {
                               commissionEn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., 25%"
                         />
                       </div>
@@ -834,8 +832,8 @@ export function AffiliateContentPage() {
                               commissionBn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
-                          placeholder="e.g., २५%"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
+                          placeholder="e.g., ২৫%"
                         />
                       </div>
                       <div>
@@ -848,7 +846,7 @@ export function AffiliateContentPage() {
                               bonusEn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., 5%"
                         />
                       </div>
@@ -862,8 +860,8 @@ export function AffiliateContentPage() {
                               bonusBn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
-                          placeholder="e.g., ५%"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
+                          placeholder="e.g., ৫%"
                         />
                       </div>
                       <div>
@@ -876,7 +874,7 @@ export function AffiliateContentPage() {
                               statusEn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., Regular Affiliate"
                         />
                       </div>
@@ -890,7 +888,7 @@ export function AffiliateContentPage() {
                               statusBn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., সাধারণ এফিলিয়েট"
                         />
                       </div>
@@ -906,7 +904,7 @@ export function AffiliateContentPage() {
                               dailyBonusEn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
                           placeholder="e.g., 25%"
                         />
                       </div>
@@ -922,8 +920,8 @@ export function AffiliateContentPage() {
                               dailyBonusBn: e.target.value,
                             })
                           }
-                          className="bg-slate-800 border-purple-500/30 text-white"
-                          placeholder="e.g., २५%"
+                          className="bg-gray-800/50 border-gray-700/50 text-white"
+                          placeholder="e.g., ২৫%"
                         />
                       </div>
                     </div>
@@ -949,7 +947,7 @@ export function AffiliateContentPage() {
                           setEditingLevel(null);
                           setEditingLevelIndex(null);
                         }}
-                        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+                        className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
                       >
                         {editingLevelIndex !== null ? "Update" : "Add"} Level
                       </Button>
@@ -958,7 +956,7 @@ export function AffiliateContentPage() {
                           setEditingLevel(null);
                           setEditingLevelIndex(null);
                         }}
-                        className="bg-slate-700 hover:bg-slate-600 text-white"
+                        className="bg-gray-700 hover:bg-gray-600 text-white"
                       >
                         Cancel
                       </Button>
@@ -986,7 +984,7 @@ export function AffiliateContentPage() {
                         order: content.commissionLevels.length + 1,
                       });
                     }}
-                    className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                    className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Add New Commission Level
@@ -999,9 +997,9 @@ export function AffiliateContentPage() {
 
         {/* Main Tab */}
         {activeTab === "main" && (
-          <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+          <Card className="bg-gray-800/50 border-gray-700/50">
             <CardHeader>
-              <CardTitle className="text-white">Main Section</CardTitle>
+              <CardTitle>Main Section</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
@@ -1011,7 +1009,7 @@ export function AffiliateContentPage() {
                   onChange={(e) =>
                     setContent({ ...content, mainTitleEn: e.target.value })
                   }
-                  className="bg-slate-800 border-purple-500/30 text-white"
+                  className="bg-gray-800/50 border-gray-700/50 text-white"
                 />
               </div>
               <div>
@@ -1021,7 +1019,7 @@ export function AffiliateContentPage() {
                   onChange={(e) =>
                     setContent({ ...content, mainTitleBn: e.target.value })
                   }
-                  className="bg-slate-800 border-purple-500/30 text-white"
+                  className="bg-gray-800/50 border-gray-700/50 text-white"
                 />
               </div>
             </CardContent>
@@ -1032,11 +1030,9 @@ export function AffiliateContentPage() {
         {activeTab === "footer" && (
           <div className="space-y-6">
             {/* Footer About Section */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white">
-                  Footer About Section
-                </CardTitle>
+                <CardTitle>Footer About Section</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -1046,7 +1042,7 @@ export function AffiliateContentPage() {
                     onChange={(e) =>
                       setContent({ ...content, footerAboutEn: e.target.value })
                     }
-                    className="w-full bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24 border"
+                    className="w-full bg-gray-800/50 border-gray-700/50 text-white rounded px-3 py-2 min-h-24 border"
                     placeholder="Enter footer about text in English"
                   />
                 </div>
@@ -1057,7 +1053,7 @@ export function AffiliateContentPage() {
                     onChange={(e) =>
                       setContent({ ...content, footerAboutBn: e.target.value })
                     }
-                    className="w-full bg-slate-800 border-purple-500/30 text-white rounded px-3 py-2 min-h-24 border"
+                    className="w-full bg-gray-800/50 border-gray-700/50 text-white rounded px-3 py-2 min-h-24 border"
                     placeholder="বাংলায় ফুটার সম্পর্কে লিখুন"
                   />
                 </div>
@@ -1065,9 +1061,9 @@ export function AffiliateContentPage() {
             </Card>
 
             {/* Footer Links Section */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2">
                   <Plus className="w-5 h-5" />
                   Footer Links
                 </CardTitle>
@@ -1076,7 +1072,7 @@ export function AffiliateContentPage() {
                 {content.footerLinks?.map((link, index) => (
                   <div
                     key={index}
-                    className="bg-slate-800/50 p-4 rounded-lg space-y-3 border border-purple-500/20"
+                    className="bg-gray-800/50 p-4 rounded-lg space-y-3 border border-gray-700/50"
                   >
                     <div className="flex justify-between items-center mb-3">
                       <h4 className="text-white font-semibold">
@@ -1106,7 +1102,7 @@ export function AffiliateContentPage() {
                             newLinks[index].labelEn = e.target.value;
                             setContent({ ...content, footerLinks: newLinks });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          className="bg-gray-800/50 border-gray-700/50 text-white text-sm"
                           placeholder="e.g., Privacy"
                         />
                       </div>
@@ -1121,7 +1117,7 @@ export function AffiliateContentPage() {
                             newLinks[index].labelBn = e.target.value;
                             setContent({ ...content, footerLinks: newLinks });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          className="bg-gray-800/50 border-gray-700/50 text-white text-sm"
                           placeholder="e.g., প্রাইভেসি"
                         />
                       </div>
@@ -1135,7 +1131,7 @@ export function AffiliateContentPage() {
                           newLinks[index].url = e.target.value;
                           setContent({ ...content, footerLinks: newLinks });
                         }}
-                        className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                        className="bg-gray-800/50 border-gray-700/50 text-white text-sm"
                         placeholder="e.g., https://example.com/privacy"
                       />
                     </div>
@@ -1156,7 +1152,7 @@ export function AffiliateContentPage() {
                       ],
                     });
                   }}
-                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white w-full"
+                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold w-full"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Footer Link
@@ -1165,9 +1161,9 @@ export function AffiliateContentPage() {
             </Card>
 
             {/* Footer Social Section */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2">
                   <Plus className="w-5 h-5" />
                   Footer Social Links
                 </CardTitle>
@@ -1176,7 +1172,7 @@ export function AffiliateContentPage() {
                 {content.footerSocial?.map((social, index) => (
                   <div
                     key={index}
-                    className="bg-slate-800/50 p-4 rounded-lg space-y-3 border border-purple-500/20"
+                    className="bg-gray-800/50 p-4 rounded-lg space-y-3 border border-gray-700/50"
                   >
                     <div className="flex justify-between items-center mb-3">
                       <h4 className="text-white font-semibold">
@@ -1206,7 +1202,7 @@ export function AffiliateContentPage() {
                             newSocial[index].platform = e.target.value;
                             setContent({ ...content, footerSocial: newSocial });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          className="bg-gray-800/50 border-gray-700/50 text-white text-sm"
                           placeholder="e.g., Facebook"
                         />
                       </div>
@@ -1219,7 +1215,7 @@ export function AffiliateContentPage() {
                             newSocial[index].icon = e.target.value;
                             setContent({ ...content, footerSocial: newSocial });
                           }}
-                          className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                          className="bg-gray-800/50 border-gray-700/50 text-white text-sm"
                           placeholder="e.g., Facebook"
                         />
                       </div>
@@ -1233,7 +1229,7 @@ export function AffiliateContentPage() {
                           newSocial[index].url = e.target.value;
                           setContent({ ...content, footerSocial: newSocial });
                         }}
-                        className="bg-slate-800 border-purple-500/30 text-white text-sm"
+                        className="bg-gray-800/50 border-gray-700/50 text-white text-sm"
                         placeholder="e.g., https://facebook.com/yourpage"
                       />
                     </div>
@@ -1254,7 +1250,7 @@ export function AffiliateContentPage() {
                       ],
                     });
                   }}
-                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white w-full"
+                  className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold w-full"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Social Link
@@ -1263,9 +1259,9 @@ export function AffiliateContentPage() {
             </Card>
 
             {/* Footer Copyright Section */}
-            <Card className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 border-purple-500/20">
+            <Card className="bg-gray-800/50 border-gray-700/50">
               <CardHeader>
-                <CardTitle className="text-white">Footer Copyright</CardTitle>
+                <CardTitle>Footer Copyright</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -1278,7 +1274,7 @@ export function AffiliateContentPage() {
                         footerCopyrightEn: e.target.value,
                       })
                     }
-                    className="bg-slate-800 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                     placeholder="e.g., Copyright © 2025. All rights reserved"
                   />
                 </div>
@@ -1292,7 +1288,7 @@ export function AffiliateContentPage() {
                         footerCopyrightBn: e.target.value,
                       })
                     }
-                    className="bg-slate-800 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                     placeholder="e.g., কপিরাইট © २०२५। সর্বাধিকার সংরক্ষিত"
                   />
                 </div>

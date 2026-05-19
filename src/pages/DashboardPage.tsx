@@ -38,8 +38,7 @@ export function DashboardPage() {
   });
 
   return (
-    <div className="p-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="space-y-6 w-full">
         {/* Debug Info - Remove after debugging */}
 
         {/* Stats Grid */}
@@ -51,7 +50,7 @@ export function DashboardPage() {
         />
 
         {/* Charts and Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <AnalyticsChart />
           </div>
@@ -62,7 +61,6 @@ export function DashboardPage() {
 
         {/* Quick Actions */}
         <QuickActions />
-      </div>
     </div>
   );
 }

@@ -206,8 +206,8 @@ export function VipSettings() {
             onClick={() => setActiveSubTab(tab.id)}
             className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-all ${
               activeSubTab === tab.id
-                ? "bg-purple-600 dark:bg-purple-700 text-white shadow-md"
-                : "hover:bg-slate-200 dark:hover:bg-slate-800"
+                ? "bg-yellow-400 text-gray-900 shadow-md"
+                : "hover:bg-gray-700/30"
             }`}
           >
             {tab.icon}
@@ -229,7 +229,7 @@ export function VipSettings() {
         <Button
           onClick={handleSave}
           disabled={updateVipSettings.isPending}
-          className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-md shadow-purple-500/30 hover:shadow-purple-500/50 hover:brightness-110 transition-all px-6"
+          className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-md shadow-yellow-400/30 hover:shadow-yellow-400/50 transition-all px-6"
         >
           <Save className="w-4 h-4 mr-2" />
           {updateVipSettings.isPending ? "Saving Settings..." : "Save VIP Settings"}
@@ -240,11 +240,11 @@ export function VipSettings() {
       {activeSubTab === "tiers" && (
         <div className="space-y-6">
           {formData.levels.map((level, idx) => (
-            <Card key={level.levelNumber} className="border-purple-100 dark:border-purple-950/40 shadow-sm overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-purple-500/10 via-blue-500/5 to-transparent py-4 border-b border-border">
+            <Card key={level.levelNumber} className="border-gray-700/50 bg-gray-800/50 shadow-sm overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-transparent py-4 border-b border-gray-700/50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-600 text-white font-bold text-sm shadow">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-400 text-gray-900 font-bold text-sm shadow">
                       {level.levelNumber}
                     </span>
                     <div>
@@ -334,7 +334,7 @@ export function VipSettings() {
                   {/* Badge Image */}
                   <div className="space-y-3">
                     <Label className="flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-purple-500" />
+                      <ImageIcon className="w-4 h-4 text-yellow-400" />
                       Badge Icon (Current Status Badge)
                     </Label>
                     <div className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-900 border rounded-lg">
@@ -374,7 +374,7 @@ export function VipSettings() {
                   {/* Privilege Card Image */}
                   <div className="space-y-3">
                     <Label className="flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-indigo-500" />
+                      <ImageIcon className="w-4 h-4 text-yellow-400" />
                       Privilege VIP Banner/Card Card
                     </Label>
                     <div className="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-900 border rounded-lg">
@@ -475,7 +475,7 @@ export function VipSettings() {
               <div className="space-y-3">
                 {formData.upgradeDescription.points.map((point, pIdx) => (
                   <div key={pIdx} className="flex items-start gap-3">
-                    <span className="flex items-center justify-center w-6 h-6 mt-2 rounded bg-purple-100 text-purple-600 font-medium text-xs">
+                    <span className="flex items-center justify-center w-6 h-6 mt-2 rounded bg-yellow-400/20 text-yellow-400 font-medium text-xs">
                       {pIdx + 1}
                     </span>
                     <div className="flex-1">
@@ -514,7 +514,7 @@ export function VipSettings() {
                   Manage the dynamic Accordion FAQ list shown inside the Question block.
                 </CardDescription>
               </div>
-              <Button type="button" onClick={addFaq} className="flex items-center gap-1.5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 hover:opacity-90">
+              <Button type="button" onClick={addFaq} className="flex items-center gap-1.5 bg-yellow-400 text-gray-900 hover:bg-yellow-500">
                 <Plus className="w-4 h-4" />
                 Add FAQ Item
               </Button>
@@ -531,7 +531,7 @@ export function VipSettings() {
                 {formData.faqs.map((faq, fIdx) => (
                   <div key={faq._id || fIdx} className="p-4 border rounded-xl bg-slate-50 dark:bg-slate-900/40 space-y-3">
                     <div className="flex justify-between items-center gap-4">
-                      <span className="text-xs font-semibold text-purple-600 bg-purple-50 dark:bg-purple-950/40 px-2.5 py-1 rounded">
+                      <span className="text-xs font-semibold text-yellow-400 bg-yellow-400/10 px-2.5 py-1 rounded">
                         FAQ Question #{fIdx + 1}
                       </span>
                       <Button
@@ -584,7 +584,7 @@ export function VipSettings() {
                   Manage the bulleted Terms and Conditions list shown at the bottom of the VIP page.
                 </CardDescription>
               </div>
-              <Button type="button" onClick={addTerm} className="flex items-center gap-1.5 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 hover:opacity-90">
+              <Button type="button" onClick={addTerm} className="flex items-center gap-1.5 bg-yellow-400 text-gray-900 hover:bg-yellow-500">
                 <Plus className="w-4 h-4" />
                 Add Term Line
               </Button>
@@ -600,7 +600,7 @@ export function VipSettings() {
               <div className="space-y-3">
                 {formData.termsAndConditions.map((term, tIdx) => (
                   <div key={tIdx} className="flex items-start gap-3">
-                    <span className="flex items-center justify-center w-6 h-6 mt-2 rounded bg-purple-50 text-purple-600 border border-purple-100 font-medium text-xs">
+                    <span className="flex items-center justify-center w-6 h-6 mt-2 rounded bg-yellow-400/20 text-yellow-400 border border-yellow-400/30 font-medium text-xs">
                       {tIdx + 1}
                     </span>
                     <div className="flex-1">

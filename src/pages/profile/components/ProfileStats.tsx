@@ -40,9 +40,9 @@ export function ProfileStats({ user }: ProfileStatsProps) {
       title: "Total Withdrawals",
       value: `${user.currency} ${user.withdraw.toFixed(2)}`,
       icon: TrendingDown,
-      color: "text-purple-600 dark:text-purple-400",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/20",
+      color: "text-orange-600 dark:text-orange-400",
+      bgColor: "bg-orange-500/10",
+      borderColor: "border-orange-500/20",
     },
     {
       title: "Net Activity",
@@ -121,7 +121,7 @@ export function ProfileStats({ user }: ProfileStatsProps) {
                   %
                 </p>
               </div>
-              <TrendingDown className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+              <TrendingDown className="h-6 w-6 text-orange-600 dark:text-orange-400" />
             </div>
 
             <div className="flex items-center justify-between p-4 rounded-lg bg-slate-500/10 border border-slate-500/20">

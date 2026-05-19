@@ -85,9 +85,9 @@ export function ReferralPage() {
     <div className="min-h-screen p-6">
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="animate-fade-in">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent flex items-center gap-3">
             <svg
-              className="h-8 w-8 text-purple-600"
+              className="h-8 w-8 text-yellow-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -101,7 +101,7 @@ export function ReferralPage() {
             </svg>
             Referral System
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-gray-400 mt-2">
             Manage and monitor the referral program
           </p>
         </div>
@@ -125,14 +125,14 @@ export function ReferralPage() {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-2 p-2 bg-gradient-to-r from-purple-100/50 via-blue-100/50 to-indigo-100/50 dark:from-purple-950/30 dark:via-blue-950/30 dark:to-indigo-950/30 rounded-xl border border-purple-200 dark:border-purple-800">
+        <div className="flex flex-wrap gap-2 p-2 bg-gray-800/50 rounded-xl border border-gray-700/50">
           <Button
             variant={activeTab === "overview" ? "default" : "ghost"}
             onClick={() => setActiveTab("overview")}
             className={
               activeTab === "overview"
-                ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
-                : "hover:bg-purple-100 dark:hover:bg-purple-950 transition-all duration-300"
+                ? "bg-yellow-400 text-gray-900 shadow-lg shadow-yellow-400/30 hover:shadow-yellow-400/50 transition-all duration-300"
+                : "hover:bg-gray-700/50 text-gray-300 hover:text-yellow-400 transition-all duration-300"
             }
           >
             <svg
@@ -155,8 +155,8 @@ export function ReferralPage() {
             onClick={() => setActiveTab("users")}
             className={
               activeTab === "users"
-                ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
-                : "hover:bg-purple-100 dark:hover:bg-purple-950 transition-all duration-300"
+                ? "bg-yellow-400 text-gray-900 shadow-lg shadow-yellow-400/30 hover:shadow-yellow-400/50 transition-all duration-300"
+                : "hover:bg-gray-700/50 text-gray-300 hover:text-yellow-400 transition-all duration-300"
             }
           >
             <svg
@@ -179,8 +179,8 @@ export function ReferralPage() {
             onClick={() => setActiveTab("transactions")}
             className={
               activeTab === "transactions"
-                ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
-                : "hover:bg-purple-100 dark:hover:bg-purple-950 transition-all duration-300"
+                ? "bg-yellow-400 text-gray-900 shadow-lg shadow-yellow-400/30 hover:shadow-yellow-400/50 transition-all duration-300"
+                : "hover:bg-gray-700/50 text-gray-300 hover:text-yellow-400 transition-all duration-300"
             }
           >
             <svg
@@ -203,8 +203,8 @@ export function ReferralPage() {
             onClick={() => setActiveTab("settings")}
             className={
               activeTab === "settings"
-                ? "bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
-                : "hover:bg-purple-100 dark:hover:bg-purple-950 transition-all duration-300"
+                ? "bg-yellow-400 text-gray-900 shadow-lg shadow-yellow-400/30 hover:shadow-yellow-400/50 transition-all duration-300"
+                : "hover:bg-gray-700/50 text-gray-300 hover:text-yellow-400 transition-all duration-300"
             }
           >
             <svg

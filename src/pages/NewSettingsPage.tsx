@@ -312,7 +312,7 @@ export function NewSettingsPage() {
     return (
       <div className="min-h-screen p-6 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-4"></div>
           <p className="text-muted-foreground">Loading settings...</p>
         </div>
       </div>
@@ -352,9 +352,9 @@ export function NewSettingsPage() {
         <div className="animate-fade-in">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent flex items-center gap-3">
                 <svg
-                  className="h-8 w-8 text-purple-600"
+                  className="h-8 w-8 text-yellow-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -391,10 +391,10 @@ export function NewSettingsPage() {
         </div>
 
         {activeTab === "organization" && (
-          <Card className="border-0 bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 dark:from-slate-900 dark:via-purple-950/30 dark:to-blue-950/30 shadow-lg animate-fade-in">
+          <Card className="border border-gray-700/50 bg-gray-800/50 shadow-lg animate-fade-in">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+              <CardTitle className="flex items-center gap-2 text-white">
+                <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
                   <Building className="h-5 w-5 text-white" />
                 </div>
                 Organization Settings
@@ -590,7 +590,7 @@ export function NewSettingsPage() {
               <Button
                 onClick={handleSaveOrganizationSettings}
                 disabled={isSaving}
-                className="w-full md:w-auto bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
+                className="w-full md:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-lg shadow-yellow-400/50 hover:shadow-yellow-400/70 transition-all duration-300"
               >
                 <Save className="w-4 h-4 mr-2" />
                 {isSaving ? "Saving..." : "Save Organization Settings"}
@@ -617,10 +617,10 @@ export function NewSettingsPage() {
         {activeTab === "vip" && <VipSettings />}
 
         {activeTab === "all" && (
-          <Card className="border-0 bg-gradient-to-br from-white via-purple-50/30 to-blue-50/30 dark:from-slate-900 dark:via-purple-950/30 dark:to-blue-950/30 shadow-lg animate-fade-in">
+          <Card className="border border-gray-700/50 bg-gray-800/50 shadow-lg animate-fade-in">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
-                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+              <CardTitle className="flex items-center gap-2 text-white">
+                <div className="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center">
                   <svg
                     className="h-5 w-5 text-white"
                     fill="none"
@@ -642,7 +642,7 @@ export function NewSettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="p-4 rounded-xl bg-gradient-to-r from-slate-50 to-purple-50/50 dark:from-slate-800 dark:to-purple-900/20 border border-purple-100 dark:border-purple-900/50">
+              <div className="p-4 rounded-xl bg-gray-800/50 border border-gray-700/50">
                 <pre className="text-sm overflow-x-auto text-slate-700 dark:text-slate-300">
                   {JSON.stringify(settings, null, 2)}
                 </pre>
@@ -651,7 +651,7 @@ export function NewSettingsPage() {
               <Button
                 onClick={handleSaveAllSettings}
                 disabled={isSaving}
-                className="w-full md:w-auto bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 text-white shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-300"
+                className="w-full md:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-lg shadow-yellow-400/50 hover:shadow-yellow-400/70 transition-all duration-300"
               >
                 <Save className="w-4 h-4 mr-2" />
                 {isSaving ? "Saving..." : "Save All Settings"}

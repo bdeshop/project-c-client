@@ -157,7 +157,7 @@ export function CreateGameTab() {
         <h2 className="text-2xl font-black text-white uppercase tracking-tight">
           Create Custom Game
         </h2>
-        <p className="text-purple-200/70 font-bold text-xs uppercase tracking-widest mt-0.5">
+        <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-0.5">
           Establish individual titles with specialized metadata
         </p>
       </div>
@@ -183,8 +183,8 @@ export function CreateGameTab() {
           {/* Game Information */}
           <section className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-1.5 rounded-full bg-purple-500"></div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-purple-200/50">
+              <div className="h-8 w-1.5 rounded-full bg-yellow-400"></div>
+              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gray-500">
                 Core Identity
               </h3>
             </div>
@@ -193,7 +193,7 @@ export function CreateGameTab() {
               <div className="space-y-3">
                 <Label
                   htmlFor="gameUuid"
-                  className="text-[11px] font-black uppercase tracking-widest text-purple-300/50"
+                  className="text-[11px] font-black uppercase tracking-widest text-gray-500"
                 >
                   System UUID <span className="text-red-500">*</span>
                 </Label>
@@ -204,7 +204,7 @@ export function CreateGameTab() {
                   onChange={(e) =>
                     setFormData({ ...formData, gameUuid: e.target.value })
                   }
-                  className="rounded-2xl h-12 bg-white/5 border-white/10 text-white font-bold placeholder:text-white/20 focus:ring-purple-500/50"
+                  className="rounded-2xl h-12 bg-white/5 border-white/10 text-white font-bold placeholder:text-white/20 focus:ring-yellow-400/50"
                   required
                 />
               </div>
@@ -212,7 +212,7 @@ export function CreateGameTab() {
               <div className="space-y-3">
                 <Label
                   htmlFor="category"
-                  className="text-[11px] font-black uppercase tracking-widest text-purple-300/50"
+                  className="text-[11px] font-black uppercase tracking-widest text-gray-500"
                 >
                   Target Category <span className="text-red-500">*</span>
                 </Label>
@@ -233,7 +233,7 @@ export function CreateGameTab() {
                       <SelectItem
                         key={cat._id}
                         value={cat._id}
-                        className="rounded-xl font-bold focus:bg-purple-500 focus:text-white"
+                        className="rounded-xl font-bold focus:bg-yellow-400 focus:text-gray-900"
                       >
                         {getCategoryDisplayName(cat)}
                       </SelectItem>
@@ -245,7 +245,7 @@ export function CreateGameTab() {
               <div className="space-y-3">
                 <Label
                   htmlFor="nameEnglish"
-                  className="text-[11px] font-black uppercase tracking-widest text-purple-300/50"
+                  className="text-[11px] font-black uppercase tracking-widest text-gray-500"
                 >
                   Name (English) <span className="text-red-500">*</span>
                 </Label>
@@ -264,7 +264,7 @@ export function CreateGameTab() {
               <div className="space-y-3">
                 <Label
                   htmlFor="nameBangla"
-                  className="text-[11px] font-black uppercase tracking-widest text-purple-300/50"
+                  className="text-[11px] font-black uppercase tracking-widest text-gray-500"
                 >
                   Name (Bangla) <span className="text-red-500">*</span>
                 </Label>
@@ -285,8 +285,8 @@ export function CreateGameTab() {
           {/* Game Image */}
           <section className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-1.5 rounded-full bg-blue-500"></div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-purple-200/50">
+              <div className="h-8 w-1.5 rounded-full bg-yellow-400"></div>
+              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gray-500">
                 Visual Assets
               </h3>
             </div>
@@ -322,7 +322,7 @@ export function CreateGameTab() {
                     required={!formData.imageFile}
                   />
                   <div className="flex items-center justify-center gap-5 w-full py-10 border-2 border-dashed border-white/10 rounded-[2rem] bg-white/5 group-hover:bg-white/10 transition-all duration-300">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-500/20 text-purple-400 group-hover:scale-110 transition-transform">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400/20 text-yellow-400 group-hover:scale-110 transition-transform">
                       <Upload size={24} />
                     </div>
                     <div className="text-left">
@@ -331,7 +331,7 @@ export function CreateGameTab() {
                           ? formData.imageFile.name
                           : "Inject Visual Asset"}
                       </p>
-                      <p className="text-[10px] text-purple-300/40 font-bold uppercase tracking-widest mt-1">
+                      <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">
                         SVG, PNG, JPG (Global Standards)
                       </p>
                     </div>
@@ -345,7 +345,7 @@ export function CreateGameTab() {
           <section className="space-y-8">
             <div className="flex items-center gap-3">
               <div className="h-8 w-1.5 rounded-full bg-emerald-500"></div>
-              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-purple-200/50">
+              <h3 className="text-sm font-black uppercase tracking-[0.2em] text-gray-500">
                 Visibility Matrix
               </h3>
             </div>
@@ -391,7 +391,7 @@ export function CreateGameTab() {
                       relative group flex flex-col items-center gap-5 p-8 rounded-[2.5rem] border-2 cursor-pointer transition-all duration-500
                       ${
                         isSelected
-                          ? "border-purple-500 bg-purple-500/10 shadow-2xl shadow-purple-500/20 translate-y-[-4px]"
+                          ? "border-yellow-400 bg-yellow-400/10 shadow-2xl shadow-yellow-400/20 translate-y-[-4px]"
                           : "border-white/5 bg-white/5 hover:border-white/10"
                       }
                     `}
@@ -399,14 +399,15 @@ export function CreateGameTab() {
                     <div
                       className={`
                       flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-500 group-hover:scale-110
-                      ${isSelected ? "bg-purple-500 text-white" : `${tag.bg} ${tag.color}`}
+                      ${isSelected ? "bg-yellow-400 text-gray-900" : `${tag.bg} ${tag.color}`}
                     `}
                     >
                       <Icon size={32} strokeWidth={1.5} />
                     </div>
                     <div className="text-center">
-                      <p
-                        className={`text-[11px] font-black uppercase tracking-widest ${isSelected ? "text-white" : "text-purple-200/50"}`}
+                      <p                      className={`
+                      text-[11px] font-black uppercase tracking-widest ${isSelected ? "text-white" : "text-gray-500"}
+                    `}
                       >
                         {tag.label}
                       </p>
@@ -417,7 +418,7 @@ export function CreateGameTab() {
                     <div
                       className={`
                       absolute top-5 right-5 h-7 w-7 rounded-full flex items-center justify-center border-2 transition-all duration-500
-                      ${isSelected ? "bg-purple-500 border-purple-500 text-white scale-100 rotate-0" : "border-white/5 scale-0 rotate-90"}
+                      ${isSelected ? "bg-yellow-400 border-yellow-400 text-gray-900 scale-100 rotate-0" : "border-white/5 scale-0 rotate-90"}
                     `}
                     >
                       <Check size={16} strokeWidth={4} />
@@ -443,7 +444,7 @@ export function CreateGameTab() {
             <Button
               type="submit"
               disabled={loading}
-              className="flex-[2] h-16 rounded-[1.25rem] font-black uppercase tracking-widest text-[10px] bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-2xl shadow-purple-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+              className="flex-[2] h-16 rounded-[1.25rem] font-black uppercase tracking-widest text-[10px] bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 shadow-2xl shadow-yellow-400/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
             >
               {loading ? (
                 <div className="flex items-center gap-3">

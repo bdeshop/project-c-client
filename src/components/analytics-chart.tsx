@@ -75,17 +75,17 @@ export function AnalyticsChart() {
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-purple-50 dark:bg-purple-950 border border-purple-200 dark:border-purple-800">
+            <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700/50">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
+                <span className="text-sm font-medium text-gray-300">
                   Withdrawals
                 </span>
-                <TrendingDown className="h-4 w-4 text-purple-600" />
+                <TrendingDown className="h-4 w-4 text-yellow-400" />
               </div>
-              <p className="text-2xl font-bold text-purple-900 dark:text-purple-100">
+              <p className="text-2xl font-bold text-white">
                 ৳{withdrawalTotal.toLocaleString()}
               </p>
-              <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
+              <p className="text-xs text-gray-400 mt-1">
                 {transactionData?.typeDistribution.find(
                   (t) => t._id === "Withdrawal"
                 )?.count || 0}{" "}
@@ -99,12 +99,12 @@ export function AnalyticsChart() {
         <div>
           <h3 className="text-sm font-semibold mb-3">Transaction Status</h3>
           <div className="grid grid-cols-3 gap-3">
-            <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 text-center">
-              <Activity className="h-5 w-5 text-blue-600 mx-auto mb-1" />
-              <p className="text-lg font-bold text-blue-900 dark:text-blue-100">
+            <div className="p-3 rounded-lg bg-gray-800/50 border border-gray-700/50 text-center">
+              <Activity className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
+              <p className="text-lg font-bold text-white">
                 {completedCount}
               </p>
-              <p className="text-xs text-blue-600 dark:text-blue-400">
+              <p className="text-xs text-gray-400">
                 Completed
               </p>
             </div>
@@ -131,17 +131,17 @@ export function AnalyticsChart() {
 
         {/* Net Revenue (Admin only) */}
         {isAdmin && (
-          <div className="p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 border border-indigo-200 dark:border-indigo-800">
+          <div className="p-4 rounded-lg bg-gray-800/50 border border-gray-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-indigo-700 dark:text-indigo-300">
+                <p className="text-sm font-medium text-gray-300">
                   Net Revenue (7 days)
                 </p>
-                <p className="text-3xl font-bold text-indigo-900 dark:text-indigo-100 mt-1">
+                <p className="text-3xl font-bold text-white mt-1">
                   ৳{(depositTotal - withdrawalTotal).toLocaleString()}
                 </p>
               </div>
-              <TrendingUp className="h-8 w-8 text-indigo-600" />
+              <TrendingUp className="h-8 w-8 text-yellow-400" />
             </div>
           </div>
         )}

@@ -216,7 +216,7 @@ export function DepositBonusPage() {
           <h2 className="text-2xl font-bold text-white uppercase tracking-tight">
             Deposit Bonuses
           </h2>
-          <p className="text-purple-300 text-sm mt-1">
+          <p className="text-gray-400 text-sm mt-1">
             Manage your deposit bonus campaigns and wagering requirements
           </p>
         </div>
@@ -224,18 +224,18 @@ export function DepositBonusPage() {
           <DialogTrigger asChild>
             <Button
               onClick={() => resetForm()}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold shadow-lg"
+              className="bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold shadow-lg"
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Bonus
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-gradient-to-br from-slate-800 to-purple-800 border border-purple-500/20 text-white max-w-2xl overflow-y-auto max-h-[90vh]">
+          <DialogContent className="bg-gray-900 border border-gray-700/50 text-white max-w-2xl overflow-y-auto max-h-[90vh]">
             <DialogHeader>
               <DialogTitle>
                 {editingId ? "Edit Bonus" : "Create New Bonus"}
               </DialogTitle>
-              <DialogDescription className="text-purple-300">
+              <DialogDescription className="text-gray-400">
                 Configure deposit bonus settings and wagering rules
               </DialogDescription>
             </DialogHeader>
@@ -243,7 +243,7 @@ export function DepositBonusPage() {
             <div className="space-y-4 py-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Bonus Name</Label>
+                  <Label className="text-gray-300">Bonus Name</Label>
                   <Input
                     placeholder="e.g., Welcome Bonus 100%"
                     value={formData.welcomeBonusName}
@@ -253,11 +253,11 @@ export function DepositBonusPage() {
                         welcomeBonusName: e.target.value,
                       })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Bonus Code</Label>
+                  <Label className="text-gray-300">Bonus Code</Label>
                   <div className="flex gap-2">
                     <Input
                       placeholder="CODE123"
@@ -268,7 +268,7 @@ export function DepositBonusPage() {
                           bonusCode: e.target.value.toUpperCase(),
                         })
                       }
-                      className="bg-slate-700/50 border-purple-500/30 text-white uppercase"
+                      className="bg-gray-800/50 border-gray-700/50 text-white uppercase"
                     />
                     <Button
                       type="button"
@@ -284,17 +284,17 @@ export function DepositBonusPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Bonus Type</Label>
+                  <Label className="text-gray-300">Bonus Type</Label>
                   <Select
                     value={formData.bonusType}
                     onValueChange={(value) =>
                       setFormData({ ...formData, bonusType: value })
                     }
                   >
-                    <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                    <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-purple-500/30">
+                    <SelectContent className="bg-gray-800 border-gray-700/50">
                       <SelectItem value="Winnable">Winnable</SelectItem>
                       <SelectItem value="Non-Winnable">Non-Winnable</SelectItem>
                       <SelectItem value="Hybrid">Hybrid</SelectItem>
@@ -303,17 +303,17 @@ export function DepositBonusPage() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Applicable To</Label>
+                  <Label className="text-gray-300">Applicable To</Label>
                   <Select
                     value={formData.applicableTo}
                     onValueChange={(value) =>
                       setFormData({ ...formData, applicableTo: value })
                     }
                   >
-                    <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                    <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                       <SelectValue placeholder="Select target" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-purple-500/30">
+                    <SelectContent className="bg-gray-800 border-gray-700/50">
                       <SelectItem value="All Users">All Users</SelectItem>
                       <SelectItem value="New Users Only">
                         New Users Only
@@ -328,7 +328,7 @@ export function DepositBonusPage() {
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Percentage (%)</Label>
+                  <Label className="text-gray-300">Percentage (%)</Label>
                   <Input
                     type="number"
                     value={formData.percentageValue}
@@ -338,11 +338,11 @@ export function DepositBonusPage() {
                         percentageValue: Number(e.target.value),
                       })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Min Deposit (BDT)</Label>
+                  <Label className="text-gray-300">Min Deposit (BDT)</Label>
                   <Input
                     type="number"
                     value={formData.minimumDepositBDT}
@@ -352,11 +352,11 @@ export function DepositBonusPage() {
                         minimumDepositBDT: Number(e.target.value),
                       })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Max Bonus (BDT)</Label>
+                  <Label className="text-gray-300">Max Bonus (BDT)</Label>
                   <Input
                     type="number"
                     value={formData.totalAmountBDT}
@@ -366,14 +366,14 @@ export function DepositBonusPage() {
                         totalAmountBDT: Number(e.target.value),
                       })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Wagering Req. (x)</Label>
+                  <Label className="text-gray-300">Wagering Req. (x)</Label>
                   <Input
                     type="number"
                     value={formData.wageringRequirement}
@@ -383,11 +383,11 @@ export function DepositBonusPage() {
                         wageringRequirement: Number(e.target.value),
                       })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Validity (Days)</Label>
+                  <Label className="text-gray-300">Validity (Days)</Label>
                   <Input
                     type="number"
                     value={formData.validityPeriodDays}
@@ -397,13 +397,13 @@ export function DepositBonusPage() {
                         validityPeriodDays: Number(e.target.value),
                       })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-purple-200">
+                <Label className="text-gray-300">
                   Payment Method (Optional)
                 </Label>
                 <Select
@@ -415,10 +415,10 @@ export function DepositBonusPage() {
                     })
                   }
                 >
-                  <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                  <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                     <SelectValue placeholder="All Methods" />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-purple-500/30">
+                  <SelectContent className="bg-gray-800 border-gray-700/50">
                     <SelectItem value="all">All Methods</SelectItem>
                     {depositMethods.map((method: any) => (
                       <SelectItem key={method._id} value={method._id}>
@@ -431,41 +431,41 @@ export function DepositBonusPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-purple-200">Start Date</Label>
+                  <Label className="text-gray-300">Start Date</Label>
                   <Input
                     type="date"
                     value={formData.startDate}
                     onChange={(e) =>
                       setFormData({ ...formData, startDate: e.target.value })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-purple-200">End Date</Label>
+                  <Label className="text-gray-300">End Date</Label>
                   <Input
                     type="date"
                     value={formData.endDate}
                     onChange={(e) =>
                       setFormData({ ...formData, endDate: e.target.value })
                     }
-                    className="bg-slate-700/50 border-purple-500/30 text-white"
+                    className="bg-gray-800/50 border-gray-700/50 text-white"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-purple-200">Status</Label>
+                <Label className="text-gray-300">Status</Label>
                 <Select
                   value={formData.status}
                   onValueChange={(value) =>
                     setFormData({ ...formData, status: value })
                   }
                 >
-                  <SelectTrigger className="bg-slate-700/50 border-purple-500/30 text-white">
+                  <SelectTrigger className="bg-gray-800/50 border-gray-700/50 text-white">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-purple-500/30">
+                  <SelectContent className="bg-gray-800 border-gray-700/50">
                     <SelectItem value="Active">Active</SelectItem>
                     <SelectItem value="Inactive">Inactive</SelectItem>
                   </SelectContent>
@@ -475,7 +475,7 @@ export function DepositBonusPage() {
               <Button
                 onClick={handleSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold h-12 mt-4"
+                className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-gray-900 font-semibold h-12 mt-4"
               >
                 {createMutation.isPending || updateMutation.isPending ? (
                   <>
@@ -492,68 +492,68 @@ export function DepositBonusPage() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-3 top-3 w-5 h-5 text-purple-400" />
+        <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
         <Input
           placeholder="Search bonuses by name or code..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-slate-800/50 border-purple-500/30 text-white placeholder:text-purple-400"
+          className="pl-10 bg-gray-800/50 border-gray-700/50 text-white placeholder:text-gray-400"
         />
       </div>
 
       {isLoading ? (
         <div className="flex justify-center items-center py-24">
-          <Loader2 className="w-12 h-12 animate-spin text-purple-500" />
+          <Loader2 className="w-12 h-12 animate-spin text-yellow-400" />
         </div>
       ) : filteredBonuses.length === 0 ? (
-        <div className="text-center py-24 bg-slate-800/50 rounded-[2rem] border border-purple-500/20">
-          <div className="bg-purple-500/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-purple-500/20">
-            <Gift className="w-10 h-10 text-purple-400" />
+        <div className="text-center py-24 bg-gray-800/50 rounded-[2rem] border border-gray-700/50">
+          <div className="bg-yellow-400/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-yellow-400/20">
+            <Gift className="w-10 h-10 text-yellow-400" />
           </div>
-          <p className="text-purple-300 font-medium">
+          <p className="text-gray-400 font-medium">
             {bonuses.length === 0
               ? "No bonuses found. Create your first campaign!"
               : "No bonuses match your search."}
           </p>
         </div>
       ) : (
-        <div className="bg-slate-800/50 rounded-[2rem] border border-purple-500/20 overflow-hidden shadow-2xl">
+        <div className="bg-gray-800/50 rounded-[2rem] border border-gray-700/50 overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-purple-500/20 bg-purple-500/10">
-                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-purple-200">
+                <tr className="border-b border-gray-700/50 bg-yellow-400">
+                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-gray-900">
                     Name / Code
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-purple-200">
+                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-gray-900">
                     Value
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-purple-200">
+                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-gray-900">
                     Rules
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-purple-200">
+                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-gray-900">
                     Target
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-purple-200">
+                  <th className="px-6 py-4 text-left text-xs font-black uppercase tracking-widest text-gray-900">
                     Status
                   </th>
-                  <th className="px-6 py-4 text-right text-xs font-black uppercase tracking-widest text-purple-200">
+                  <th className="px-6 py-4 text-right text-xs font-black uppercase tracking-widest text-gray-900">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-purple-500/10">
+              <tbody className="divide-y divide-gray-700/30">
                 {filteredBonuses.map((bonus: DepositBonus) => (
                   <tr
                     key={bonus._id}
-                    className="hover:bg-purple-500/5 transition-colors group"
+                    className="hover:bg-gray-700/30 transition-colors group"
                   >
                     <td className="px-6 py-4">
                       <div>
-                        <p className="text-white font-bold group-hover:text-purple-400 transition-colors">
+                        <p className="text-white font-bold group-hover:text-yellow-400 transition-colors">
                           {bonus.welcomeBonusName}
                         </p>
-                        <p className="text-purple-300 text-xs font-mono bg-purple-900/30 inline-block px-2 py-0.5 rounded mt-1">
+                        <p className="text-gray-400 text-xs font-mono bg-gray-800 inline-block px-2 py-0.5 rounded mt-1">
                           {bonus.bonusCode}
                         </p>
                       </div>
@@ -562,26 +562,26 @@ export function DepositBonusPage() {
                       <div className="text-white font-bold">
                         {bonus.percentageValue}%
                       </div>
-                      <p className="text-purple-300 text-xs mt-1">
+                      <p className="text-gray-400 text-xs mt-1">
                         Max: ৳{bonus.totalAmountBDT}
                       </p>
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-white text-xs">
-                        <span className="text-purple-300">Min Dep:</span> ৳
+                        <span className="text-gray-400">Min Dep:</span> ৳
                         {bonus.minimumDepositBDT}
                       </div>
                       <div className="text-white text-xs mt-1">
-                        <span className="text-purple-300">Wager:</span>{" "}
+                        <span className="text-gray-400">Wager:</span>{" "}
                         {bonus.wageringRequirement}x
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-purple-200 text-xs">
+                      <p className="text-gray-300 text-xs">
                         {bonus.applicableTo}
                       </p>
                       {bonus.depositMethodId && (
-                        <p className="text-purple-400 text-[10px] mt-1">
+                        <p className="text-gray-500 text-[10px] mt-1">
                           {bonus.depositMethodId.method_name_en}
                         </p>
                       )}
@@ -603,7 +603,7 @@ export function DepositBonusPage() {
                           size="icon"
                           variant="ghost"
                           onClick={() => handleEdit(bonus)}
-                          className="h-8 w-8 text-blue-400 hover:text-blue-300 hover:bg-blue-500/20"
+                          className="h-8 w-8 text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/20"
                         >
                           <Edit2 size={14} />
                         </Button>
