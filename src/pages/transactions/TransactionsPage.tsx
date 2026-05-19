@@ -187,7 +187,7 @@ export default function TransactionsPage() {
 
   if (isLoading || (activeTab === "withdraw" && isLoadingWithdrawals)) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
@@ -197,7 +197,7 @@ export default function TransactionsPage() {
 
   return (
     <div className="min-h-screen gradient-bg p-6">
-      <div className="container mx-auto">
+      <div className="w-full">
         {/* Breadcrumb */}
         <Breadcrumb items={[{ label: "Transactions" }]} />
 

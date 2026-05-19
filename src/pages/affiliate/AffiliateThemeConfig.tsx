@@ -240,7 +240,7 @@ function AffiliateThemeConfig() {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 uppercase">
+    <div className="w-full p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 uppercase">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-5">

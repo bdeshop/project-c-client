@@ -181,7 +181,7 @@ export default function EditDepositMethodPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
         </div>
@@ -191,7 +191,7 @@ export default function EditDepositMethodPage() {
 
   if (!paymentMethod) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="text-center py-12">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Payment Method Not Found
@@ -208,7 +208,7 @@ export default function EditDepositMethodPage() {
   }
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl">
+    <div className="p-6">
       <div className="flex items-center gap-4 mb-6">
         <Button
           variant="ghost"

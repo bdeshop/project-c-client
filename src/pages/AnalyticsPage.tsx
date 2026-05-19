@@ -42,7 +42,7 @@ export function AnalyticsPage() {
 
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         <div className="mb-8 flex justify-between items-start">
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">

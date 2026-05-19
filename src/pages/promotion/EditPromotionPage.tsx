@@ -160,7 +160,7 @@ export default function EditPromotionPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
@@ -170,7 +170,7 @@ export default function EditPromotionPage() {
 
   if (!promotion) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="text-center py-12">
           <h2 className="text-xl font-semibold text-foreground mb-2">
             Promotion Not Found
@@ -188,7 +188,7 @@ export default function EditPromotionPage() {
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="container mx-auto max-w-4xl">
+      <div className="w-full">
         <div className="flex items-center gap-4 mb-6">
           <Button
             variant="ghost"

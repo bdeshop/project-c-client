@@ -256,7 +256,7 @@ export function AffiliateContentPage() {
 
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         <Breadcrumb items={[{ label: "Affiliate Content" }]} />
 
         <div className="flex justify-between items-center">

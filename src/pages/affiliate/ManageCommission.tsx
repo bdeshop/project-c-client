@@ -221,7 +221,7 @@ function ManageCommission() {
   }
 
   return (
-    <div className="flex flex-col gap-8 p-6 max-w-7xl mx-auto">
+    <div className="flex flex-col gap-8 p-6 w-full">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">

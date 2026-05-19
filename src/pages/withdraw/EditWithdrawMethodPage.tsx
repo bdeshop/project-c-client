@@ -169,7 +169,7 @@ export default function EditWithdrawMethodPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
@@ -179,7 +179,7 @@ export default function EditWithdrawMethodPage() {
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="container mx-auto max-w-4xl">
+      <div>
         {/* Header */}
         <div className="mb-8">
           <Button

@@ -60,7 +60,7 @@ export function GamesConfigPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-6">
-      <div className="max-w-7xl mx-auto">
+      <div>
         {/* Header Section */}
         <div className="relative overflow-hidden rounded-[2.5rem] bg-white/5 backdrop-blur-xl p-10 shadow-2xl border border-white/10 mb-10 animate-fade-in">
           <div className="absolute top-0 right-0 -mr-20 -mt-20 h-80 w-80 rounded-full bg-yellow-400/10 blur-[100px]"></div>

@@ -6,7 +6,7 @@ import { Shield, AlertTriangle, CheckCircle, Lock, Key, Eye } from "lucide-react
 export function SecurityPage() {
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Security</h1>
           <p className="text-muted-foreground">Monitor and manage your platform's security settings</p>

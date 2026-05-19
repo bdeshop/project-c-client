@@ -76,7 +76,7 @@ export default function PromotionsListPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
         </div>
@@ -86,7 +86,7 @@ export default function PromotionsListPage() {
 
   return (
     <div className="min-h-screen p-6">
-      <div className="container mx-auto max-w-7xl">
+      <div className="w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div className="animate-fade-in">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent flex items-center gap-3">

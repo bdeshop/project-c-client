@@ -83,7 +83,7 @@ export function ReferralPage() {
 
   return (
     <div className="min-h-screen p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="w-full space-y-8">
         <div className="animate-fade-in">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent flex items-center gap-3">
             <svg

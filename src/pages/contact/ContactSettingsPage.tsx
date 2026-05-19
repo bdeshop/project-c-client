@@ -85,7 +85,7 @@ export default function ContactSettingsPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background p-6">
-        <div className="container mx-auto max-w-4xl">
+        <div>
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           </div>
@@ -96,7 +96,7 @@ export default function ContactSettingsPage() {
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="container mx-auto max-w-4xl">
+      <div>
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">

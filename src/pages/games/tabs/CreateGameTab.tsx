@@ -152,7 +152,7 @@ export function CreateGameTab() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-12">
+    <div className="space-y-8 pb-12">
       <div className="flex flex-col gap-1">
         <h2 className="text-2xl font-black text-white uppercase tracking-tight">
           Create Custom Game

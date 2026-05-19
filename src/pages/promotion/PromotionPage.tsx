@@ -167,7 +167,7 @@ export function PromotionPage() {
 
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         {/* Show error message if there's an error with toggle operation */}
         {errorMessage && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

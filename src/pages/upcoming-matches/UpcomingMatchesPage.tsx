@@ -53,7 +53,7 @@ export function UpcomingMatchesPage() {
 
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         {/* Breadcrumb */}
         <Breadcrumb items={[{ label: "Upcoming Matches" }]} />
 

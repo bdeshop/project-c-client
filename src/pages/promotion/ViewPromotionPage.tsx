@@ -29,7 +29,7 @@ export default function ViewPromotionPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
+      <div>
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-400"></div>
         </div>
@@ -39,7 +39,7 @@ export default function ViewPromotionPage() {
 
   if (error || !promotion) {
     return (
-      <div className="container mx-auto p-6">
+      <div>
         <div className="text-center py-12">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">
             Promotion Not Found
@@ -57,7 +57,7 @@ export default function ViewPromotionPage() {
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="container mx-auto max-w-6xl">
+      <div className="w-full">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <Button

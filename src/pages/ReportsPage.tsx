@@ -5,7 +5,7 @@ import { FileText, Download, Calendar, Filter } from "lucide-react"
 export function ReportsPage() {
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">Reports</h1>

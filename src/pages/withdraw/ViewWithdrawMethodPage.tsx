@@ -29,7 +29,7 @@ export default function ViewWithdrawMethodPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
@@ -39,7 +39,7 @@ export default function ViewWithdrawMethodPage() {
 
   if (error || !withdrawMethodData?.data?.data) {
     return (
-      <div className="container mx-auto p-6">
+      <div className="p-6">
         <div className="text-center py-12">
           <h2 className="text-xl font-semibold text-foreground mb-2">
             Withdraw Method Not Found
@@ -59,7 +59,7 @@ export default function ViewWithdrawMethodPage() {
 
   return (
     <div className="min-h-screen bg-background p-6">
-      <div className="container mx-auto max-w-6xl">
+      <div>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <Button

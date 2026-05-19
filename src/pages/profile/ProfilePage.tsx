@@ -29,18 +29,16 @@ export function ProfilePage() {
   if (isLoading) {
     return (
       <div className="p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center items-center h-64">
+        <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           </div>
-        </div>
       </div>
     );
   }
 
   return (
     <div className="p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="w-full space-y-6">
         {/* Breadcrumb */}
         <Breadcrumb items={[{ label: "Profile" }]} />
 

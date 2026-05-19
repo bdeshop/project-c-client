@@ -152,7 +152,7 @@ export default function AddDepositMethodPage() {
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl">
+    <div className="p-6">
       <div className="flex items-center gap-4 mb-6">
         <Button
           variant="ghost"

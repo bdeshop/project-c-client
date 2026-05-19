@@ -348,7 +348,7 @@ export function NewSettingsPage() {
 
   return (
     <div className="min-h-screen p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="w-full space-y-8">
         <div className="animate-fade-in">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
